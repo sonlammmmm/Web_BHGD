@@ -11,8 +11,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(
 
 // Cấu hình Identity - Đảm bảo dòng này chính xác và ở đây
 // Bạn có thể đặt RequireConfirmedAccount = true nếu bạn muốn yêu cầu xác nhận email trong môi trường thực tế
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
-    .AddRoles<IdentityRole>() // <-- THÊM DÒNG NÀY ĐỂ KÍCH HOẠT QUẢN LÝ VAI TRÒ
+builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
@@ -47,7 +47,7 @@ app.MapRazorPages();
 using (var scope = app.Services.CreateScope())
 {
     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 
     // Tạo vai trò "Admin" nếu chưa có
     if (!await roleManager.RoleExistsAsync("Admin"))
@@ -60,7 +60,7 @@ using (var scope = app.Services.CreateScope())
     string adminPassword = "AdminPassword123!"; // Đổi thành mật khẩu mạnh hơn và bảo mật
     if (await userManager.FindByEmailAsync(adminEmail) == null)
     {
-        var adminUser = new IdentityUser { UserName = adminEmail, Email = adminEmail, EmailConfirmed = true };
+        var adminUser = new ApplicationUser { UserName = adminEmail, Email = adminEmail, EmailConfirmed = true };
         var result = await userManager.CreateAsync(adminUser, adminPassword);
         if (result.Succeeded)
         {

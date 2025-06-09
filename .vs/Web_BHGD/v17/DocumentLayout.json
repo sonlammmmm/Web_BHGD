@@ -1,7 +1,20 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\trans\\OneDrive\\Desktop\\Web_BHGD\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A6418685-FD53-4E84-8DFE-508828CF1C98}|Web_BHGD\\Web_BHGD.csproj|c:\\users\\trans\\onedrive\\desktop\\web_bhgd\\web_bhgd\\models\\applicationuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A6418685-FD53-4E84-8DFE-508828CF1C98}|Web_BHGD\\Web_BHGD.csproj|solutionrelative:web_bhgd\\models\\applicationuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6418685-FD53-4E84-8DFE-508828CF1C98}|Web_BHGD\\Web_BHGD.csproj|c:\\users\\trans\\onedrive\\desktop\\web_bhgd\\web_bhgd\\models\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A6418685-FD53-4E84-8DFE-508828CF1C98}|Web_BHGD\\Web_BHGD.csproj|solutionrelative:web_bhgd\\models\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6418685-FD53-4E84-8DFE-508828CF1C98}|Web_BHGD\\Web_BHGD.csproj|c:\\users\\trans\\onedrive\\desktop\\web_bhgd\\web_bhgd\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A6418685-FD53-4E84-8DFE-508828CF1C98}|Web_BHGD\\Web_BHGD.csproj|solutionrelative:web_bhgd\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -27,8 +40,34 @@
         },
         {
           "DockedWidth": 98,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 5,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\trans\\OneDrive\\Desktop\\Web_BHGD\\Web_BHGD\\Program.cs",
+              "RelativeDocumentMoniker": "Web_BHGD\\Program.cs",
+              "ToolTip": "C:\\Users\\trans\\OneDrive\\Desktop\\Web_BHGD\\Web_BHGD\\Program.cs",
+              "RelativeToolTip": "Web_BHGD\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-09T06:19:02.016Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ApplicationDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\trans\\OneDrive\\Desktop\\Web_BHGD\\Web_BHGD\\Models\\ApplicationDbContext.cs",
+              "RelativeDocumentMoniker": "Web_BHGD\\Models\\ApplicationDbContext.cs",
+              "ToolTip": "C:\\Users\\trans\\OneDrive\\Desktop\\Web_BHGD\\Web_BHGD\\Models\\ApplicationDbContext.cs",
+              "RelativeToolTip": "Web_BHGD\\Models\\ApplicationDbContext.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-09T06:13:44.538Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Bookmark",
               "Name": "ST:1:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
@@ -40,6 +79,19 @@
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "ApplicationUser.cs",
+              "DocumentMoniker": "C:\\Users\\trans\\OneDrive\\Desktop\\Web_BHGD\\Web_BHGD\\Models\\ApplicationUser.cs",
+              "RelativeDocumentMoniker": "Web_BHGD\\Models\\ApplicationUser.cs",
+              "ToolTip": "C:\\Users\\trans\\OneDrive\\Desktop\\Web_BHGD\\Web_BHGD\\Models\\ApplicationUser.cs",
+              "RelativeToolTip": "Web_BHGD\\Models\\ApplicationUser.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAhAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-09T06:13:55.309Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Bookmark",
