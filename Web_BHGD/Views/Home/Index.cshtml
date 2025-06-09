@@ -1,0 +1,36 @@
+﻿@using Web_BHGD.Models
+@model IEnumerable<Product>
+
+@{
+    ViewData["Title"] = "Tất cả sản phẩm";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Chào mừng đến với cửa hàng của chúng tôi!</h1>
+</div>
+
+<div class="container">
+    <div class="row">
+        @if (Model != null && Model.Any()) // Kiểm tra nếu có sản phẩm để hiển thị
+        {
+            @foreach (var product in Model)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <img src="/@product.ImageUrl" class="card-img-top" alt="@product.Name" style="height: 200px; object-fit: cover;">
+                        <div class="card-body">
+                            <h5 class="card-title">@product.Name</h5>
+                            <p class="card-text">Giá: @product.Price.ToString("N0") VNĐ</p>
+                            <p class="card-text">Mô tả: @product.Description</p>
+                            <a href="#" class="btn btn-primary">Xem chi tiết</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <p>Không có sản phẩm nào để hiển thị.</p>
+        }
+    </div>
+</div>
