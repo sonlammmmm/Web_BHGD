@@ -1,36 +1,41 @@
-﻿@using Web_BHGD.Models
-@model IEnumerable<Product>
-
+﻿@model IEnumerable<Web_BHGD.Models.Product>
 @{
-    ViewData["Title"] = "Tất cả sản phẩm";
+    ViewData["Title"] = "Home Page";
+    int numOfQuantity = 1;
 }
 
-<div class="text-center">
-    <h1 class="display-4">Chào mừng đến với cửa hàng của chúng tôi!</h1>
-</div>
 
-<div class="container">
-    <div class="row">
-        @if (Model != null && Model.Any()) // Kiểm tra nếu có sản phẩm để hiển thị
-        {
-            @foreach (var product in Model)
+@if (User.IsInRole("Admin"))
+{
+    <a asp-action="Add" class="btn btn-success mb-2">quản lý sản phầm</a>
+}
+
+<section class="py-2">
+    <div class="container px-4 px-lg-5 mt-5">
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+            @foreach (var item in Model)
             {
-                <div class="col-md-4 mb-4">
-                    <div class="card">
-                        <img src="/@product.ImageUrl" class="card-img-top" alt="@product.Name" style="height: 200px; object-fit: cover;">
+                <div class="col mb-5">
+                    <div class="card gap-3" style="width: 18rem">
+                        <img src="@item.ImageUrl" class="card-img-top" alt="..." style="height: 300px">
                         <div class="card-body">
-                            <h5 class="card-title">@product.Name</h5>
-                            <p class="card-text">Giá: @product.Price.ToString("N0") VNĐ</p>
-                            <p class="card-text">Mô tả: @product.Description</p>
-                            <a href="#" class="btn btn-primary">Xem chi tiết</a>
+                            <h5 class="card-title">@Html.DisplayFor(modelItem => item.Name)</h5>
+                            <div class="d-flex">
+                                <span>Price: </span>
+                                <p class="mx-3">@item.Price.ToString("#,##0") Vnđ</p>
+                            </div>
+
+                            <!-- Nút "Thêm vào giỏ" cho tất cả người dùng -->
+                            <a asp-controller="ShoppingCart" asp-action="AddToCart" asp-route-productId="@item.Id" asp-route-quantity="@numOfQuantity">
+                                <button class="btn btn-outline-dark">
+                                    <i class="bi-cart-fill me-1"></i> Add to Cart
+                                </button>
+                            </a>
+
                         </div>
                     </div>
                 </div>
             }
-        }
-        else
-        {
-            <p>Không có sản phẩm nào để hiển thị.</p>
-        }
+        </div>
     </div>
-</div>
+</section>

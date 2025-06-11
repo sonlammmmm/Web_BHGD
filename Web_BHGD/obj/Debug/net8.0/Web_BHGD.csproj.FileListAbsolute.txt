@@ -135,6 +135,7 @@ C:\Users\trans\OneDrive\Desktop\Web_BHGD\Web_BHGD\obj\Debug\net8.0\Web_BHGD.MvcA
 C:\Users\trans\OneDrive\Desktop\Web_BHGD\Web_BHGD\obj\Debug\net8.0\Web_BHGD.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\trans\OneDrive\Desktop\Web_BHGD\Web_BHGD\obj\Debug\net8.0\Web_BHGD.RazorAssemblyInfo.cache
 C:\Users\trans\OneDrive\Desktop\Web_BHGD\Web_BHGD\obj\Debug\net8.0\Web_BHGD.RazorAssemblyInfo.cs
+C:\Users\trans\OneDrive\Desktop\Web_BHGD\Web_BHGD\obj\Debug\net8.0\Web_BHGD.sourcelink.json
 C:\Users\trans\OneDrive\Desktop\Web_BHGD\Web_BHGD\obj\Debug\net8.0\staticwebassets.build.json
 C:\Users\trans\OneDrive\Desktop\Web_BHGD\Web_BHGD\obj\Debug\net8.0\staticwebassets.development.json
 C:\Users\trans\OneDrive\Desktop\Web_BHGD\Web_BHGD\obj\Debug\net8.0\staticwebassets\msbuild.Web_BHGD.Microsoft.AspNetCore.StaticWebAssets.props

@@ -1,25 +1,25 @@
-﻿using System.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 using Web_BHGD.Models;
-using Web_BHGD.Models.Repositories;
+using Web_BHGD.Repositories;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Web_BHGD.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly IProductRepository _productRepository; // Khai báo ProductRepository
+        private readonly IProductRepository _productRepository;
 
-        public HomeController(ILogger<HomeController> logger, IProductRepository productRepository) // Thêm IProductRepository vào constructor
+        public HomeController(ILogger<HomeController> logger, IProductRepository productRepository)
         {
             _logger = logger;
-            _productRepository = productRepository; // Gán giá trị
+            _productRepository = productRepository;
         }
 
-        public async Task<IActionResult> Index() // Thay đổi sang async Task<IActionResult>
+        public async Task<IActionResult> Index()
         {
-            var products = await _productRepository.GetAll(); // Lấy tất cả sản phẩm
-            return View(products); // Truyền danh sách sản phẩm vào View
+            var products = await _productRepository.GetAllAsync();
+            return View(products);
         }
 
         public IActionResult Privacy()

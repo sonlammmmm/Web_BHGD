@@ -1,16 +1,12 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations; // Thêm dòng này cho Required
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Web_BHGD.Models
 {
     public class Category
     {
         public int Id { get; set; }
-
-        [Required(ErrorMessage = "Tên danh mục không được để trống")] // Thêm Required
-        public string Name { get; set; } = string.Empty; // Khởi tạo để tránh CS8618
-
-        // Kết nối với bảng Product - Cho phép nullable
+        [Required, StringLength(50)]
+        public string Name { get; set; }
         public List<Product>? Products { get; set; }
     }
 }

@@ -1,28 +1,18 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Web_BHGD.Models
 {
     public class Product
     {
         public int Id { get; set; }
-
-        [Required(ErrorMessage = "Tên sản phẩm không được để trống")] // Thêm Required
-        [StringLength(100, ErrorMessage = "Tên SP không được vượt quá 100 ký tự")]
-        public string Name { get; set; } = string.Empty; // Khởi tạo để tránh CS8618
-
-        [Range(0, 100000000, ErrorMessage = "Giá SP nằm từ 0 - 100000000")]
+        [Required, StringLength(100)]
+        public string Name { get; set; }
+        [Range(0.01, 10000.00)]
         public decimal Price { get; set; }
-
-        public string? Description { get; set; } // Có thể null
-        public string? ImageUrl { get; set; } // Có thể null
-
-        // Kết nối bảng Category
+        public string Description { get; set; }
+        public string? ImageUrl { get; set; }
+        public List<ProductImage>? Images { get; set; }
         public int CategoryId { get; set; }
-        public Category? Category { get; set; } // Có thể null
-
-        // Kết nối bảng ProductImage
-        public List<ProductImage>? Images { get; set; } // Có thể null
+        public Category? Category { get; set; }
     }
 }

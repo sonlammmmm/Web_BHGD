@@ -1,31 +1,31 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Web_BHGD.Models;
-using Web_BHGD.Models.Repositories;
-using Microsoft.AspNetCore.Authorization; // Thêm dòng này
+﻿using Web_BHGD.Models;
+using Web_BHGD.Repositories;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Web_BHGD.Controllers
 {
-    [Authorize(Roles = "Admin")] // Chỉ Admin mới có quyền truy cập CategoryController
-    public class CategoryController : Controller
+    public class CategoriesController : Controller
     {
+        private readonly IProductRepository _productRepository;
         private readonly ICategoryRepository _categoryRepository;
 
-        public CategoryController(ICategoryRepository categoryRepository)
+        public CategoriesController(IProductRepository productRepository, ICategoryRepository categoryRepository)
         {
+            _productRepository = productRepository;
             _categoryRepository = categoryRepository;
         }
 
-        // GET: Category
+        // Hiển thị danh sách danh mục
         public async Task<IActionResult> Index()
         {
-            var categories = await _categoryRepository.GetAll();
-            return View(categories);
+            var category = await _categoryRepository.GetAllAsync();
+            return View(category);
         }
 
-        // GET: Category/Details/5
-        public async Task<IActionResult> Details(int id)
+        // Hiển thị chi tiết danh mục
+        public async Task<IActionResult> Display(int id)
         {
-            var category = await _categoryRepository.GetById(id);
+            var category = await _categoryRepository.GetByIdAsync(id);
             if (category == null)
             {
                 return NotFound();
@@ -33,29 +33,28 @@ namespace Web_BHGD.Controllers
             return View(category);
         }
 
-        // GET: Category/Create
-        public IActionResult Create()
+        // Hiển thị form thêm danh mục
+        public IActionResult Add()
         {
             return View();
         }
 
-        // POST: Category/Create
+        // Xử lý thêm danh mục
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Name")] Category category)
+        public async Task<IActionResult> Add(Category category)
         {
             if (ModelState.IsValid)
             {
-                await _categoryRepository.Create(category);
+                await _categoryRepository.AddAsync(category);
                 return RedirectToAction(nameof(Index));
             }
             return View(category);
         }
 
-        // GET: Category/Edit/5
-        public async Task<IActionResult> Edit(int id)
+        // Hiển thị form cập nhật danh mục
+        public async Task<IActionResult> Update(int id)
         {
-            var category = await _categoryRepository.GetById(id);
+            var category = await _categoryRepository.GetByIdAsync(id);
             if (category == null)
             {
                 return NotFound();
@@ -63,10 +62,9 @@ namespace Web_BHGD.Controllers
             return View(category);
         }
 
-        // POST: Category/Edit/5
+        // Xử lý cập nhật danh mục
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] Category category)
+        public async Task<IActionResult> Update(int id, Category category)
         {
             if (id != category.Id)
             {
@@ -75,16 +73,16 @@ namespace Web_BHGD.Controllers
 
             if (ModelState.IsValid)
             {
-                await _categoryRepository.Update(category);
+                await _categoryRepository.UpdateAsync(category);
                 return RedirectToAction(nameof(Index));
             }
             return View(category);
         }
 
-        // GET: Category/Delete/5
+        // Hiển thị form xác nhận xóa danh mục
         public async Task<IActionResult> Delete(int id)
         {
-            var category = await _categoryRepository.GetById(id);
+            var category = await _categoryRepository.GetByIdAsync(id);
             if (category == null)
             {
                 return NotFound();
@@ -92,13 +90,21 @@ namespace Web_BHGD.Controllers
             return View(category);
         }
 
-        // POST: Category/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
+        // Xử lý xóa danh mục
+        [HttpPost, ActionName("DeleteConfirmed")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            await _categoryRepository.Delete(id);
+            var category = await _categoryRepository.GetByIdAsync(id);
+            if (category != null)
+            {
+                await _categoryRepository.DeleteAsync(id);
+            }
             return RedirectToAction(nameof(Index));
         }
+
+       
+
+
     }
+
 }
