@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace buoi2_update.Areas.Admin.Controllers
+namespace Web_BHGD.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Authorize(Roles = SD.Role_Admin)]
@@ -67,8 +67,6 @@ namespace buoi2_update.Areas.Admin.Controllers
             }
             return "/images/" + image.FileName; // Trả về đường dẫn tương đối
         }
-
-        // Nhớ tạo folder images trong wwwroot
 
         // Hiển thị thông tin chi tiết sản phẩm
         public async Task<IActionResult> Display(int id)

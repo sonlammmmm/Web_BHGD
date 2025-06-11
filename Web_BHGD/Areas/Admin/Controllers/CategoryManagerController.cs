@@ -1,9 +1,13 @@
-﻿using Web_BHGD.Models;
-using Web_BHGD.Repositories;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Web_BHGD.Areas.Admin.Models;
+using Web_BHGD.Models;
+using Web_BHGD.Repositories;
 
-namespace Web_BHGD.Controllers
+namespace Web_BHGD.Areas.Admin.Controllers
 {
+    [Area("Admin")]
+    [Authorize(Roles = SD.Role_Admin)]
     public class CategoriesController : Controller
     {
         private readonly IProductRepository _productRepository;
@@ -103,5 +107,4 @@ namespace Web_BHGD.Controllers
         }
 
     }
-
 }
