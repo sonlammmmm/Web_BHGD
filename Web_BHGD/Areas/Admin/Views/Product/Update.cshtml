@@ -1,54 +1,274 @@
 ﻿@model Web_BHGD.Models.Product
-
+@using Microsoft.AspNetCore.Mvc.Rendering
 @{
-    ViewData["Title"] = "Edit Product";
+    ViewData["Title"] = "Cập nhật Sản phẩm";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-<h2>Edit Product</h2>
-<form asp-action="Update" method="post" enctype="multipart/form-data">
-    <input type="hidden" asp-for="Id" />
-    <div class="form-group">
-        <label asp-for="Name"></label>
-        <input asp-for="Name" class="form-control" />
-        <span asp-validation-for="Name" class="text-danger"></span>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-9 col-lg-10">
+            <div class="p-4">
+                <nav aria-label="breadcrumb" class="mb-4">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a asp-controller="Home" asp-action="Index" class="text-decoration-none">
+                                <i class="fas fa-home me-1"></i>Dashboard
+                            </a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a asp-controller="Product" asp-action="Index" class="text-decoration-none">
+                                Sản phẩm
+                            </a>
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">Cập nhật</li>
+                    </ol>
+                </nav>
+
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <h1 class="h3 mb-0">
+                            <i class="fas fa-edit me-2 text-warning"></i>
+                            Cập nhật Sản phẩm
+                        </h1>
+                        <p class="text-muted mb-0">Chỉnh sửa thông tin sản phẩm "#@Model.Id - @Model.Name"</p>
+                    </div>
+                </div>
+
+                <div class="row justify-content-center">
+                    <div class="col-md-8 col-lg-6">
+                        <div class="card shadow-sm">
+                            <div class="card-header bg-warning text-dark">
+                                <h5 class="mb-0">
+                                    <i class="fas fa-edit me-2"></i>
+                                    Thông tin Sản phẩm
+                                </h5>
+                            </div>
+                            <div class="card-body p-4">
+                                <form asp-action="Update" method="post" enctype="multipart/form-data">
+                                    <input type="hidden" asp-for="Id" />
+                                    <div asp-validation-summary="All" class="text-danger mb-4"></div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label text-muted small">
+                                            <i class="fas fa-hashtag me-1"></i>
+                                            ID Sản phẩm
+                                        </label>
+                                        <div class="input-group">
+                                            <span class="input-group-text bg-light">#</span>
+                                            <input type="text" class="form-control bg-light" value="@Model.Id" readonly />
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <label asp-for="Name" class="form-label fw-bold">
+                                            <i class="fas fa-box me-1 text-primary"></i>
+                                            Tên Sản phẩm <span class="text-danger">*</span>
+                                        </label>
+                                        <input asp-for="Name" class="form-control form-control-lg"
+                                               placeholder="Nhập tên sản phẩm..." id="Name" autocomplete="off" />
+                                        <span asp-validation-for="Name" class="text-danger small"></span>
+                                        <div class="form-text" id="nameValidation">
+                                            <i class="fas fa-info-circle me-1"></i>
+                                            Tên sản phẩm phải từ 2-100 ký tự
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <label asp-for="Price" class="form-label fw-bold">
+                                            <i class="fas fa-dollar-sign me-1 text-primary"></i>
+                                            Giá <span class="text-danger">*</span>
+                                        </label>
+                                        <input asp-for="Price" class="form-control form-control-lg"
+                                               placeholder="Nhập giá sản phẩm..." type="number" step="0.01" />
+                                        <span asp-validation-for="Price" class="text-danger small"></span>
+                                        <div class="form-text" id="priceValidation">
+                                            <i class="fas fa-info-circle me-1"></i>
+                                            Giá phải là số dương
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <label asp-for="Description" class="form-label fw-bold">
+                                            <i class="fas fa-align-left me-1 text-primary"></i>
+                                            Mô tả
+                                        </label>
+                                        <textarea asp-for="Description" class="form-control"
+                                                  placeholder="Nhập mô tả sản phẩm..." rows="4"></textarea>
+                                        <span asp-validation-for="Description" class="text-danger small"></span>
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <label asp-for="CategoryId" class="form-label fw-bold">
+                                            <i class="fas fa-tag me-1 text-primary"></i>
+                                            Danh mục <span class="text-danger">*</span>
+                                        </label>
+                                        <select asp-for="CategoryId" asp-items="ViewBag.Categories" class="form-control form-control-lg">
+                                            <option value="">Chọn danh mục</option>
+                                        </select>
+                                        <span asp-validation-for="CategoryId" class="text-danger small"></span>
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <label asp-for="ImageUrl" class="form-label fw-bold">
+                                            <i class="fas fa-image me-1 text-primary"></i>
+                                            Hình ảnh
+                                        </label>
+                                        <input type="file" name="imageUrl" class="form-control" accept="image/jpeg,image/png,image/gif" id="imageInput" />
+                                        <span class="text-danger small" id="imageValidation"></span>
+                                        <div class="mt-2">
+                                            <img id="previewImage" src="@(string.IsNullOrEmpty(Model.ImageUrl) ? "/images/placeholder.png" : Model.ImageUrl)" alt="Preview" style="max-width: 200px;" />
+                                        </div>
+                                    </div>
+
+                                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                        <a asp-action="Index" class="btn btn-outline-secondary btn-lg me-2">
+                                            <i class="fas fa-arrow-left me-1"></i>
+                                            Quay lại
+                                        </a>
+                                        <button type="submit" class="btn btn-warning btn-lg">
+                                            <i class="fas fa-save me-1"></i>
+                                            Cập nhật
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="card mt-4 border-info">
+                            <div class="card-header bg-light">
+                                <h6 class="mb-0 text-info">
+                                    <i class="fas fa-history me-1"></i>
+                                    Thông tin Sản phẩm
+                                </h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <small class="text-muted">ID:</small>
+                                        <p class="mb-2"><strong>@Model.Id</strong></p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <small class="text-muted">Tên hiện tại:</small>
+                                        <p class="mb-2"><strong>@Model.Name</strong></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="form-group">
-        <label asp-for="Price"></label>
-        <input asp-for="Price" class="form-control" />
-        <span asp-validation-for="Price" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Description"></label>
-        <textarea asp-for="Description" class="form-control"></textarea>
-        <span asp-validation-for="Description" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="CategoryId">Category</label>
-        <select asp-for="CategoryId" asp-items="@ViewBag.Categories" class="form-control"></select>
-    </div>
-    <div class="form-group">
-        <label asp-for="ImageUrl">Product Image</label>
-        <input type="file" asp-for="ImageUrl" class="form-control" id="imageInput" />
-    </div>
-    <div class="form-group">
-        <input type="submit" value="Save" class="btn btn-primary" />
-    </div>
-</form>
-<div class="col-8">
-    <img src="@Model.ImageUrl" alt="Product Image" style="max-width:200px;" id="previewImage" />
 </div>
+
+<style>
+    .nav-link {
+        transition: all 0.3s ease;
+        border-radius: 0.25rem;
+        margin-bottom: 0.25rem;
+    }
+
+        .nav-link:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white !important;
+        }
+
+        .nav-link.active {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white !important;
+        }
+
+    .card {
+        border: none;
+        box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+        transition: all 0.3s ease;
+    }
+
+    .form-control:focus {
+        border-color: #ffc107;
+        box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.25);
+    }
+
+    .bg-dark {
+        background-color: #2c3e50 !important;
+    }
+
+    .breadcrumb-item + .breadcrumb-item::before {
+        content: "›";
+        font-weight: bold;
+    }
+</style>
+
 <script>
-    document.querySelectorAll('input[type="file"]').forEach(input => {
-        input.addEventListener('change', function (event) {
+    document.addEventListener('DOMContentLoaded', function () {
+        const nameInput = document.getElementById('Name');
+        if (nameInput) {
+            nameInput.focus();
+            nameInput.select();
+        }
+
+        nameInput.addEventListener('input', function () {
+            const value = this.value.trim();
+            const formText = document.getElementById('nameValidation');
+            if (value.length < 2) {
+                formText.innerHTML = '<i class="fas fa-exclamation-triangle me-1"></i>Tên sản phẩm phải có ít nhất 2 ký tự';
+                formText.className = 'form-text text-warning';
+            } else if (value.length > 100) {
+                formText.innerHTML = '<i class="fas fa-exclamation-triangle me-1"></i>Tên sản phẩm không được quá 100 ký tự';
+                formText.className = 'form-text text-danger';
+            } else {
+                formText.innerHTML = '<i class="fas fa-check-circle me-1"></i>Tên sản phẩm hợp lệ';
+                formText.className = 'form-text text-success';
+            }
+        });
+
+        const priceInput = document.querySelector('input[asp-for="Price"]');
+        priceInput.addEventListener('input', function () {
+            const value = parseFloat(this.value);
+            const formText = document.getElementById('priceValidation');
+            if (isNaN(value) || value <= 0) {
+                formText.innerHTML = '<i class="fas fa-exclamation-triangle me-1"></i>Giá phải là số dương';
+                formText.className = 'form-text text-warning';
+            } else {
+                formText.innerHTML = '<i class="fas fa-check-circle me-1"></i>Giá hợp lệ';
+                formText.className = 'form-text text-success';
+            }
+        });
+
+        const imageInput = document.getElementById('imageInput');
+        const previewImage = document.getElementById('previewImage');
+        const imageValidation = document.getElementById('imageValidation');
+        imageInput.addEventListener('change', function (event) {
             const file = event.target.files[0];
             if (file) {
+                if (file.size > 5 * 1024 * 1024) {
+                    imageValidation.innerHTML = '<i class="fas fa-exclamation-triangle me-1"></i>Hình ảnh quá lớn, tối đa 5MB';
+                    imageInput.value = '';
+                    previewImage.src = '@(string.IsNullOrEmpty(Model.ImageUrl) ? "/images/placeholder.png" : Model.ImageUrl)';
+                    return;
+                }
+                const allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+                if (!allowedTypes.includes(file.type)) {
+                    imageValidation.innerHTML = '<i class="fas fa-exclamation-triangle me-1"></i>Chỉ chấp nhận file .jpg, .png, .gif';
+                    imageInput.value = '';
+                    previewImage.src = '@(string.IsNullOrEmpty(Model.ImageUrl) ? "/images/placeholder.png" : Model.ImageUrl)';
+                    return;
+                }
                 const reader = new FileReader();
                 reader.onload = function (e) {
-                    const img = document.getElementById("previewImage");
-                    img.src = e.target.result;
+                    previewImage.src = e.target.result;
+                    imageValidation.innerHTML = '';
                 };
                 reader.readAsDataURL(file);
             }
         });
     });
 </script>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

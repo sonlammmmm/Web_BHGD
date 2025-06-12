@@ -34,35 +34,91 @@ namespace Web_BHGD.Areas.Admin.Controllers
         }
         // Xử lý thêm sản phẩm mới
         [HttpPost]
-        public async Task<IActionResult> Add(Product product, IFormFile
-        imageUrl)
+        public async Task<IActionResult> Add(Product product, IFormFile imageUrl)
         {
-            if (ModelState.IsValid)
-            {
-                if (imageUrl != null)
-                {
-                    // Lưu hình ảnh đại diện tham khảo bài 02 hàm SaveImage
-                    product.ImageUrl = await SaveImage(imageUrl);
-                }
-                await _productRepository.AddAsync(product);
-                return RedirectToAction(nameof(Index));
-            }
-            // Nếu ModelState không hợp lệ, hiển thị form với dữ liệu đã nhập
+            // Khai báo categories một lần ở đầu phương thức
             var categories = await _categoryRepository.GetAllAsync();
+
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    // Kiểm tra danh mục tồn tại
+                    var category = await _categoryRepository.GetByIdAsync(product.CategoryId);
+                    if (category == null)
+                    {
+                        ModelState.AddModelError("CategoryId", "Danh mục không tồn tại");
+                        ViewBag.Categories = new SelectList(categories, "Id", "Name");
+                        return View(product);
+                    }
+
+                    if (imageUrl != null)
+                    {
+                        product.ImageUrl = await SaveImage(imageUrl);
+                    }
+                    await _productRepository.AddAsync(product);
+                    return RedirectToAction(nameof(Index));
+                }
+            }
+            catch (InvalidOperationException ex)
+            {
+                ModelState.AddModelError("", ex.Message);
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", "Lỗi khi thêm sản phẩm: " + ex.Message);
+            }
+
+            // Sử dụng lại categories đã khai báo
             ViewBag.Categories = new SelectList(categories, "Id", "Name");
             return View(product);
         }
-        // Viết thêm hàm SaveImage (tham khảo bài 02)
+
         private async Task<string> SaveImage(IFormFile image)
         {
-            //Thay đổi đường dẫn theo cấu hình của bạn
-            var savePath = Path.Combine("wwwroot/images", image.FileName);
-            using (var fileStream = new FileStream(savePath, FileMode.Create))
+            if (image == null || image.Length == 0)
             {
-                await image.CopyToAsync(fileStream);
+                return null; // Không có hình ảnh, trả về null
             }
-            return "/images/" + image.FileName; // Trả về đường dẫn tương đối
+
+            // Kiểm tra định dạng file
+            var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif" };
+            var extension = Path.GetExtension(image.FileName).ToLowerInvariant();
+            if (!allowedExtensions.Contains(extension))
+            {
+                throw new InvalidOperationException("Chỉ chấp nhận file hình ảnh (.jpg, .jpeg, .png, .gif)");
+            }
+
+            // Kiểm tra kích thước file (giới hạn 5MB)
+            if (image.Length > 5 * 1024 * 1024)
+            {
+                throw new InvalidOperationException("Hình ảnh quá lớn, tối đa 5MB");
+            }
+
+            // Tạo tên file duy nhất để tránh trùng lặp
+            var fileName = $"{Guid.NewGuid()}{extension}";
+            var savePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", fileName);
+
+            // Đảm bảo thư mục tồn tại
+            try
+            {
+                Directory.CreateDirectory(Path.GetDirectoryName(savePath));
+                using (var fileStream = new FileStream(savePath, FileMode.Create))
+                {
+                    await image.CopyToAsync(fileStream);
+                }
+                return "/images/" + fileName;
+            }
+            catch (IOException ex)
+            {
+                throw new InvalidOperationException("Lỗi khi lưu hình ảnh: " + ex.Message, ex);
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                throw new InvalidOperationException("Không có quyền ghi vào thư mục images: " + ex.Message, ex);
+            }
         }
+
         // Hiển thị thông tin chi tiết sản phẩm
         public async Task<IActionResult> Display(int id)
         {
@@ -88,43 +144,72 @@ namespace Web_BHGD.Areas.Admin.Controllers
         }
         // Xử lý cập nhật sản phẩm
         [HttpPost]
-        public async Task<IActionResult> Update(int id, Product product,
-        IFormFile imageUrl)
+        [HttpPost]
+        public async Task<IActionResult> Update(int id, Product product, IFormFile imageUrl)
         {
-            ModelState.Remove("ImageUrl"); // Loại bỏ xác thực ModelState choImageUrl
-
+            ModelState.Remove("ImageUrl"); // Loại bỏ xác thực cho ImageUrl
             if (id != product.Id)
             {
                 return NotFound();
             }
-            if (ModelState.IsValid)
-            {
-                var existingProduct = await
-                _productRepository.GetByIdAsync(id); // Giả định có phương thức GetByIdAsync
-                                                     // Giữ nguyên thông tin hình ảnh nếu không có hình mới được  tải lên
 
-                if (imageUrl == null)
-                {
-                    product.ImageUrl = existingProduct.ImageUrl;
-                }
-                else
-                {
-                    // Lưu hình ảnh mới
-                    product.ImageUrl = await SaveImage(imageUrl);
-                }
-                // Cập nhật các thông tin khác của sản phẩm
-                existingProduct.Name = product.Name;
-                existingProduct.Price = product.Price;
-                existingProduct.Description = product.Description;
-                existingProduct.CategoryId = product.CategoryId;
-                existingProduct.ImageUrl = product.ImageUrl;
-                await _productRepository.UpdateAsync(existingProduct);
-                return RedirectToAction(nameof(Index));
-            }
+            // Khai báo categories một lần ở đầu phương thức
             var categories = await _categoryRepository.GetAllAsync();
-            ViewBag.Categories = new SelectList(categories, "Id", "Name");
+
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var existingProduct = await _productRepository.GetByIdAsync(id);
+                    if (existingProduct == null)
+                    {
+                        return NotFound();
+                    }
+
+                    // Kiểm tra danh mục tồn tại
+                    var category = await _categoryRepository.GetByIdAsync(product.CategoryId);
+                    if (category == null)
+                    {
+                        ModelState.AddModelError("CategoryId", "Danh mục không tồn tại");
+                        ViewBag.Categories = new SelectList(categories, "Id", "Name", product.CategoryId);
+                        return View(product);
+                    }
+
+                    // Giữ nguyên ImageUrl nếu không có hình ảnh mới
+                    if (imageUrl == null)
+                    {
+                        product.ImageUrl = existingProduct.ImageUrl;
+                    }
+                    else
+                    {
+                        product.ImageUrl = await SaveImage(imageUrl);
+                    }
+
+                    // Cập nhật thông tin sản phẩm
+                    existingProduct.Name = product.Name;
+                    existingProduct.Price = product.Price;
+                    existingProduct.Description = product.Description;
+                    existingProduct.CategoryId = product.CategoryId;
+                    existingProduct.ImageUrl = product.ImageUrl;
+
+                    await _productRepository.UpdateAsync(existingProduct);
+                    return RedirectToAction(nameof(Index));
+                }
+            }
+            catch (InvalidOperationException ex)
+            {
+                ModelState.AddModelError("", ex.Message);
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", "Lỗi khi cập nhật sản phẩm: " + ex.Message);
+            }
+
+            // Sử dụng lại categories đã khai báo
+            ViewBag.Categories = new SelectList(categories, "Id", "Name", product.CategoryId);
             return View(product);
         }
+
         // Hiển thị form xác nhận xóa sản phẩm
         public async Task<IActionResult> Delete(int id)
         {

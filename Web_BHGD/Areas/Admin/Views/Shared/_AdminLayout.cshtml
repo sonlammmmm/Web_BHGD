@@ -5,86 +5,86 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Admin Panel</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/Web_BHGD.styles.css" asp-append-version="true" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f8f9fa;
-        }
-
-        .navbar-brand {
-            font-weight: bold;
-        }
-
-        .navbar {
-            box-shadow: 0 2px 4px rgba(0,0,0,.1);
-        }
-
-        .footer {
-            background-color: #343a40;
-            color: white;
-            padding: 20px 0;
-            margin-top: auto;
-        }
-
-        .min-vh-100 {
-            min-height: 100vh !important;
-        }
-    </style>
 </head>
-<body class="d-flex flex-column min-vh-100">
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="Admin" asp-controller="Home" asp-action="Index">
-                    <i class="fas fa-cog me-2"></i>
-                    Admin Panel
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="Admin" asp-controller="Home" asp-action="Index">
-                                <i class="fas fa-home me-1"></i>
-                                Dashboard
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="Admin" asp-controller="Product" asp-action="Index">
-                                <i class="fas fa-box me-1"></i>
-                                Sản phẩm
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="Admin" asp-controller="Categories" asp-action="Index">
-                                <i class="fas fa-tags me-1"></i>
-                                Danh mục
-                            </a>
-                        </li>
-                    </ul>
-                    <partial name="_LoginPartial" />
+<body>
+    <main>
+        <div class="container-fluid">
+            <div class="row">
+                <!-- Sidebar -->
+                <div class="col-md-3 col-lg-2 px-0">
+                    <div class="bg-dark min-vh-100">
+                        <div class="p-3">
+                            <h5 class="text-white mb-4">
+                                <i class="fas fa-user-shield me-2"></i>
+                                Admin Panel
+                            </h5>
+
+                            <nav class="nav flex-column">
+                                <a class="nav-link text-white-50" asp-controller="Home" asp-action="Index">
+                                    <i class="fas fa-tachometer-alt me-2"></i>
+                                    Dashboard
+                                </a>
+
+                                <hr class="text-white-50">
+
+                                <h6 class="text-white-50 text-uppercase small mb-3">Quản lý</h6>
+
+                                <a class="nav-link text-white-50" asp-controller="Product" asp-action="Index">
+                                    <i class="fas fa-box me-2"></i>
+                                    Sản phẩm
+                                    <span class="badge bg-secondary ms-auto">Products</span>
+                                </a>
+
+                                <a class="nav-link text-white-50" asp-controller="Categories" asp-action="Index">
+                                    <i class="fas fa-tags me-2"></i>
+                                    Danh mục
+                                    <span class="badge bg-secondary ms-auto">Categories</span>
+                                </a>
+
+                                <hr class="text-white-50">
+
+                                <h6 class="text-white-50 text-uppercase small mb-3">Hệ thống</h6>
+
+                                <a class="nav-link text-white-50" href="#" id="users-link">
+                                    <i class="fas fa-users me-2"></i>
+                                    Người dùng
+                                    <small class="text-muted d-block">Sắp có</small>
+                                </a>
+
+                                <a class="nav-link text-white-50" href="#" id="orders-link">
+                                    <i class="fas fa-shopping-cart me-2"></i>
+                                    Đơn hàng
+                                    <small class="text-muted d-block">Sắp có</small>
+                                </a>
+
+                                <a class="nav-link text-white-50" href="#" id="reports-link">
+                                    <i class="fas fa-chart-bar me-2"></i>
+                                    Báo cáo
+                                    <small class="text-muted d-block">Sắp có</small>
+                                </a>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Content -->
+                <div class="col-md-9 col-lg-10">
+                    @RenderBody()
                 </div>
             </div>
-        </nav>
-    </header>
-
-    <main role="main" class="flex-grow-1">
-        @RenderBody()
+        </div>
     </main>
 
-    <footer class="footer">
+    <footer class="border-top footer text-muted">
         <div class="container">
-            <div class="row">
+            <div class="row py-3">
                 <div class="col-md-6">
-                    <span>&copy; 2024 - Admin Panel - <a href="#" class="text-light">Privacy</a></span>
+                    © 2024 - Admin Panel - Privacy
                 </div>
-                <div class="col-md-6 text-end">
-                    <span class="text-muted">Powered by ASP.NET Core</span>
+                <div class="col-md-6 text-md-end">
+                    Powered by ASP.NET Core
                 </div>
             </div>
         </div>

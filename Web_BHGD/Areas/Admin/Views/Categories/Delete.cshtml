@@ -1,6 +1,6 @@
-﻿@model Web_BHGD.Models.Product
+﻿@model Web_BHGD.Models.Category
 @{
-    ViewData["Title"] = "Xóa Sản phẩm";
+    ViewData["Title"] = "Xóa Danh mục";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
@@ -19,8 +19,8 @@
                             </a>
                         </li>
                         <li class="breadcrumb-item">
-                            <a asp-controller="Product" asp-action="Index" class="text-decoration-none">
-                                Sản phẩm
+                            <a asp-controller="Categories" asp-action="Index" class="text-decoration-none">
+                                Danh mục
                             </a>
                         </li>
                         <li class="breadcrumb-item active" aria-current="page">Xóa</li>
@@ -32,9 +32,9 @@
                     <div>
                         <h1 class="h3 mb-0">
                             <i class="fas fa-trash-alt me-2 text-danger"></i>
-                            Xóa Sản phẩm
+                            Xóa Danh mục
                         </h1>
-                        <p class="text-muted mb-0">Xác nhận xóa sản phẩm khỏi hệ thống</p>
+                        <p class="text-muted mb-0">Xác nhận xóa danh mục khỏi hệ thống</p>
                     </div>
                 </div>
 
@@ -72,7 +72,7 @@
                                     <p class="text-muted">Hành động này không thể hoàn tác!</p>
                                 </div>
 
-                                <!-- Product Info -->
+                                <!-- Category Info -->
                                 <div class="bg-light rounded p-3 mb-4">
                                     <div class="row">
                                         <div class="col-4">
@@ -80,12 +80,8 @@
                                             <p class="mb-0 fw-bold">#@Model.Id</p>
                                         </div>
                                         <div class="col-8">
-                                            <small class="text-muted">Tên sản phẩm:</small>
+                                            <small class="text-muted">Tên danh mục:</small>
                                             <p class="mb-0 fw-bold">@Model.Name</p>
-                                        </div>
-                                        <div class="col-12 mt-2">
-                                            <small class="text-muted">Hình ảnh:</small>
-                                            <p class="mb-0"><img src="@Model.ImageUrl" alt="Product Image" style="max-width: 100px;" /></p>
                                         </div>
                                     </div>
                                 </div>
@@ -99,7 +95,8 @@
                                         <div class="flex-grow-1 ms-2">
                                             <strong>Lưu ý quan trọng:</strong>
                                             <ul class="mb-0 mt-2">
-                                                <li>Sản phẩm sẽ bị xóa vĩnh viễn khỏi hệ thống</li>
+                                                <li>Danh mục sẽ bị xóa vĩnh viễn khỏi hệ thống</li>
+                                                <li>Không thể xóa nếu còn sản phẩm thuộc danh mục này</li>
                                                 <li>Hành động này không thể hoàn tác</li>
                                             </ul>
                                         </div>
@@ -131,7 +128,7 @@
                                     Bảo vệ Dữ liệu
                                 </h6>
                                 <p class="mb-0 small text-muted">
-                                    Hệ thống sẽ kiểm tra và ngăn chặn việc xóa sản phẩm nếu có dữ liệu liên quan (ví dụ: đơn hàng).
+                                    Hệ thống sẽ kiểm tra và ngăn chặn việc xóa danh mục nếu vẫn còn sản phẩm liên quan.
                                     Điều này giúp bảo vệ tính toàn vẹn của dữ liệu.
                                 </p>
                             </div>
@@ -188,11 +185,16 @@
         if (confirmBtn) {
             confirmBtn.addEventListener('click', function(e) {
                 e.preventDefault();
-                const confirmed = confirm('Bạn có thực sự chắc chắn muốn xóa sản phẩm này?\n\nHành động này không thể hoàn tác!');
+
+                // Double confirmation for safety
+                const confirmed = confirm('Bạn có thực sự chắc chắn muốn xóa danh mục này?\n\nHành động này không thể hoàn tác!');
 
                 if (confirmed) {
+                    // Add loading state
                     this.disabled = true;
                     this.innerHTML = '<i class="fas fa-spinner fa-spin me-1"></i>Đang xóa...';
+
+                    // Submit form
                     this.closest('form').submit();
                 } else {
                     this.disabled = false;

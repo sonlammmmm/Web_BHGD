@@ -3,169 +3,105 @@
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 
-<div class="container-fluid">
-    <div class="row">
-        <!-- Sidebar -->
-        <div class="col-md-3 col-lg-2 px-0">
-            <div class="bg-dark min-vh-100">
-                <div class="p-3">
-                    <h5 class="text-white mb-4">
-                        <i class="fas fa-user-shield me-2"></i>
-                        Admin Panel
-                    </h5>
+<div class="p-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h3 mb-0">Dashboard</h1>
+        <div class="text-muted">
+            <i class="fas fa-calendar-alt me-1"></i>
+            @DateTime.Now.ToString("dd/MM/yyyy")
+        </div>
+    </div>
 
-                    <nav class="nav flex-column">
-                        <a class="nav-link text-white-50 active" href="#" id="dashboard-link">
-                            <i class="fas fa-tachometer-alt me-2"></i>
-                            Dashboard
-                        </a>
-
-                        <hr class="text-white-50">
-
-                        <h6 class="text-white-50 text-uppercase small mb-3">Quản lý</h6>
-
-                        <a class="nav-link text-white-50" asp-controller="Product" asp-action="Index">
-                            <i class="fas fa-box me-2"></i>
-                            Sản phẩm
-                            <span class="badge bg-secondary ms-auto">Products</span>
-                        </a>
-
-                        <a class="nav-link text-white-50" asp-controller="Categories" asp-action="Index">
-                            <i class="fas fa-tags me-2"></i>
-                            Danh mục
-                            <span class="badge bg-secondary ms-auto">Categories</span>
-                        </a>
-
-                        <hr class="text-white-50">
-
-                        <h6 class="text-white-50 text-uppercase small mb-3">Hệ thống</h6>
-
-                        <a class="nav-link text-white-50" href="#" id="users-link">
-                            <i class="fas fa-users me-2"></i>
-                            Người dùng
-                            <small class="text-muted d-block">Sắp có</small>
-                        </a>
-
-                        <a class="nav-link text-white-50" href="#" id="orders-link">
-                            <i class="fas fa-shopping-cart me-2"></i>
-                            Đơn hàng
-                            <small class="text-muted d-block">Sắp có</small>
-                        </a>
-
-                        <a class="nav-link text-white-50" href="#" id="reports-link">
-                            <i class="fas fa-chart-bar me-2"></i>
-                            Báo cáo
-                            <small class="text-muted d-block">Sắp có</small>
-                        </a>
-                    </nav>
+    <!-- Dashboard Cards -->
+    <div class="row mb-4">
+        <div class="col-md-6 col-lg-3 mb-3">
+            <div class="card bg-primary text-white">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h6 class="card-title">Sản phẩm</h6>
+                            <h4 class="mb-0">--</h4>
+                            <small>Tổng số sản phẩm</small>
+                        </div>
+                        <div class="align-self-center">
+                            <i class="fas fa-box fa-2x opacity-75"></i>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Main Content -->
-        <div class="col-md-9 col-lg-10">
-            <div class="p-4">
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h1 class="h3 mb-0">Dashboard</h1>
-                    <div class="text-muted">
-                        <i class="fas fa-calendar-alt me-1"></i>
-                        @DateTime.Now.ToString("dd/MM/yyyy")
-                    </div>
-                </div>
-
-                <!-- Dashboard Cards -->
-                <div class="row mb-4">
-                    <div class="col-md-6 col-lg-3 mb-3">
-                        <div class="card bg-primary text-white">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between">
-                                    <div>
-                                        <h6 class="card-title">Sản phẩm</h6>
-                                        <h4 class="mb-0">--</h4>
-                                        <small>Tổng số sản phẩm</small>
-                                    </div>
-                                    <div class="align-self-center">
-                                        <i class="fas fa-box fa-2x opacity-75"></i>
-                                    </div>
-                                </div>
-                            </div>
+        <div class="col-md-6 col-lg-3 mb-3">
+            <div class="card bg-success text-white">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h6 class="card-title">Danh mục</h6>
+                            <h4 class="mb-0">--</h4>
+                            <small>Tổng số danh mục</small>
                         </div>
-                    </div>
-
-                    <div class="col-md-6 col-lg-3 mb-3">
-                        <div class="card bg-success text-white">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between">
-                                    <div>
-                                        <h6 class="card-title">Danh mục</h6>
-                                        <h4 class="mb-0">--</h4>
-                                        <small>Tổng số danh mục</small>
-                                    </div>
-                                    <div class="align-self-center">
-                                        <i class="fas fa-tags fa-2x opacity-75"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 col-lg-3 mb-3">
-                        <div class="card bg-info text-white">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between">
-                                    <div>
-                                        <h6 class="card-title">Đơn hàng</h6>
-                                        <h4 class="mb-0">--</h4>
-                                        <small>Sắp có</small>
-                                    </div>
-                                    <div class="align-self-center">
-                                        <i class="fas fa-shopping-cart fa-2x opacity-75"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 col-lg-3 mb-3">
-                        <div class="card bg-warning text-white">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between">
-                                    <div>
-                                        <h6 class="card-title">Người dùng</h6>
-                                        <h4 class="mb-0">--</h4>
-                                        <small>Sắp có</small>
-                                    </div>
-                                    <div class="align-self-center">
-                                        <i class="fas fa-users fa-2x opacity-75"></i>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="align-self-center">
+                            <i class="fas fa-tags fa-2x opacity-75"></i>
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
 
-                <!-- Welcome Message -->
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-body text-center py-5">
-                                <i class="fas fa-rocket fa-3x text-primary mb-3"></i>
-                                <h4>Chào mừng đến với Admin Dashboard!</h4>
-                                <p class="text-muted">
-                                    Đây là khu vực dành cho quản trị viên. Bạn có thể quản lý sản phẩm, danh mục và các chức năng khác từ sidebar bên trái.
-                                </p>
-                                <div class="mt-4">
-                                    <a asp-controller="Product" asp-action="Index" class="btn btn-primary me-2">
-                                        <i class="fas fa-box me-1"></i>
-                                        Quản lý Sản phẩm
-                                    </a>
-                                    <a asp-controller="Categories" asp-action="Index" class="btn btn-outline-primary">
-                                        <i class="fas fa-tags me-1"></i>
-                                        Quản lý Danh mục
-                                    </a>
-                                </div>
-                            </div>
+        <div class="col-md-6 col-lg-3 mb-3">
+            <div class="card bg-info text-white">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h6 class="card-title">Đơn hàng</h6>
+                            <h4 class="mb-0">--</h4>
+                            <small>Sắp có</small>
                         </div>
+                        <div class="align-self-center">
+                            <i class="fas fa-shopping-cart fa-2x opacity-75"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3 mb-3">
+            <div class="card bg-warning text-white">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h6 class="card-title">Người dùng</h6>
+                            <h4 class="mb-0">--</h4>
+                            <small>Sắp có</small>
+                        </div>
+                        <div class="align-self-center">
+                            <i class="fas fa-users fa-2x opacity-75"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Welcome Message -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body text-center py-5">
+                    <i class="fas fa-rocket fa-3x text-primary mb-3"></i>
+                    <h4>Chào mừng đến với Admin Dashboard!</h4>
+                    <p class="text-muted">
+                        Đây là khu vực dành cho quản trị viên. Bạn có thể quản lý sản phẩm, danh mục và các chức năng khác từ sidebar bên trái.
+                    </p>
+                    <div class="mt-4">
+                        <a asp-controller="Product" asp-action="Index" class="btn btn-primary me-2">
+                            <i class="fas fa-box me-1"></i>
+                            Quản lý Sản phẩm
+                        </a>
+                        <a asp-controller="Categories" asp-action="Index" class="btn btn-outline-primary">
+                            <i class="fas fa-tags me-1"></i>
+                            Quản lý Danh mục
+                        </a>
                     </div>
                 </div>
             </div>
@@ -180,15 +116,15 @@
         margin-bottom: 0.25rem;
     }
 
-    .nav-link:hover {
-        background-color: rgba(255, 255, 255, 0.1);
-        color: white !important;
-    }
+        .nav-link:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white !important;
+        }
 
-    .nav-link.active {
-        background-color: rgba(255, 255, 255, 0.2);
-        color: white !important;
-    }
+        .nav-link.active {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white !important;
+        }
 
     .card {
         transition: transform 0.2s ease-in-out;
@@ -196,10 +132,10 @@
         box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
     }
 
-    .card:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-    }
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+        }
 
     .bg-dark {
         background-color: #2c3e50 !important;
