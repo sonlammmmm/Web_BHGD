@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "5stJ12uPMQiofvKdiIavBPPsMmaTsaSrXh/XQh66/jU=",
+  "Hash": "6ZXmUMn78MqRQ+uISog/AdxHKrXK92bKzitkXbHG014=",
   "Source": "Web_BHGD",
   "BasePath": "_content/Web_BHGD",
   "Mode": "Default",
@@ -1231,6 +1231,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\favicon.ico"
+    },
+    {
+      "Identity": "C:\\Users\\trans\\OneDrive\\Desktop\\Web_BHGD\\Web_BHGD\\wwwroot\\images\\images (2).jpg",
+      "SourceId": "Web_BHGD",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\trans\\OneDrive\\Desktop\\Web_BHGD\\Web_BHGD\\wwwroot\\",
+      "BasePath": "_content/Web_BHGD",
+      "RelativePath": "images/images (2).jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\images (2).jpg"
     },
     {
       "Identity": "C:\\Users\\trans\\OneDrive\\Desktop\\Web_BHGD\\Web_BHGD\\wwwroot\\js\\site.js",

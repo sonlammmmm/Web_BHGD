@@ -4,104 +4,78 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Web_BHGD.Controllers
 {
-    public class CategoriesController : Controller
+    public class CategoryController : Controller
     {
         private readonly IProductRepository _productRepository;
         private readonly ICategoryRepository _categoryRepository;
 
-        public CategoriesController(IProductRepository productRepository, ICategoryRepository categoryRepository)
+        public CategoryController(IProductRepository productRepository, ICategoryRepository categoryRepository)
         {
             _productRepository = productRepository;
             _categoryRepository = categoryRepository;
         }
 
-        // Hiển thị danh sách danh mục
+        // Hiển thị danh sách danh mục cho khách hàng
         public async Task<IActionResult> Index()
         {
-            var category = await _categoryRepository.GetAllAsync();
-            return View(category);
+            var categories = await _categoryRepository.GetAllAsync();
+
+            // Tính số lượng sản phẩm cho mỗi danh mục
+            var products = await _productRepository.GetAllAsync();
+            var categoriesWithCount = categories.Select(c => new
+            {
+                Category = c,
+                ProductCount = products.Count(p => p.CategoryId == c.Id)
+            }).ToList();
+
+            ViewBag.CategoriesWithCount = categoriesWithCount;
+            return View(categories);
         }
 
-        // Hiển thị chi tiết danh mục
-        public async Task<IActionResult> Display(int id)
+        // Hiển thị chi tiết danh mục và sản phẩm thuộc danh mục đó
+        public async Task<IActionResult> Details(int id, string sortOrder)
         {
             var category = await _categoryRepository.GetByIdAsync(id);
             if (category == null)
             {
                 return NotFound();
             }
+
+            // Lấy tất cả sản phẩm thuộc danh mục này
+            var allProducts = await _productRepository.GetAllAsync();
+            var products = allProducts.Where(p => p.CategoryId == id);
+
+            // Sắp xếp sản phẩm
+            products = sortOrder switch
+            {
+                "name_desc" => products.OrderByDescending(p => p.Name),
+                "price" => products.OrderBy(p => p.Price),
+                "price_desc" => products.OrderByDescending(p => p.Price),
+                _ => products.OrderBy(p => p.Name),
+            };
+
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.Products = products.ToList();
+
             return View(category);
         }
 
-        // Hiển thị form thêm danh mục
-        public IActionResult Add()
+        // API để lấy danh sách danh mục (dùng cho dropdown, menu, v.v.)
+        [HttpGet]
+        public async Task<IActionResult> GetAllCategories()
         {
-            return View();
+            var categories = await _categoryRepository.GetAllAsync();
+            return Json(categories.Select(c => new {
+                id = c.Id,
+                name = c.Name
+            }));
         }
 
-        // Xử lý thêm danh mục
-        [HttpPost]
-        public async Task<IActionResult> Add(Category category)
+        // Hiển thị menu danh mục (partial view)
+        public async Task<IActionResult> CategoryMenu()
         {
-            if (ModelState.IsValid)
-            {
-                await _categoryRepository.AddAsync(category);
-                return RedirectToAction(nameof(Index));
-            }
-            return View(category);
+            var categories = await _categoryRepository.GetAllAsync();
+            return PartialView("_CategoryMenu", categories);
         }
-
-        // Hiển thị form cập nhật danh mục
-        public async Task<IActionResult> Update(int id)
-        {
-            var category = await _categoryRepository.GetByIdAsync(id);
-            if (category == null)
-            {
-                return NotFound();
-            }
-            return View(category);
-        }
-
-        // Xử lý cập nhật danh mục
-        [HttpPost]
-        public async Task<IActionResult> Update(int id, Category category)
-        {
-            if (id != category.Id)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                await _categoryRepository.UpdateAsync(category);
-                return RedirectToAction(nameof(Index));
-            }
-            return View(category);
-        }
-
-        // Hiển thị form xác nhận xóa danh mục
-        public async Task<IActionResult> Delete(int id)
-        {
-            var category = await _categoryRepository.GetByIdAsync(id);
-            if (category == null)
-            {
-                return NotFound();
-            }
-            return View(category);
-        }
-
-        // Xử lý xóa danh mục
-        [HttpPost, ActionName("DeleteConfirmed")]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var category = await _categoryRepository.GetByIdAsync(id);
-            if (category != null)
-            {
-                await _categoryRepository.DeleteAsync(id);
-            }
-            return RedirectToAction(nameof(Index));
-        }
-
     }
-
 }
