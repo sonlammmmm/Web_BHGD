@@ -26,8 +26,8 @@
     <Folder Include="Controllers\" />
     <Folder Include="Extensions\" />
     <Folder Include="Models\Repositories\" />
-    <Folder Include="Views\Category\" />
     <Folder Include="Views\Product\" />
+    <Folder Include="wwwroot\images\" />
   </ItemGroup>
 
 </Project>

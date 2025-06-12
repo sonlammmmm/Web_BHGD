@@ -3,44 +3,36 @@
   "WorkspaceRootPath": "C:\\Users\\trans\\OneDrive\\Desktop\\Web_BHGD\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A6418685-FD53-4E84-8DFE-508828CF1C98}|Web_BHGD\\Web_BHGD.csproj|c:\\users\\trans\\onedrive\\desktop\\web_bhgd\\web_bhgd\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A6418685-FD53-4E84-8DFE-508828CF1C98}|Web_BHGD\\Web_BHGD.csproj|solutionrelative:web_bhgd\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A6418685-FD53-4E84-8DFE-508828CF1C98}|Web_BHGD\\Web_BHGD.csproj|c:\\users\\trans\\onedrive\\desktop\\web_bhgd\\web_bhgd\\areas\\admin\\controllers\\productcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A6418685-FD53-4E84-8DFE-508828CF1C98}|Web_BHGD\\Web_BHGD.csproj|solutionrelative:web_bhgd\\areas\\admin\\controllers\\productcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A6418685-FD53-4E84-8DFE-508828CF1C98}|Web_BHGD\\Web_BHGD.csproj|c:\\users\\trans\\onedrive\\desktop\\web_bhgd\\web_bhgd\\areas\\admin\\controllers\\productmanagercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A6418685-FD53-4E84-8DFE-508828CF1C98}|Web_BHGD\\Web_BHGD.csproj|solutionrelative:web_bhgd\\areas\\admin\\controllers\\productmanagercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A6418685-FD53-4E84-8DFE-508828CF1C98}|Web_BHGD\\Web_BHGD.csproj|c:\\users\\trans\\onedrive\\desktop\\web_bhgd\\web_bhgd\\areas\\admin\\views\\product\\add.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A6418685-FD53-4E84-8DFE-508828CF1C98}|Web_BHGD\\Web_BHGD.csproj|solutionrelative:web_bhgd\\areas\\admin\\views\\product\\add.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A6418685-FD53-4E84-8DFE-508828CF1C98}|Web_BHGD\\Web_BHGD.csproj|c:\\users\\trans\\onedrive\\desktop\\web_bhgd\\web_bhgd\\views\\_viewstart.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{A6418685-FD53-4E84-8DFE-508828CF1C98}|Web_BHGD\\Web_BHGD.csproj|solutionrelative:web_bhgd\\views\\_viewstart.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A6418685-FD53-4E84-8DFE-508828CF1C98}|Web_BHGD\\Web_BHGD.csproj|c:\\users\\trans\\onedrive\\desktop\\web_bhgd\\web_bhgd\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{A6418685-FD53-4E84-8DFE-508828CF1C98}|Web_BHGD\\Web_BHGD.csproj|solutionrelative:web_bhgd\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{A6418685-FD53-4E84-8DFE-508828CF1C98}|Web_BHGD\\Web_BHGD.csproj|c:\\users\\trans\\onedrive\\desktop\\web_bhgd\\web_bhgd\\areas\\admin\\views\\product\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A6418685-FD53-4E84-8DFE-508828CF1C98}|Web_BHGD\\Web_BHGD.csproj|solutionrelative:web_bhgd\\areas\\admin\\views\\product\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A6418685-FD53-4E84-8DFE-508828CF1C98}|Web_BHGD\\Web_BHGD.csproj|c:\\users\\trans\\onedrive\\desktop\\web_bhgd\\web_bhgd\\views\\product\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{A6418685-FD53-4E84-8DFE-508828CF1C98}|Web_BHGD\\Web_BHGD.csproj|solutionrelative:web_bhgd\\views\\product\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{A6418685-FD53-4E84-8DFE-508828CF1C98}|Web_BHGD\\Web_BHGD.csproj|c:\\users\\trans\\onedrive\\desktop\\web_bhgd\\web_bhgd\\models\\productimage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A6418685-FD53-4E84-8DFE-508828CF1C98}|Web_BHGD\\Web_BHGD.csproj|solutionrelative:web_bhgd\\models\\productimage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A6418685-FD53-4E84-8DFE-508828CF1C98}|Web_BHGD\\Web_BHGD.csproj|c:\\users\\trans\\onedrive\\desktop\\web_bhgd\\web_bhgd\\areas\\admin\\views\\productmanager\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{A6418685-FD53-4E84-8DFE-508828CF1C98}|Web_BHGD\\Web_BHGD.csproj|solutionrelative:web_bhgd\\areas\\admin\\views\\productmanager\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{A6418685-FD53-4E84-8DFE-508828CF1C98}|Web_BHGD\\Web_BHGD.csproj|c:\\users\\trans\\onedrive\\desktop\\web_bhgd\\web_bhgd\\models\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A6418685-FD53-4E84-8DFE-508828CF1C98}|Web_BHGD\\Web_BHGD.csproj|solutionrelative:web_bhgd\\models\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A6418685-FD53-4E84-8DFE-508828CF1C98}|Web_BHGD\\Web_BHGD.csproj|c:\\users\\trans\\onedrive\\desktop\\web_bhgd\\web_bhgd\\areas\\admin\\views\\productmanager\\add.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{A6418685-FD53-4E84-8DFE-508828CF1C98}|Web_BHGD\\Web_BHGD.csproj|solutionrelative:web_bhgd\\areas\\admin\\views\\productmanager\\add.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{A6418685-FD53-4E84-8DFE-508828CF1C98}|Web_BHGD\\Web_BHGD.csproj|c:\\users\\trans\\onedrive\\desktop\\web_bhgd\\web_bhgd\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A6418685-FD53-4E84-8DFE-508828CF1C98}|Web_BHGD\\Web_BHGD.csproj|solutionrelative:web_bhgd\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A6418685-FD53-4E84-8DFE-508828CF1C98}|Web_BHGD\\Web_BHGD.csproj|c:\\users\\trans\\onedrive\\desktop\\web_bhgd\\web_bhgd\\areas\\admin\\controllers\\categorymanagercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A6418685-FD53-4E84-8DFE-508828CF1C98}|Web_BHGD\\Web_BHGD.csproj|solutionrelative:web_bhgd\\areas\\admin\\controllers\\categorymanagercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A6418685-FD53-4E84-8DFE-508828CF1C98}|Web_BHGD\\Web_BHGD.csproj|c:\\users\\trans\\onedrive\\desktop\\web_bhgd\\web_bhgd\\controllers\\categorycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A6418685-FD53-4E84-8DFE-508828CF1C98}|Web_BHGD\\Web_BHGD.csproj|solutionrelative:web_bhgd\\controllers\\categorycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A6418685-FD53-4E84-8DFE-508828CF1C98}|Web_BHGD\\Web_BHGD.csproj|c:\\users\\trans\\onedrive\\desktop\\web_bhgd\\web_bhgd\\controllers\\productcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A6418685-FD53-4E84-8DFE-508828CF1C98}|Web_BHGD\\Web_BHGD.csproj|solutionrelative:web_bhgd\\controllers\\productcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A6418685-FD53-4E84-8DFE-508828CF1C98}|Web_BHGD\\Web_BHGD.csproj|c:\\users\\trans\\onedrive\\desktop\\web_bhgd\\web_bhgd\\models\\product.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A6418685-FD53-4E84-8DFE-508828CF1C98}|Web_BHGD\\Web_BHGD.csproj|solutionrelative:web_bhgd\\models\\product.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -50,7 +42,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Bookmark",
@@ -74,124 +66,98 @@
               "RelativeToolTip": "Web_BHGD\\Views\\_ViewStart.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-06-11T08:59:07.032Z",
+              "WhenOpened": "2025-06-11T10:36:51.616Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Add.cshtml",
+              "DocumentMoniker": "C:\\Users\\trans\\OneDrive\\Desktop\\Web_BHGD\\Web_BHGD\\Areas\\Admin\\Views\\Product\\Add.cshtml",
+              "RelativeDocumentMoniker": "Web_BHGD\\Areas\\Admin\\Views\\Product\\Add.cshtml",
+              "ToolTip": "C:\\Users\\trans\\OneDrive\\Desktop\\Web_BHGD\\Web_BHGD\\Areas\\Admin\\Views\\Product\\Add.cshtml",
+              "RelativeToolTip": "Web_BHGD\\Areas\\Admin\\Views\\Product\\Add.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-06-11T10:15:37.079Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "ProductController.cs",
+              "DocumentMoniker": "C:\\Users\\trans\\OneDrive\\Desktop\\Web_BHGD\\Web_BHGD\\Areas\\Admin\\Controllers\\ProductController.cs",
+              "RelativeDocumentMoniker": "Web_BHGD\\Areas\\Admin\\Controllers\\ProductController.cs",
+              "ToolTip": "C:\\Users\\trans\\OneDrive\\Desktop\\Web_BHGD\\Web_BHGD\\Areas\\Admin\\Controllers\\ProductController.cs",
+              "RelativeToolTip": "Web_BHGD\\Areas\\Admin\\Controllers\\ProductController.cs",
+              "ViewState": "AgIAAHwAAAAAAAAAAAAowJEAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-11T10:10:29.934Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
               "Title": "Index.cshtml",
-              "DocumentMoniker": "C:\\Users\\trans\\OneDrive\\Desktop\\Web_BHGD\\Web_BHGD\\Views\\Home\\Index.cshtml",
-              "RelativeDocumentMoniker": "Web_BHGD\\Views\\Home\\Index.cshtml",
-              "ToolTip": "C:\\Users\\trans\\OneDrive\\Desktop\\Web_BHGD\\Web_BHGD\\Views\\Home\\Index.cshtml",
-              "RelativeToolTip": "Web_BHGD\\Views\\Home\\Index.cshtml",
-              "ViewState": "AgIAABUAAAAAAAAAAAAAACkAAAAAAAAAAAAAAA==",
+              "DocumentMoniker": "C:\\Users\\trans\\OneDrive\\Desktop\\Web_BHGD\\Web_BHGD\\Areas\\Admin\\Views\\Product\\Index.cshtml",
+              "RelativeDocumentMoniker": "Web_BHGD\\Areas\\Admin\\Views\\Product\\Index.cshtml",
+              "ToolTip": "C:\\Users\\trans\\OneDrive\\Desktop\\Web_BHGD\\Web_BHGD\\Areas\\Admin\\Views\\Product\\Index.cshtml",
+              "RelativeToolTip": "Web_BHGD\\Areas\\Admin\\Views\\Product\\Index.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAA0AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-06-11T08:57:14.61Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "C:\\Users\\trans\\OneDrive\\Desktop\\Web_BHGD\\Web_BHGD\\Views\\Product\\Index.cshtml",
-              "RelativeDocumentMoniker": "Web_BHGD\\Views\\Product\\Index.cshtml",
-              "ToolTip": "C:\\Users\\trans\\OneDrive\\Desktop\\Web_BHGD\\Web_BHGD\\Views\\Product\\Index.cshtml",
-              "RelativeToolTip": "Web_BHGD\\Views\\Product\\Index.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-06-11T08:57:10.618Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\trans\\OneDrive\\Desktop\\Web_BHGD\\Web_BHGD\\Program.cs",
-              "RelativeDocumentMoniker": "Web_BHGD\\Program.cs",
-              "ToolTip": "C:\\Users\\trans\\OneDrive\\Desktop\\Web_BHGD\\Web_BHGD\\Program.cs",
-              "RelativeToolTip": "Web_BHGD\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAABBAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-11T08:56:05.06Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "C:\\Users\\trans\\OneDrive\\Desktop\\Web_BHGD\\Web_BHGD\\Areas\\Admin\\Views\\ProductManager\\Index.cshtml",
-              "RelativeDocumentMoniker": "Web_BHGD\\Areas\\Admin\\Views\\ProductManager\\Index.cshtml",
-              "ToolTip": "C:\\Users\\trans\\OneDrive\\Desktop\\Web_BHGD\\Web_BHGD\\Areas\\Admin\\Views\\ProductManager\\Index.cshtml",
-              "RelativeToolTip": "Web_BHGD\\Areas\\Admin\\Views\\ProductManager\\Index.cshtml",
-              "ViewState": "AgIAAA8AAAAAAAAAAAAAABkAAAAnAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-06-11T08:55:45.379Z",
+              "WhenOpened": "2025-06-11T10:36:00.341Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 6,
-              "Title": "Add.cshtml",
-              "DocumentMoniker": "C:\\Users\\trans\\OneDrive\\Desktop\\Web_BHGD\\Web_BHGD\\Areas\\Admin\\Views\\ProductManager\\Add.cshtml",
-              "RelativeDocumentMoniker": "Web_BHGD\\Areas\\Admin\\Views\\ProductManager\\Add.cshtml",
-              "ToolTip": "C:\\Users\\trans\\OneDrive\\Desktop\\Web_BHGD\\Web_BHGD\\Areas\\Admin\\Views\\ProductManager\\Add.cshtml",
-              "RelativeToolTip": "Web_BHGD\\Areas\\Admin\\Views\\ProductManager\\Add.cshtml",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAABAAAAAnAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-06-11T08:55:21.743Z",
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\trans\\OneDrive\\Desktop\\Web_BHGD\\Web_BHGD\\Program.cs",
+              "RelativeDocumentMoniker": "Web_BHGD\\Program.cs",
+              "ToolTip": "C:\\Users\\trans\\OneDrive\\Desktop\\Web_BHGD\\Web_BHGD\\Program.cs",
+              "RelativeToolTip": "Web_BHGD\\Program.cs",
+              "ViewState": "AgIAADIAAAAAAAAAAAAAwEEAAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-11T10:23:10.862Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "CategoryController.cs",
-              "DocumentMoniker": "C:\\Users\\trans\\OneDrive\\Desktop\\Web_BHGD\\Web_BHGD\\Controllers\\CategoryController.cs",
-              "RelativeDocumentMoniker": "Web_BHGD\\Controllers\\CategoryController.cs",
-              "ToolTip": "C:\\Users\\trans\\OneDrive\\Desktop\\Web_BHGD\\Web_BHGD\\Controllers\\CategoryController.cs",
-              "RelativeToolTip": "Web_BHGD\\Controllers\\CategoryController.cs",
-              "ViewState": "AgIAAFAAAAAAAAAAAAAuwGgAAAAFAAAAAAAAAA==",
+              "DocumentIndex": 4,
+              "Title": "ProductImage.cs",
+              "DocumentMoniker": "C:\\Users\\trans\\OneDrive\\Desktop\\Web_BHGD\\Web_BHGD\\Models\\ProductImage.cs",
+              "RelativeDocumentMoniker": "Web_BHGD\\Models\\ProductImage.cs",
+              "ToolTip": "C:\\Users\\trans\\OneDrive\\Desktop\\Web_BHGD\\Web_BHGD\\Models\\ProductImage.cs",
+              "RelativeToolTip": "Web_BHGD\\Models\\ProductImage.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAcAAAAWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-11T08:53:19.764Z",
+              "WhenOpened": "2025-06-11T10:13:40.915Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "ApplicationDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\trans\\OneDrive\\Desktop\\Web_BHGD\\Web_BHGD\\Models\\ApplicationDbContext.cs",
+              "RelativeDocumentMoniker": "Web_BHGD\\Models\\ApplicationDbContext.cs",
+              "ToolTip": "C:\\Users\\trans\\OneDrive\\Desktop\\Web_BHGD\\Web_BHGD\\Models\\ApplicationDbContext.cs",
+              "RelativeToolTip": "Web_BHGD\\Models\\ApplicationDbContext.cs",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAowCAAAAAqAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-11T10:24:41.808Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 7,
-              "Title": "CategoryManagerController.cs",
-              "DocumentMoniker": "C:\\Users\\trans\\OneDrive\\Desktop\\Web_BHGD\\Web_BHGD\\Areas\\Admin\\Controllers\\CategoryManagerController.cs",
-              "RelativeDocumentMoniker": "Web_BHGD\\Areas\\Admin\\Controllers\\CategoryManagerController.cs",
-              "ToolTip": "C:\\Users\\trans\\OneDrive\\Desktop\\Web_BHGD\\Web_BHGD\\Areas\\Admin\\Controllers\\CategoryManagerController.cs",
-              "RelativeToolTip": "Web_BHGD\\Areas\\Admin\\Controllers\\CategoryManagerController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAABAAAAAAAAAA==",
+              "Title": "Product.cs",
+              "DocumentMoniker": "C:\\Users\\trans\\OneDrive\\Desktop\\Web_BHGD\\Web_BHGD\\Models\\Product.cs",
+              "RelativeDocumentMoniker": "Web_BHGD\\Models\\Product.cs",
+              "ToolTip": "C:\\Users\\trans\\OneDrive\\Desktop\\Web_BHGD\\Web_BHGD\\Models\\Product.cs",
+              "RelativeToolTip": "Web_BHGD\\Models\\Product.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-11T08:53:11.8Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "ProductManagerController.cs",
-              "DocumentMoniker": "C:\\Users\\trans\\OneDrive\\Desktop\\Web_BHGD\\Web_BHGD\\Areas\\Admin\\Controllers\\ProductManagerController.cs",
-              "RelativeDocumentMoniker": "Web_BHGD\\Areas\\Admin\\Controllers\\ProductManagerController.cs",
-              "ToolTip": "C:\\Users\\trans\\OneDrive\\Desktop\\Web_BHGD\\Web_BHGD\\Areas\\Admin\\Controllers\\ProductManagerController.cs",
-              "RelativeToolTip": "Web_BHGD\\Areas\\Admin\\Controllers\\ProductManagerController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-11T08:52:29.093Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "ProductController.cs",
-              "DocumentMoniker": "C:\\Users\\trans\\OneDrive\\Desktop\\Web_BHGD\\Web_BHGD\\Controllers\\ProductController.cs",
-              "RelativeDocumentMoniker": "Web_BHGD\\Controllers\\ProductController.cs",
-              "ToolTip": "C:\\Users\\trans\\OneDrive\\Desktop\\Web_BHGD\\Web_BHGD\\Controllers\\ProductController.cs",
-              "RelativeToolTip": "Web_BHGD\\Controllers\\ProductController.cs",
-              "ViewState": "AgIAAA0AAAAAAAAAAAAgwAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-11T08:52:27.576Z",
+              "WhenOpened": "2025-06-11T10:13:25.775Z",
               "EditorCaption": ""
             }
           ]

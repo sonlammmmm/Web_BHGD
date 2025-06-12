@@ -18,24 +18,32 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = C:\Users\trans\OneDrive\Desktop\Web_BHGD\Web_BHGD
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Users/trans/OneDrive/Desktop/Web_BHGD/Web_BHGD/Areas/Admin/Views/ProductManager/Add.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcUHJvZHVjdE1hbmFnZXJcQWRkLmNzaHRtbA==
+[C:/Users/trans/OneDrive/Desktop/Web_BHGD/Web_BHGD/Areas/Admin/Views/Categories/Add.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcQ2F0ZWdvcmllc1xBZGQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/trans/OneDrive/Desktop/Web_BHGD/Web_BHGD/Areas/Admin/Views/ProductManager/Delete.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcUHJvZHVjdE1hbmFnZXJcRGVsZXRlLmNzaHRtbA==
+[C:/Users/trans/OneDrive/Desktop/Web_BHGD/Web_BHGD/Areas/Admin/Views/Categories/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcQ2F0ZWdvcmllc1xJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/trans/OneDrive/Desktop/Web_BHGD/Web_BHGD/Areas/Admin/Views/ProductManager/Display.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcUHJvZHVjdE1hbmFnZXJcRGlzcGxheS5jc2h0bWw=
+[C:/Users/trans/OneDrive/Desktop/Web_BHGD/Web_BHGD/Areas/Admin/Views/Product/Add.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcUHJvZHVjdFxBZGQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/trans/OneDrive/Desktop/Web_BHGD/Web_BHGD/Areas/Admin/Views/ProductManager/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcUHJvZHVjdE1hbmFnZXJcSW5kZXguY3NodG1s
+[C:/Users/trans/OneDrive/Desktop/Web_BHGD/Web_BHGD/Areas/Admin/Views/Product/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcUHJvZHVjdFxEZWxldGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/trans/OneDrive/Desktop/Web_BHGD/Web_BHGD/Areas/Admin/Views/ProductManager/Update.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcUHJvZHVjdE1hbmFnZXJcVXBkYXRlLmNzaHRtbA==
+[C:/Users/trans/OneDrive/Desktop/Web_BHGD/Web_BHGD/Areas/Admin/Views/Product/Display.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcUHJvZHVjdFxEaXNwbGF5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/trans/OneDrive/Desktop/Web_BHGD/Web_BHGD/Areas/Admin/Views/Product/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcUHJvZHVjdFxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/trans/OneDrive/Desktop/Web_BHGD/Web_BHGD/Areas/Admin/Views/Product/Update.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcUHJvZHVjdFxVcGRhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/trans/OneDrive/Desktop/Web_BHGD/Web_BHGD/Areas/Identity/Pages/Account/Login.cshtml]
@@ -64,10 +72,6 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/trans/OneDrive/Desktop/Web_BHGD/Web_BHGD/Areas/Identity/Pages/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcX1ZpZXdTdGFydC5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/trans/OneDrive/Desktop/Web_BHGD/Web_BHGD/Views/Category/Manage.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2F0ZWdvcnlcTWFuYWdlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/trans/OneDrive/Desktop/Web_BHGD/Web_BHGD/Views/Home/Index.cshtml]

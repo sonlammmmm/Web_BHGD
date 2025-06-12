@@ -43,6 +43,7 @@ if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Home/Error");
     app.UseHsts();
 }
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 // Đặt trước UseRouting
@@ -56,11 +57,10 @@ app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllerRoute(
     name: "Admin",
-    pattern: "{area:exists}/{controller=ProductManager}/{action=Index}/{id?}");
+    pattern: "{area:exists}/{controller=Product}/{action=Index}/{id?}");
+    endpoints.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 });
-app.MapControllerRoute(
-name: "default",
-pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
-app.UseStaticFiles();

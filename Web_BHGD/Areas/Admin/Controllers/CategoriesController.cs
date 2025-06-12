@@ -19,14 +19,12 @@ namespace Web_BHGD.Areas.Admin.Controllers
             _categoryRepository = categoryRepository;
         }
 
-        // Hiển thị danh sách danh mục
         public async Task<IActionResult> Index()
         {
-            var category = await _categoryRepository.GetAllAsync();
-            return View(category);
+            var categories = await _categoryRepository.GetAllAsync();
+            return View(categories);
         }
 
-        // Hiển thị chi tiết danh mục
         public async Task<IActionResult> Display(int id)
         {
             var category = await _categoryRepository.GetByIdAsync(id);
@@ -37,25 +35,22 @@ namespace Web_BHGD.Areas.Admin.Controllers
             return View(category);
         }
 
-        // Hiển thị form thêm danh mục
         public IActionResult Add()
         {
             return View();
         }
 
-        // Xử lý thêm danh mục
         [HttpPost]
         public async Task<IActionResult> Add(Category category)
         {
             if (ModelState.IsValid)
             {
-                await _categoryRepository.AddAsync(category);
+                await _categoryRepository.AddAsync(category); // Đảm bảo gọi await
                 return RedirectToAction(nameof(Index));
             }
             return View(category);
         }
 
-        // Hiển thị form cập nhật danh mục
         public async Task<IActionResult> Update(int id)
         {
             var category = await _categoryRepository.GetByIdAsync(id);
@@ -66,7 +61,6 @@ namespace Web_BHGD.Areas.Admin.Controllers
             return View(category);
         }
 
-        // Xử lý cập nhật danh mục
         [HttpPost]
         public async Task<IActionResult> Update(int id, Category category)
         {
@@ -74,16 +68,14 @@ namespace Web_BHGD.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-
             if (ModelState.IsValid)
             {
-                await _categoryRepository.UpdateAsync(category);
+                await _categoryRepository.UpdateAsync(category); // Đảm bảo gọi await
                 return RedirectToAction(nameof(Index));
             }
             return View(category);
         }
 
-        // Hiển thị form xác nhận xóa danh mục
         public async Task<IActionResult> Delete(int id)
         {
             var category = await _categoryRepository.GetByIdAsync(id);
@@ -91,18 +83,30 @@ namespace Web_BHGD.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            return View(category);
+            return View(category); // Đảm bảo trả về View(category)
         }
 
-        // Xử lý xóa danh mục
         [HttpPost, ActionName("DeleteConfirmed")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var category = await _categoryRepository.GetByIdAsync(id);
-            if (category != null)
+
+            if (category == null)
             {
-                await _categoryRepository.DeleteAsync(id);
+                return NotFound();
             }
+
+            // Kiểm tra nếu danh mục có sản phẩm thì không cho xóa
+            var products = await _productRepository.GetAllAsync();
+            bool hasProducts = products.Any(p => p.CategoryId == id);
+
+            if (hasProducts)
+            {
+                ModelState.AddModelError("", "Không thể xoá danh mục này vì đang có sản phẩm liên quan.");
+                return View("Delete", category);
+            }
+
+            await _categoryRepository.DeleteAsync(id);
             return RedirectToAction(nameof(Index));
         }
 
