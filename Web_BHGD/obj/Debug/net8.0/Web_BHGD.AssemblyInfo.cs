@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Web_BHGD")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8a36aa016885dcb77d8726caa2e7b13cef764188")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+284cc24fcdf9ad6532c6259a4ba5f7a8c998d3c2")]
 [assembly: System.Reflection.AssemblyProductAttribute("Web_BHGD")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Web_BHGD")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

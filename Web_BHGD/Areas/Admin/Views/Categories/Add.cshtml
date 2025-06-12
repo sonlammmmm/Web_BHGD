@@ -1,24 +1,215 @@
 ﻿@model Web_BHGD.Models.Category
 @using Microsoft.AspNetCore.Mvc.Rendering
 @{
-    ViewData["Title"] = "Thêm danh mục";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Thêm Danh mục";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
-<h2>@ViewData["Title"]</h2>
+<div class="container-fluid">
+    <div class="row">
+        <!-- Sidebar -->
+        <div class="col-md-3 col-lg-2 px-0">
+            <div class="bg-dark min-vh-100">
+                <div class="p-3">
+                    <h5 class="text-white mb-4">
+                        <i class="fas fa-user-shield me-2"></i>
+                        Admin Panel
+                    </h5>
 
-<form asp-action="Add" method="post">
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <nav class="nav flex-column">
+                        <a class="nav-link text-white-50" asp-controller="Home" asp-action="Index">
+                            <i class="fas fa-tachometer-alt me-2"></i>
+                            Dashboard
+                        </a>
 
-    <div class="form-group">
-        <label asp-for="Name"></label>
-        <input asp-for="Name" class="form-control" />
-        <span asp-validation-for="Name" class="text-danger" />
+                        <hr class="text-white-50">
+
+                        <h6 class="text-white-50 text-uppercase small mb-3">Quản lý</h6>
+
+                        <a class="nav-link text-white-50" asp-controller="Product" asp-action="Index">
+                            <i class="fas fa-box me-2"></i>
+                            Sản phẩm
+                        </a>
+
+                        <a class="nav-link text-white-50 active" asp-controller="Categories" asp-action="Index">
+                            <i class="fas fa-tags me-2"></i>
+                            Danh mục
+                            <span class="badge bg-primary ms-auto">Hiện tại</span>
+                        </a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="col-md-9 col-lg-10">
+            <div class="p-4">
+                <!-- Breadcrumb -->
+                <nav aria-label="breadcrumb" class="mb-4">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a asp-controller="Home" asp-action="Index">
+                                <i class="fas fa-home"></i> Dashboard
+                            </a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a asp-action="Index">Danh mục</a>
+                        </li>
+                        <li class="breadcrumb-item active">Thêm mới</li>
+                    </ol>
+                </nav>
+
+                <!-- Header -->
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <h1 class="h3 mb-0">
+                            <i class="fas fa-plus-circle me-2 text-success"></i>
+                            Thêm Danh mục Mới
+                        </h1>
+                        <p class="text-muted mb-0">Tạo danh mục sản phẩm mới</p>
+                    </div>
+                    <div>
+                        <a asp-action="Index" class="btn btn-outline-secondary">
+                            <i class="fas fa-arrow-left me-1"></i>
+                            Quay lại
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Form Card -->
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <div class="card shadow-sm">
+                            <div class="card-header bg-white">
+                                <h5 class="mb-0">
+                                    <i class="fas fa-edit me-2"></i>
+                                    Thông tin Danh mục
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <form asp-action="Add" method="post">
+                                    <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+                                    <div class="mb-4">
+                                        <label asp-for="Name" class="form-label">
+                                            <i class="fas fa-tag me-1"></i>
+                                            Tên Danh mục <span class="text-danger">*</span>
+                                        </label>
+                                        <input asp-for="Name" class="form-control form-control-lg"
+                                               placeholder="Nhập tên danh mục..."
+                                               autocomplete="off" />
+                                        <span asp-validation-for="Name" class="text-danger small"></span>
+                                        <div class="form-text">
+                                            <i class="fas fa-info-circle me-1"></i>
+                                            Tên danh mục sẽ hiển thị cho khách hàng
+                                        </div>
+                                    </div>
+
+                                    <!-- Form Actions -->
+                                    <div class="border-top pt-4">
+                                        <div class="d-flex justify-content-between">
+                                            <div>
+                                                <button type="submit" class="btn btn-success btn-lg">
+                                                    <i class="fas fa-save me-2"></i>
+                                                    Lưu Danh mục
+                                                </button>
+                                                <button type="reset" class="btn btn-outline-secondary btn-lg ms-2">
+                                                    <i class="fas fa-undo me-2"></i>
+                                                    Đặt lại
+                                                </button>
+                                            </div>
+                                            <div>
+                                                <a asp-action="Index" class="btn btn-outline-danger btn-lg">
+                                                    <i class="fas fa-times me-2"></i>
+                                                    Hủy
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <!-- Help Card -->
+                        <div class="card mt-4 border-info">
+                            <div class="card-body">
+                                <h6 class="card-title text-info">
+                                    <i class="fas fa-lightbulb me-2"></i>
+                                    Gợi ý
+                                </h6>
+                                <ul class="mb-0 small text-muted">
+                                    <li>Tên danh mục nên ngắn gọn và dễ hiểu</li>
+                                    <li>Mô tả giúp khách hàng hiểu rõ hơn về nhóm sản phẩm</li>
+                                    <li>Sau khi tạo, bạn có thể thêm sản phẩm vào danh mục này</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+</div>
 
+<style>
+    .nav-link {
+        transition: all 0.3s ease;
+        border-radius: 0.25rem;
+        margin-bottom: 0.25rem;
+    }
 
+    .nav-link:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+        color: white !important;
+    }
 
-    <button type="submit" class="btn btn-success">Thêm</button>
-    <a asp-action="Index" class="btn btn-secondary">Huỷ</a>
-</form>
+    .nav-link.active {
+        background-color: rgba(255, 255, 255, 0.2);
+        color: white !important;
+    }
+
+    .bg-dark {
+        background-color: #2c3e50 !important;
+    }
+
+    .form-control:focus {
+        border-color: #80bdff;
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    }
+
+    .breadcrumb {
+        background-color: transparent;
+        padding: 0;
+    }
+
+    .breadcrumb a {
+        text-decoration: none;
+        color: #6c757d;
+    }
+
+    .breadcrumb a:hover {
+        color: #007bff;
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Auto focus on name input
+        const nameInput = document.querySelector('input[name="Name"]');
+        if (nameInput) {
+            nameInput.focus();
+        }
+
+        // Form validation enhancement
+        const form = document.querySelector('form');
+        form.addEventListener('submit', function(e) {
+            const nameInput = document.querySelector('input[name="Name"]');
+            if (!nameInput.value.trim()) {
+                e.preventDefault();
+                nameInput.focus();
+                // Add custom validation feedback if needed
+            }
+        });
+    });
+</script>

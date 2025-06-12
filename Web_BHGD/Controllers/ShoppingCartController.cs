@@ -183,7 +183,7 @@ namespace Web_BHGD.Controllers
             }
         }
 
-        // Lấy số lượng sản phẩm trong giỏ hàng (dùng cho hiển thị trên layout)
+        [AllowAnonymous]
         [HttpGet]
         public IActionResult GetCartItemCount()
         {
