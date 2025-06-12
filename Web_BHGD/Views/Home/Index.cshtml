@@ -1,37 +1,210 @@
 ﻿@model IEnumerable<Web_BHGD.Models.Product>
 @{
-    ViewData["Title"] = "Home Page";
-    int numOfQuantity = 1;
+    ViewData["Title"] = "BHGD Store - Gia dụng chất lượng cao";
 }
 
+<!-- Hero Banner -->
+<section class="hero-section bg-gradient py-5" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 text-white">
+                <h1 class="display-4 fw-bold mb-4">Đồ Gia Dụng Chất Lượng Cao</h1>
+                <p class="lead mb-4">Mang không gian sống tiện nghi, ấm cúng đến mọi gia đình Việt với hàng nghìn sản phẩm chất lượng.</p>
+                <div class="d-flex gap-3">
+                    <a asp-controller="Product" asp-action="Index" class="btn btn-light btn-lg px-4">
+                        <i class="bi bi-bag-check me-2"></i>Mua sắm ngay
+                    </a>
+                    <a href="#featured-products" class="btn btn-outline-light btn-lg px-4">
+                        <i class="bi bi-arrow-down me-2"></i>Khám phá
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-6 text-center">
+                <img src="/images/hero-banner.jpg" alt="Gia dụng chất lượng" class="img-fluid rounded shadow-lg" style="max-height: 400px;">
+            </div>
+        </div>
+    </div>
+</section>
 
-@if (User.IsInRole("Admin"))
-{
-    <a asp-action="Add" class="btn btn-success mb-2">Quản lý sản phầm</a>
-}
+<!-- Features Section -->
+<section class="features-section py-5 bg-light">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="feature-item p-4 bg-white rounded shadow-sm h-100">
+                    <i class="bi bi-truck text-primary display-4 mb-3"></i>
+                    <h5>Giao hàng miễn phí</h5>
+                    <p class="text-muted">Miễn phí vận chuyển cho đơn hàng từ 500.000đ</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="feature-item p-4 bg-white rounded shadow-sm h-100">
+                    <i class="bi bi-shield-check text-primary display-4 mb-3"></i>
+                    <h5>Bảo hành chính hãng</h5>
+                    <p class="text-muted">Cam kết bảo hành chính hãng từ 12-24 tháng</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="feature-item p-4 bg-white rounded shadow-sm h-100">
+                    <i class="bi bi-arrow-repeat text-primary display-4 mb-3"></i>
+                    <h5>Đổi trả dễ dàng</h5>
+                    <p class="text-muted">Đổi trả trong 7 ngày nếu không hài lòng</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="feature-item p-4 bg-white rounded shadow-sm h-100">
+                    <i class="bi bi-headset text-primary display-4 mb-3"></i>
+                    <h5>Hỗ trợ 24/7</h5>
+                    <p class="text-muted">Tư vấn và hỗ trợ khách hàng mọi lúc</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
-<section class="py-2">
-    <div class="container px-4 px-lg-5 mt-5">
-        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-            @foreach (var item in Model)
+<!-- Quick Search -->
+<section class="search-section py-4 bg-white border-bottom">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <form asp-action="QuickSearch" method="post" class="d-flex">
+                    <div class="input-group input-group-lg">
+                        <span class="input-group-text bg-primary text-white">
+                            <i class="bi bi-search"></i>
+                        </span>
+                        <input type="text" name="searchTerm" class="form-control"
+                               placeholder="Tìm kiếm sản phẩm: nồi cơm điện, bình nước, chảo chống dính...">
+                        <button class="btn btn-primary px-4" type="submit">
+                            Tìm kiếm
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Categories Section -->
+<section class="categories-section py-5">
+    <div class="container">
+        <h2 class="text-center mb-5">
+            <i class="bi bi-grid-3x3-gap text-primary me-2"></i>
+            Danh mục sản phẩm
+        </h2>
+        <div class="row">
+            @if (ViewBag.Categories != null)
             {
-                <div class="col mb-5">
-                    <div class="card gap-3" style="width: 18rem">
-                        <img src="@item.ImageUrl" class="card-img-top" alt="..." style="height: 300px">
-                        <div class="card-body">
-                            <h5 class="card-title">@Html.DisplayFor(modelItem => item.Name)</h5>
-                            <div class="d-flex">
-                                <span>Price: </span>
-                                <p class="mx-3">@item.Price.ToString("#,##0") Vnđ</p>
+                @foreach (var category in ViewBag.Categories)
+                {
+                    <div class="col-lg-3 col-md-6 mb-4">
+                        <div class="category-card text-center">
+                            <a asp-controller="Category" asp-action="Details" asp-route-id="@category.Id"
+                               class="text-decoration-none">
+                                <div class="card border-0 shadow-hover h-100">
+                                    <div class="card-body p-4">
+                                        <i class="bi bi-house-gear text-primary display-3 mb-3"></i>
+                                        <h5 class="card-title">@category.Name</h5>
+                                        <p class="text-muted small">Khám phá ngay</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</section>
+
+<!-- Featured Products -->
+<section id="featured-products" class="products-section py-5 bg-light">
+    <div class="container">
+        <div class="row align-items-center mb-5">
+            <div class="col">
+                <h2 class="mb-0">
+                    <i class="bi bi-star-fill text-warning me-2"></i>
+                    Sản phẩm nổi bật
+                </h2>
+                <p class="text-muted">Những sản phẩm được khách hàng yêu thích nhất</p>
+            </div>
+            <div class="col-auto">
+                <a asp-controller="Product" asp-action="Index" class="btn btn-outline-primary">
+                    Xem tất cả <i class="bi bi-arrow-right ms-1"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="row">
+            @foreach (var item in Model.Take(8))
+            {
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="product-card">
+                        <div class="card border-0 shadow-hover h-100">
+                            <!-- Product Image -->
+                            <div class="position-relative overflow-hidden">
+                                <img src="@(string.IsNullOrEmpty(item.ImageUrl) ? "/images/no-image.jpg" : item.ImageUrl)"
+                                     class="card-img-top product-image" alt="@item.Name"
+                                     style="height: 250px; object-fit: cover; transition: transform 0.3s;">
+
+                                <!-- Quick View Overlay -->
+                                <div class="product-overlay position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center">
+                                    <a asp-controller="Product" asp-action="Details" asp-route-id="@item.Id"
+                                       class="btn btn-light btn-sm rounded-pill shadow">
+                                        <i class="bi bi-eye me-1"></i> Xem chi tiết
+                                    </a>
+                                </div>
+
+                                <!-- Sale Badge -->
+                                @if (item.Price < 500000)
+                                {
+                                    <div class="position-absolute top-0 start-0 m-2">
+                                        <span class="badge bg-danger">Giá tốt</span>
+                                    </div>
+                                }
                             </div>
 
-                            <!-- Nút "Thêm vào giỏ" cho tất cả người dùng -->
-                            <a asp-controller="ShoppingCart" asp-action="AddToCart" asp-route-productId="@item.Id" asp-route-quantity="@numOfQuantity">
-                                <button class="btn btn-outline-dark">
-                                    <i class="bi-cart-fill me-1"></i> Add to Cart
-                                </button>
-                            </a>
+                            <div class="card-body p-3">
+                                <h5 class="card-title text-truncate" title="@item.Name">@item.Name</h5>
 
+                                <!-- Price -->
+                                <div class="price-section mb-3">
+                                    <span class="h5 text-primary fw-bold">@item.Price.ToString("#,##0")₫</span>
+                                    @if (item.Price > 200000)
+                                    {
+                                        <small class="text-muted text-decoration-line-through ms-2">
+                                            @((item.Price * 1.2m).ToString("#,##0"))₫
+                                        </small>
+                                    }
+                                </div>
+
+                                <!-- Rating -->
+                                <div class="rating mb-2">
+                                    @for (int i = 0; i < 5; i++)
+                                    {
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                    }
+                                    <small class="text-muted ms-1">(999+ đánh giá)</small>
+                                </div>
+
+                                <!-- Add to Cart Button -->
+                                @if (User.Identity.IsAuthenticated)
+                                {
+                                    <form asp-controller="ShoppingCart" asp-action="AddToCart" method="post" class="d-inline">
+                                        <input type="hidden" name="productId" value="@item.Id" />
+                                        <input type="hidden" name="quantity" value="1" />
+                                        <button type="submit" class="btn btn-primary w-100"
+                                                onclick="addToCartAnimation(this)">
+                                            <i class="bi bi-cart-plus me-1"></i> Thêm vào giỏ
+                                        </button>
+                                    </form>
+                                }
+                                else
+                                {
+                                    <a asp-area="Identity" asp-page="/Account/Login" class="btn btn-outline-primary w-100">
+                                        <i class="bi bi-box-arrow-in-right me-1"></i> Đăng nhập để mua
+                                    </a>
+                                }
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -39,3 +212,67 @@
         </div>
     </div>
 </section>
+
+<!-- Admin Quick Access -->
+@if (User.IsInRole("Admin"))
+{
+    <div class="floating-admin-panel position-fixed bottom-0 end-0 m-4">
+        <div class="btn-group-vertical" role="group">
+            <a asp-controller="Product" asp-action="Add" class="btn btn-success mb-2 shadow">
+                <i class="bi bi-plus-circle me-1"></i> Thêm sản phẩm
+            </a>
+            <a asp-controller="Product" asp-action="Index" class="btn btn-info shadow">
+                <i class="bi bi-gear me-1"></i> Quản lý
+            </a>
+        </div>
+    </div>
+}
+
+<!-- Newsletter Section -->
+<section class="newsletter-section py-5 bg-primary text-white">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h3><i class="bi bi-envelope-heart me-2"></i>Đăng ký nhận tin</h3>
+                <p class="mb-0">Nhận thông tin khuyến mãi và sản phẩm mới nhất từ BHGD Store</p>
+            </div>
+            <div class="col-lg-6">
+                <div class="input-group">
+                    <input type="email" class="form-control" placeholder="Nhập email của bạn...">
+                    <button class="btn btn-light" type="button">
+                        <i class="bi bi-send me-1"></i>Đăng ký
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .shadow-hover {
+        transition: all 0.3s ease;
+    }
+
+        .shadow-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15) !important;
+        }
+
+    .product-overlay {
+        background: rgba(0,0,0,0.7);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .product-card:hover .product-overlay {
+        opacity: 1;
+    }
+
+    .product-card:hover .product-image {
+        transform: scale(1.05);
+    }
+
+    .floating-admin-panel {
+        z-index: 1050;
+    }
+</style>
