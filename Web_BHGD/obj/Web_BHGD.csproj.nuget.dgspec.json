@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\trans\\OneDrive\\Desktop\\Web_BHGD\\Web_BHGD\\Web_BHGD.csproj": {}
+    "E:\\Web_BHGD\\Web_BHGD\\Web_BHGD.csproj": {}
   },
   "projects": {
-    "C:\\Users\\trans\\OneDrive\\Desktop\\Web_BHGD\\Web_BHGD\\Web_BHGD.csproj": {
+    "E:\\Web_BHGD\\Web_BHGD\\Web_BHGD.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\trans\\OneDrive\\Desktop\\Web_BHGD\\Web_BHGD\\Web_BHGD.csproj",
+        "projectUniqueName": "E:\\Web_BHGD\\Web_BHGD\\Web_BHGD.csproj",
         "projectName": "Web_BHGD",
-        "projectPath": "C:\\Users\\trans\\OneDrive\\Desktop\\Web_BHGD\\Web_BHGD\\Web_BHGD.csproj",
+        "projectPath": "E:\\Web_BHGD\\Web_BHGD\\Web_BHGD.csproj",
         "packagesPath": "C:\\Users\\trans\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\trans\\OneDrive\\Desktop\\Web_BHGD\\Web_BHGD\\obj\\",
+        "outputPath": "E:\\Web_BHGD\\Web_BHGD\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\trans\\AppData\\Roaming\\NuGet\\NuGet.Config",
