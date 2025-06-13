@@ -1,12 +1,8 @@
+E:\Web_BHGD\Web_BHGD\bin\Debug\net8.0\Web_BHGD.exe
 E:\Web_BHGD\Web_BHGD\bin\Debug\net8.0\wwwroot\images\default_product.png
 E:\Web_BHGD\Web_BHGD\bin\Debug\net8.0\appsettings.Development.json
 E:\Web_BHGD\Web_BHGD\bin\Debug\net8.0\appsettings.json
 E:\Web_BHGD\Web_BHGD\bin\Debug\net8.0\Web_BHGD.staticwebassets.runtime.json
-E:\Web_BHGD\Web_BHGD\bin\Debug\net8.0\Web_BHGD.exe
-E:\Web_BHGD\Web_BHGD\bin\Debug\net8.0\Web_BHGD.deps.json
-E:\Web_BHGD\Web_BHGD\bin\Debug\net8.0\Web_BHGD.runtimeconfig.json
-E:\Web_BHGD\Web_BHGD\bin\Debug\net8.0\Web_BHGD.dll
-E:\Web_BHGD\Web_BHGD\bin\Debug\net8.0\Web_BHGD.pdb
 E:\Web_BHGD\Web_BHGD\bin\Debug\net8.0\Azure.Core.dll
 E:\Web_BHGD\Web_BHGD\bin\Debug\net8.0\Azure.Identity.dll
 E:\Web_BHGD\Web_BHGD\bin\Debug\net8.0\Humanizer.dll
@@ -151,5 +147,9 @@ E:\Web_BHGD\Web_BHGD\obj\Debug\net8.0\Web_BHGD.csproj.Up2Date
 E:\Web_BHGD\Web_BHGD\obj\Debug\net8.0\Web_BHGD.dll
 E:\Web_BHGD\Web_BHGD\obj\Debug\net8.0\refint\Web_BHGD.dll
 E:\Web_BHGD\Web_BHGD\obj\Debug\net8.0\Web_BHGD.pdb
+E:\Web_BHGD\Web_BHGD\bin\Debug\net8.0\Web_BHGD.deps.json
+E:\Web_BHGD\Web_BHGD\bin\Debug\net8.0\Web_BHGD.runtimeconfig.json
+E:\Web_BHGD\Web_BHGD\bin\Debug\net8.0\Web_BHGD.dll
+E:\Web_BHGD\Web_BHGD\bin\Debug\net8.0\Web_BHGD.pdb
 E:\Web_BHGD\Web_BHGD\obj\Debug\net8.0\Web_BHGD.genruntimeconfig.cache
 E:\Web_BHGD\Web_BHGD\obj\Debug\net8.0\ref\Web_BHGD.dll
