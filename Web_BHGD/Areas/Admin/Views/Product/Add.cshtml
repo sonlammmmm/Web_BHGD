@@ -70,7 +70,7 @@
                                         </label>
                                         <input asp-for="Price" class="form-control form-control-lg"
                                                placeholder="Nhập giá sản phẩm..."
-                                               type="number" step="1000" min="1" max="999999999" />
+                                               type="number" step="1" min="1" max="999999999" />
                                         <span asp-validation-for="Price" class="text-danger small"></span>
                                         <div class="form-text" id="priceValidation">
                                             <i class="fas fa-info-circle me-1"></i>
@@ -104,7 +104,7 @@
                                             <i class="fas fa-image me-1 text-primary"></i>
                                             Hình ảnh
                                         </label>
-                                        <input type="file" name="imageUrl" class="form-control" accept="image/jpeg,image/png,image/gif" id="imageInput" />
+                                        <input type="file" name="ImageUrl" class="form-control" accept="image/jpeg,image/png,image/gif" id="imageInput" />
                                         <span class="text-danger small" id="imageValidation"></span>
                                         <div class="mt-2">
                                             <img id="previewImage" src="" alt="Preview" style="max-width: 200px; display: none;" />

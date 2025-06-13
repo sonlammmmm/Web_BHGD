@@ -17,17 +17,14 @@ public class EFProductRepository : IProductRepository
     {
         // return await _context.Products.ToListAsync();
         return await _context.Products
-            .Include(p => p.Category)
-            .Include(p => p.Images) // Include thông tin về category
+            .Include(p => p.Category) // Include thông tin về category
             .ToListAsync();
     }
 
     public async Task<Product> GetByIdAsync(int id)
     {
-        return await _context.Products
-            .Include(p => p.Category)
-            .Include(p => p.Images)
-            .FirstOrDefaultAsync(p => p.Id == id);
+        return await _context.Products.Include(p =>
+       p.Category).FirstOrDefaultAsync(p => p.Id == id);
     }
 
     public async Task AddAsync(Product product)
