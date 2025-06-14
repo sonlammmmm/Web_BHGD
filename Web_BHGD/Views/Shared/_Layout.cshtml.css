@@ -1,48 +1,148 @@
-﻿/* Please see documentation at https://learn.microsoft.com/aspnet/core/client-side/bundling-and-minification
-for details on configuring this project to bundle and minify static web assets. */
-
-a.navbar-brand {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
+﻿```css
+/* General Styles */
+html {
+    font-size: 14px;
 }
 
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+body {
+    margin-bottom: 0;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Links */
 a {
-  color: #0077cc;
+    color: #dc3545;
+    text-decoration: none;
 }
 
+    a:hover {
+        color: #ffcc00;
+    }
+
+/* Navbar */
+.navbar-brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.navbar-nav .nav-link {
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+}
+
+    .navbar-nav .nav-link:hover {
+        background-color: #ffcc00;
+        color: #212529 !important;
+    }
+
+/* Buttons */
 .btn-primary {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+    background-color: #dc3545;
+    border-color: #dc3545;
+    color: #fff;
 }
 
-.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+    .btn-primary:hover {
+        background-color: #c82333;
+        border-color: #c82333;
+    }
+
+.btn-dark {
+    background-color: #212529;
+    border-color: #212529;
 }
 
+    .btn-dark:hover {
+        background-color: #343a40;
+        border-color: #343a40;
+    }
+
+/* Footer */
+.footer {
+    position: relative;
+    width: 100%;
+}
+
+/* Borders and Shadows */
 .border-top {
-  border-top: 1px solid #e5e5e5;
+    border-top: 1px solid #e5e5e5;
 }
+
 .border-bottom {
-  border-bottom: 1px solid #e5e5e5;
+    border-bottom: 1px solid #e5e5e5;
 }
 
 .box-shadow {
-  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+    box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.05);
 }
 
-button.accept-policy {
-  font-size: 1rem;
-  line-height: inherit;
+/* Input Focus */
+.btn:focus, .btn:active:focus, .form-control:focus, .form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem #fff, 0 0 0 0.25rem #dc3545;
 }
 
-.footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  white-space: nowrap;
-  line-height: 60px;
+/* Custom Styles for Vietnamese Theme */
+header {
+    border-bottom: 3px solid #dc3545;
 }
+
+.navbar {
+    border-top: 3px solid #000;
+}
+
+.sidebar {
+    border: 3px solid #dc3545;
+}
+
+.product-card, .category-card {
+    border: 2px solid #000;
+    transition: all 0.3s ease;
+}
+
+    .product-card:hover, .category-card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+/* Accordion for Sidebar */
+.accordion-button {
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+    .accordion-button:not(.collapsed) {
+        background-color: #dc3545;
+        color: #fff;
+    }
+
+.accordion-body {
+    padding: 0;
+}
+
+    .accordion-body a {
+        display: block;
+        padding: 0.5rem 1rem;
+        transition: all 0.3s ease;
+    }
+
+        .accordion-body a:hover {
+            background-color: #ffcc00;
+            color: #212529;
+        }
+
+        .accordion-body a.active {
+            background-color: #dc3545;
+            color: #fff;
+        }
+
+/* Sticky Sidebar */
+.sticky-top {
+    z-index: 1;
+}
+

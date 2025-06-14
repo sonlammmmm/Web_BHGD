@@ -1,0 +1,82 @@
+﻿@model IEnumerable<Web_BHGD.Models.Category>
+
+<div class="tiki-sidebar bg-white p-3">
+    <h5 class="sidebar-title mb-3 text-dark fw-bold">
+        <i class="bi bi-list me-2"></i>Danh Mục
+    </h5>
+
+    @if (Model != null && Model.Any())
+    {
+        <ul class="list-unstyled category-list">
+            <li class="category-item mb-1">
+                <a asp-controller="Category" asp-action="Details" asp-route-id="0"
+                   class="category-link d-block p-2 rounded @(ViewBag.CurrentCategoryId == 0 ? "active" : "")">
+                    <i class="bi bi-chevron-right me-2"></i>Tất cả danh mục
+                </a>
+            </li>
+            @foreach (var category in Model)
+            {
+                <li class="category-item mb-1">
+                    <a asp-controller="Category" asp-action="Details" asp-route-id="@category.Id"
+                       class="category-link d-block p-2 rounded @(ViewBag.CurrentCategoryId == category.Id ? "active" : "")">
+                        <i class="bi bi-chevron-right me-2"></i>@category.Name
+                    </a>
+                </li>
+            }
+        </ul>
+    }
+    else
+    {
+        <div class="alert alert-warning p-2 text-center">
+            Không thể tải danh mục.
+        </div>
+    }
+</div>
+
+<style>
+    .tiki-sidebar {
+        border-right: 2px solid #dc3545;
+        min-height: 100%;
+        font-size: 14px;
+    }
+
+    .sidebar-title {
+        font-size: 16px;
+        border-bottom: 1px solid #dc3545;
+        padding-bottom: 8px;
+    }
+
+    .category-list {
+        margin: 0;
+        padding: 0;
+    }
+
+    .category-item {
+        margin-bottom: 4px;
+    }
+
+    .category-link {
+        text-decoration: none;
+        color: #212529;
+        font-weight: 400;
+        transition: all 0.2s ease;
+        border-radius: 4px;
+    }
+
+        .category-link:hover {
+            background-color: #ffcc00;
+            color: #212529;
+            transform: translateX(4px);
+        }
+
+        .category-link.active {
+            background-color: #dc3545;
+            color: #fff;
+            font-weight: 500;
+        }
+
+        .category-link i {
+            font-size: 12px;
+            vertical-align: middle;
+        }
+</style>

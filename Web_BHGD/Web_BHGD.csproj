@@ -25,7 +25,6 @@
   <ItemGroup>
     <Folder Include="Extensions\" />
     <Folder Include="Models\Repositories\" />
-    <Folder Include="Views\Product\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,6 +1,71 @@
 ﻿@{
-    ViewData["Title"] = "Privacy Policy";
+    ViewData["Title"] = "Chính Sách Bảo Mật - BHGD Store";
 }
-<h1>@ViewData["Title"]</h1>
 
-<p>Use this page to detail your site's privacy policy.</p>
+<!-- Page Header -->
+<section class="page-header py-5 bg-light">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col">
+                <h1 class="fw-bold mb-0">Chính Sách Bảo Mật</h1>
+                <p class="text-muted">Thông tin về cách chúng tôi bảo vệ dữ liệu của bạn</p>
+            </div>
+            <div class="col-auto">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0">
+                        <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Trang chủ</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Chính sách bảo mật</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Privacy Content -->
+<section class="privacy-section py-5 bg-white">
+    <div class="container">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-lg-3 col-md-4 mb-4">
+                <div class="sidebar bg-white p-4 sticky-top" style="border: 3px solid #dc3545; top: 20px;">
+                    <partial name="_CategoryMenu" model="ViewBag.Categories" />
+                </div>
+            </div>
+
+            <!-- Content -->
+            <div class="col-lg-9 col-md-8">
+                <h2 class="fw-bold mb-3"><i class="bi bi-shield-lock-fill text-danger me-2"></i>Cam Kết Bảo Mật</h2>
+                <p>Chúng tôi tại BHGD Store cam kết bảo vệ thông tin cá nhân của khách hàng. Chính sách bảo mật này giải thích cách chúng tôi thu thập, sử dụng và bảo vệ dữ liệu của bạn.</p>
+
+                <h5 class="fw-bold mt-4">1. Thông Tin Thu Thập</h5>
+                <p>Chúng tôi thu thập thông tin như họ tên, email, số điện thoại, và địa chỉ khi bạn đặt hàng hoặc đăng ký tài khoản. Dữ liệu này được sử dụng để xử lý đơn hàng và cải thiện trải nghiệm mua sắm.</p>
+
+                <h5 class="fw-bold mt-4">2. Sử Dụng Thông Tin</h5>
+                <p>
+                    Thông tin của bạn được sử dụng để:
+                    <ul>
+                        <li>Xử lý và giao hàng.</li>
+                        <li>Gửi thông báo về khuyến mãi và sản phẩm mới (nếu bạn đồng ý).</li>
+                        <li>Cải thiện dịch vụ và website của chúng tôi.</li>
+                    </ul>
+                </p>
+
+                <h5 class="fw-bold mt-4">3. Bảo Vệ Thông Tin</h5>
+                <p>Chúng tôi sử dụng các biện pháp bảo mật tiên tiến để bảo vệ dữ liệu của bạn, bao gồm mã hóa SSL và lưu trữ an toàn. Chúng tôi không chia sẻ thông tin cá nhân với bên thứ ba trừ khi có sự đồng ý của bạn hoặc theo yêu cầu pháp lý.</p>
+
+                <h5 class="fw-bold mt-4">4. Quyền Lợi Của Bạn</h5>
+                <p>Bạn có quyền yêu cầu xem, chỉnh sửa, hoặc xóa thông tin cá nhân của mình. Liên hệ chúng tôi qua email: info@bhgdstore.com để được hỗ trợ.</p>
+
+                <h5 class="fw-bold mt-4">5. Liên Hệ</h5>
+                <p>
+                    Nếu bạn có câu hỏi về chính sách bảo mật, vui lòng liên hệ qua:
+                    <ul>
+                        <li>Email: info@bhgdstore.com</li>
+                        <li>Hotline: 1900-1000</li>
+                    </ul>
+                </p>
+            </div>
+        </div>
+    </div>
+</section>

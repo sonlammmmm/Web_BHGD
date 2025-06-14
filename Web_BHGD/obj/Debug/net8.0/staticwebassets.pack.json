@@ -13,6 +13,14 @@
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
+      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\images\\90539e42-a813-4876-b395-9a5b29671271.jpg",
+      "PackagePath": "staticwebassets\\images\\90539e42-a813-4876-b395-9a5b29671271.jpg"
+    },
+    {
+      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\images\\banner_bhgd.png",
+      "PackagePath": "staticwebassets\\images\\banner_bhgd.png"
+    },
+    {
       "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\images\\default_product.png",
       "PackagePath": "staticwebassets\\images\\default_product.png"
     },

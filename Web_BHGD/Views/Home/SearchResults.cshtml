@@ -1,0 +1,105 @@
+﻿@model IEnumerable<Web_BHGD.Models.Product>
+@{
+    ViewData["Title"] = "Kết Quả Tìm Kiếm - BHGD Store";
+}
+
+<!-- Page Header -->
+<section class="page-header py-5 bg-light">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col">
+                <h1 class="fw-bold mb-0">Kết Quả Tìm Kiếm</h1>
+                <p class="text-muted">
+                    Kết quả cho từ khóa: <strong>@ViewBag.SearchTerm</strong> (@(Model?.Count() ?? 0) sản phẩm)
+                </p>
+            </div>
+            <div class="col-auto">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0">
+                        <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Trang chủ</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Tìm kiếm</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Search Results -->
+<section class="search-results py-5 bg-white">
+    <div class="container">
+        <div class="row">
+            <!-- Sidebar Categories -->
+            <div class="col-lg-3 col-md-4 mb-4">
+                <div class="sidebar bg-white p-4 sticky-top" style="border: 3px solid #dc3545; top: 20px;">
+                    <partial name="_CategoryMenu" model="ViewBag.Categories" />
+                </div>
+            </div>
+
+            <!-- Results -->
+            <div class="col-lg-9 col-md-8">
+                @if (Model == null || !Model.Any())
+                {
+                    <div class="alert alert-warning text-center" role="alert">
+                        Không tìm thấy sản phẩm nào cho từ khóa "<strong>@ViewBag.SearchTerm</strong>".
+                    </div>
+                }
+                else
+                {
+                    <div class="row">
+                        @foreach (var item in Model)
+                        {
+                            <div class="col-lg-4 col-md-6 mb-4">
+                                <div class="product-card bg-white" style="border: 2px solid #000;">
+                                    <div class="position-relative overflow-hidden">
+                                        <img src="@(string.IsNullOrEmpty(item.ImageUrl) ? "/images/no-image.jpg" : item.ImageUrl)"
+                                             class="card-img-top" alt="@item.Name" style="height: 200px; object-fit: cover;">
+                                        @if (item.Price < 500000)
+                                        {
+                                            <span class="badge bg-danger position-absolute top-0 start-0 m-2">Giá Sốc</span>
+                                        }
+                                    </div>
+                                    <div class="p-3">
+                                        <h6 class="text-truncate fw-bold" title="@item.Name">@item.Name</h6>
+                                        <div class="price-section mb-2">
+                                            <span class="h6 text-danger fw-bold">@item.Price.ToString("#,##0")₫</span>
+                                            @if (item.Price > 200000)
+                                            {
+                                                <small class="text-muted text-decoration-line-through ms-2">
+                                                    @((item.Price * 1.2m).ToString("#,##0"))₫
+                                                </small>
+                                            }
+                                        </div>
+                                        <div class="rating mb-2">
+                                            @for (int i = 0; i < 5; i++)
+                                            {
+                                                <i class="bi bi-star-fill text-warning"></i>
+                                            }
+                                            <small class="text-muted ms-1">(1k+)</small>
+                                        </div>
+                                        @if (User.Identity.IsAuthenticated)
+                                        {
+                                            <form asp-controller="ShoppingCart" asp-action="AddToCart" method="post" class="d-inline">
+                                                <input type="hidden" name="productId" value="@item.Id" />
+                                                <input type="hidden" name="quantity" value="1" />
+                                                <button type="submit" class="btn btn-danger w-100">
+                                                    <i class="bi bi-cart-plus me-1"></i>Thêm Vào Giỏ
+                                                </button>
+                                            </form>
+                                        }
+                                        else
+                                        {
+                                            <a asp-area="Identity" asp-page="/Account/Login" class="btn btn-outline-danger w-100">
+                                                <i class="bi bi-box-arrow-in-right me-1"></i>Đăng Nhập Để Mua
+                                            </a>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>

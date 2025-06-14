@@ -1,9 +1,11 @@
 ﻿using Web_BHGD.Models;
 using Web_BHGD.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Web_BHGD.Controllers
 {
+    [AllowAnonymous]
     public class CategoryController : Controller
     {
         private readonly IProductRepository _productRepository;
@@ -19,45 +21,58 @@ namespace Web_BHGD.Controllers
         public async Task<IActionResult> Index()
         {
             var categories = await _categoryRepository.GetAllAsync();
-
-            // Tính số lượng sản phẩm cho mỗi danh mục
             var products = await _productRepository.GetAllAsync();
-            var categoriesWithCount = categories.Select(c => new
-            {
-                Category = c,
-                ProductCount = products.Count(p => p.CategoryId == c.Id)
-            }).ToList();
 
-            ViewBag.CategoriesWithCount = categoriesWithCount;
+            // Gửi danh mục và số lượng sản phẩm trực tiếp qua ViewBag
+            ViewBag.ProductCounts = categories.ToDictionary(c => c.Id, c => products.Count(p => p.CategoryId == c.Id));
+
             return View(categories);
         }
 
-        // Hiển thị chi tiết danh mục và sản phẩm thuộc danh mục đó
-        public async Task<IActionResult> Details(int id, string sortOrder)
+        public async Task<IActionResult> Details(int id, string sortOrder, int page = 1)
         {
-            var category = await _categoryRepository.GetByIdAsync(id);
-            if (category == null)
+            // Lấy danh mục
+            var category = id == 0 ? new Category { Id = 0, Name = "Tất cả danh mục" } : await _categoryRepository.GetByIdAsync(id);
+            if (category == null && id != 0)
             {
                 return NotFound();
             }
 
-            // Lấy tất cả sản phẩm thuộc danh mục này
-            var allProducts = await _productRepository.GetAllAsync();
-            var products = allProducts.Where(p => p.CategoryId == id);
+            // Lấy danh sách sản phẩm
+            var products = id == 0 ? await _productRepository.GetAllAsync() : await _productRepository.GetByCategoryIdAsync(id);
 
-            // Sắp xếp sản phẩm
-            products = sortOrder switch
+            // Sắp xếp
+            switch (sortOrder)
             {
-                "name_desc" => products.OrderByDescending(p => p.Name),
-                "price" => products.OrderBy(p => p.Price),
-                "price_desc" => products.OrderByDescending(p => p.Price),
-                _ => products.OrderBy(p => p.Name),
-            };
+                case "name_desc":
+                    products = products.OrderByDescending(p => p.Name);
+                    break;
+                case "price":
+                    products = products.OrderBy(p => p.Price);
+                    break;
+                case "price_desc":
+                    products = products.OrderByDescending(p => p.Price);
+                    break;
+                default:
+                    products = products.OrderBy(p => p.Id);
+                    break;
+            }
 
+            // Phân trang
+            int pageSize = 12;
+            int totalItems = products.Count();
+            int totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
+            products = products.Skip((page - 1) * pageSize).Take(pageSize);
+
+            // Truyền ViewBag
+            ViewBag.Category = category;
+            ViewBag.Categories = await _categoryRepository.GetAllAsync(); // Đảm bảo truyền danh sách danh mục
             ViewBag.CurrentSort = sortOrder;
-            ViewBag.Products = products.ToList();
+            ViewBag.CurrentPage = page;
+            ViewBag.TotalPages = totalPages;
+            ViewBag.CurrentCategoryId = id;
 
-            return View(category);
+            return View(products);
         }
 
         // API để lấy danh sách danh mục (dùng cho dropdown, menu, v.v.)
@@ -65,7 +80,8 @@ namespace Web_BHGD.Controllers
         public async Task<IActionResult> GetAllCategories()
         {
             var categories = await _categoryRepository.GetAllAsync();
-            return Json(categories.Select(c => new {
+            return Json(categories.Select(c => new
+            {
                 id = c.Id,
                 name = c.Name
             }));
