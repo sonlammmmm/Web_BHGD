@@ -1,0 +1,73 @@
+﻿@model IEnumerable<Web_BHGD.Models.Order>
+@{
+    ViewData["Title"] = "Quảb lý đơn hàng";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="container-fluid">
+    <h2>Quản lý đơn hàng</h2>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success">@TempData["Success"]</div>
+    }
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger">@TempData["Error"]</div>
+    }
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Mã đơn hàng</th>
+                <th>Khách hàng</th>
+                <th>Ngày đặt</th>
+                <th>Tổng tiền</th>
+                <th>Trạng thái</th>
+                <th>Hành động</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var order in Model)
+            {
+                <tr>
+                    <td>#@order.Id</td>
+                    <td>@(order.ApplicationUser?.UserName ?? order.CustomerName)</td>
+                    <td>@order.OrderDate.ToString("dd/MM/yyyy HH:mm")</td>
+                    <td>@order.TotalPrice.ToString("C0") VNĐ</td>
+                    <td>
+                        <form asp-action="UpdateStatus" method="post" class="d-inline">
+                            <input type="hidden" name="id" value="@order.Id" />
+                            <select name="status" class="form-select form-select-sm" onchange="this.form.submit()">
+                                <option value="Pending" selected="@(order.Status == "Pending")">Chưa thanh toán</option>
+                                <option value="Confirmed" selected="@(order.Status == "Confirmed")">Đã thanh toán</option>
+                                <option value="Cancelled" selected="@(order.Status == "Cancelled")">Đã hủy</option>
+                            </select>
+                        </form>
+                    </td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@order.Id" class="btn btn-primary btn-sm">Chi tiết</a>
+
+                        @if (order.Status == "Pending")
+                        {
+                            <form asp-action="ConfirmOrder" method="post" class="d-inline">
+                                <input type="hidden" name="id" value="@order.Id" />
+                                <button type="submit" class="btn btn-success btn-sm">Xác nhận</button>
+                            </form>
+                        }
+
+                        @if (order.Status != "Cancelled")
+                        {
+                            <form asp-action="UpdateStatus" method="post" class="d-inline">
+                                <input type="hidden" name="id" value="@order.Id" />
+                                <input type="hidden" name="status" value="Cancelled" />
+                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Bạn có chắc muốn hủy đơn hàng này không?');">Hủy</button>
+                            </form>
+                        }
+
+                        <a asp-action="GenerateInvoice" asp-route-id="@order.Id" class="btn btn-secondary btn-sm">In hóa đơn</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

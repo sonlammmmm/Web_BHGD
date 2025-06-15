@@ -1,0 +1,77 @@
+﻿@model Web_BHGD.Models.Order
+
+@{
+    ViewData["Title"] = $"Hủy đơn hàng #{Model.Id}";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="p-4">
+    <style>
+        .card {
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+            padding: 1.5rem;
+        }
+        .btn-danger {
+            background-color: #007bff;
+            border-color: #007bff;
+            border-radius: 8px;
+            padding: 0.5rem 1.25rem;
+            font-weight: 500;
+        }
+        .btn-danger:hover {
+            background-color: #fd7e14; 
+            border-color: #fd7e14;
+        }
+        .btn-outline-danger {
+            border-color: #007bff;
+            color: #007bff;
+            border-radius: 8px;
+            padding: 0.5rem 1.25rem;
+        }
+        .btn-outline-danger:hover {
+            background-color: #007bff;
+            color: #fff;
+        }
+        h2 {
+            color: #007bff; /* Xanh dương của Tiki */
+        }
+        .text-primary {
+            color: #007bff !important;
+        }
+    </style>
+
+    <!-- Breadcrumb -->
+    <section class="bg-light py-3">
+        <div class="container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-0">
+                    <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Trang chủ</a></li>
+                    <li class="breadcrumb-item"><a asp-area="Admin" asp-controller="Order" asp-action="Index">Quản lý đơn hàng</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Hủy đơn hàng #@Model.Id</li>
+                </ol>
+            </nav>
+        </div>
+    </section>
+
+    <!-- Nội dung chính -->
+    <section class="py-4 text-center">
+        <div class="container">
+            <div class="card shadow-sm mx-auto" style="max-width: 600px;">
+                <div class="card-body">
+                    <h2 class="fw-bold mb-4">Hủy đơn hàng #@Model.Id</h2>
+                    <p class="text-dark">Bạn có chắc chắn muốn hủy đơn hàng này không? Hành động này không thể hoàn tác.</p>
+                    <p><strong>Khách hàng:</strong> @(Model.ApplicationUser?.UserName ?? Model.CustomerName)</p>
+                    <p><strong>Tổng tiền:</strong> @Model.TotalPrice.ToString("#,##0")₫</p>
+                    <form asp-action="ConfirmCancel" method="post">
+                        <input type="hidden" name="id" value="@Model.Id" />
+                        <button type="submit" class="btn btn-danger">Xác nhận hủy</button>
+                        <a asp-action="Index" class="btn btn-outline-danger">Quay lại</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

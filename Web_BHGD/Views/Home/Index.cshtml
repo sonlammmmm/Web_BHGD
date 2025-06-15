@@ -1,95 +1,75 @@
-﻿@model IEnumerable<Web_BHGD.Models.Product>
+﻿<!-- Views/Home/Index.cshtml -->
+@model IEnumerable<Web_BHGD.Models.Product>
 @{
     ViewData["Title"] = "BHGD Store - Đồ Gia Dụng Chất Lượng";
 }
 
 <!-- Hero Section -->
-<section class="hero-section py-4" style="background: linear-gradient(135deg, #dc3545 0%, #ffcc00 100%);">
+<section class="hero-section py-5 bg-danger text-white">
     <div class="container">
         <div class="row align-items-center">
-            <div class="col-lg-6 text-white">
-                <h1 class="fw-bold mb-3 fs-3">Gia Dụng Việt - Chất Lượng Đỉnh Cao</h1>
-                <p class="lead mb-3">Mang đến không gian sống tiện nghi, đậm chất Việt với sản phẩm bền đẹp, giá tốt.</p>
-                <div class="d-flex gap-2">
-                    <a asp-controller="Product" asp-action="Index" class="btn btn-dark btn-sm px-3">
-                        <i class="bi bi-cart-check me-1"></i>Mua Sắm Ngay
-                    </a>
-                    <a href="#featured-products" class="btn btn-outline-light btn-sm px-3">
-                        <i class="bi bi-arrow-down-circle me-1"></i>Khám Phá
-                    </a>
-                </div>
+            <div class="col-lg-6">
+                <h1 class="fw-bold mb-3">Chất Lượng Gia Dụng Việt</h1>
+                <p class="lead mb-4">Khám phá các sản phẩm gia dụng bền đẹp, giá tốt, phù hợp với mọi gia đình.</p>
+                <a asp-controller="Product" asp-action="Index" class="btn btn-dark px-4">
+                    <i class="bi bi-cart-check me-2"></i>Mua Sắm Ngay
+                </a>
             </div>
             <div class="col-lg-6 text-center">
-                <img src="/images/banner_bhgd.png" alt="Gia dụng Việt" class="img-fluid" style="max-height: 300px; border: 3px solid #fff;">
+                <img src="/images/hero-banner.png" alt="Gia dụng Việt" class="img-fluid" style="max-height: 300px;" />
             </div>
         </div>
     </div>
 </section>
 
-<!-- Main Content with Sidebar -->
-<section class="main-content py-4 bg-light">
+<!-- Main Content -->
+<section class="py-4">
     <div class="container">
         <div class="row">
             <!-- Sidebar -->
-            <div class="col-lg-2 col-md-3 mb-4">
-                <div class="sidebar sticky-top" style="top: 20px;">
+            <div class="col-lg-3 mb-4">
+                <div class="sticky-top" style="top: 20px;">
                     <partial name="_CategoryMenu" model="ViewBag.Categories" />
                 </div>
             </div>
-
-            <!-- Main Content -->
-            <div class="col-lg-10 col-md-9">
+            <!-- Content -->
+            <div class="col-lg-9">
                 <!-- Quick Search -->
-                <section class="search-section py-3 bg-dark text-white mb-3">
-                    <div class="container">
-                        <div class="row justify-content-center">
-                            <div class="col-lg-8">
-                                <form asp-action="QuickSearch" method="post" class="d-flex">
-                                    <div class="input-group">
-                                        <span class="input-group-text bg-danger text-white">
-                                            <i class="bi bi-search"></i>
-                                        </span>
-                                        <input type="text" name="searchTerm" class="form-control" placeholder="Tìm nồi chiên, máy xay, chảo chống dính...">
-                                        <button class="btn btn-danger px-3" type="submit">Tìm Ngay</button>
-                                    </div>
-                                </form>
-                            </div>
+                <div class="mb-4">
+                    <form asp-action="QuickSearch" method="post" class="d-flex">
+                        <div class="input-group">
+                            <input type="text" name="searchTerm" class="form-control" placeholder="Tìm kiếm sản phẩm..." />
+                            <button class="btn btn-danger" type="submit"><i class="bi bi-search"></i> Tìm</button>
                         </div>
-                    </div>
-                </section>
-
+                    </form>
+                </div>
                 <!-- Featured Products -->
-                <section id="featured-products" class="products-section">
-                    <div class="row align-items-center mb-3">
-                        <div class="col">
-                            <h2 class="fw-bold mb-0 fs-5">
-                                <i class="bi bi-fire text-danger me-2"></i>Sản Phẩm Nổi Bật
-                            </h2>
-                            <p class="text-muted mb-0">Những sản phẩm đang được yêu thích nhất tại BHGD Store</p>
-                        </div>
-                        <div class="col-auto">
-                            <a asp-controller="Product" asp-action="Index" class="btn btn-danger btn-sm">
-                                Xem Tất Cả <i class="bi bi-arrow-right ms-1"></i>
-                            </a>
-                        </div>
+                <div class="mb-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h4 class="fw-bold"><i class="bi bi-fire text-danger me-2"></i>Sản Phẩm Nổi Bật</h4>
+                        <a asp-controller="Product" asp-action="Index" class="btn btn-outline-danger btn-sm">Xem tất cả</a>
                     </div>
                     <div class="row">
                         @foreach (var item in Model.Take(8))
                         {
                             <div class="col-lg-3 col-md-4 col-sm-6 mb-3">
-                                <div class="product-card bg-white" style="border: 2px solid #000;">
-                                    <div class="position-relative overflow-hidden">
-                                        <img src="@(string.IsNullOrEmpty(item.ImageUrl) ? "/images/no-image.jpg" : item.ImageUrl)"
-                                             class="card-img-top" alt="@item.Name" style="height: 180px; object-fit: cover;">
-                                        @if (item.Price < 500000)
-                                        {
-                                            <span class="badge bg-danger position-absolute top-0 start-0 m-2">Giá Sốc</span>
-                                        }
-                                    </div>
-                                    <div class="p-2">
-                                        <h6 class="text-truncate fw-bold" title="@item.Name">@item.Name</h6>
-                                        <div class="price-section mb-2">
-                                            <span class="h6 text-danger fw-bold">@item.Price.ToString("#,##0")₫</span>
+                                <div class="product-card bg-white shadow-sm rounded">
+                                    <a asp-controller="Product" asp-action="Details" asp-route-id="@item.Id">
+                                        <div class="position-relative">
+                                            <img src="@(string.IsNullOrEmpty(item.ImageUrl) ? "/images/no-image.jpg" : item.ImageUrl)"
+                                                 class="card-img-top rounded-top" alt="@item.Name" style="height: 180px; object-fit: cover;" />
+                                            @if (item.Price < 500000)
+                                            {
+                                                <span class="badge bg-danger position-absolute top-0 start-0 m-2">Giá Sốc</span>
+                                            }
+                                        </div>
+                                    </a>
+                                    <div class="p-3">
+                                        <a asp-controller="Product" asp-action="Details" asp-route-id="@item.Id" class="text-dark">
+                                            <h6 class="text-truncate fw-bold">@item.Name</h6>
+                                        </a>
+                                        <div class="mb-2">
+                                            <span class="text-danger fw-bold">@item.Price.ToString("#,##0")₫</span>
                                             @if (item.Price > 200000)
                                             {
                                                 <small class="text-muted text-decoration-line-through ms-2">
@@ -97,78 +77,76 @@
                                                 </small>
                                             }
                                         </div>
-                                        <div class="rating mb-2">
+                                        <div class="mb-2">
                                             @for (int i = 0; i < 5; i++)
                                             {
                                                 <i class="bi bi-star-fill text-warning" style="font-size: 12px;"></i>
                                             }
                                             <small class="text-muted ms-1">(1k+)</small>
                                         </div>
-                                        @if (User.Identity.IsAuthenticated)
-                                        {
-                                            <form asp-controller="ShoppingCart" asp-action="AddToCart" method="post" class="d-inline">
-                                                <input type="hidden" name="productId" value="@item.Id" />
-                                                <input type="hidden" name="quantity" value="1" />
-                                                <button type="submit" class="btn btn-danger btn-sm w-100">
-                                                    <i class="bi bi-cart-plus me-1"></i>Thêm Vào Giỏ
-                                                </button>
-                                            </form>
-                                        }
-                                        else
-                                        {
-                                            <a asp-area="Identity" asp-page="/Account/Login" class="btn btn-outline-danger btn-sm w-100">
-                                                <i class="bi bi-box-arrow-in-right me-1"></i>Đăng Nhập Để Mua
-                                            </a>
-                                        }
+                                        <button type="button" class="btn btn-danger btn-sm w-100 add-to-cart-btn"
+                                                data-product-id="@item.Id" data-product-name="@item.Name">
+                                            <i class="bi bi-cart-plus me-1"></i>Thêm vào giỏ
+                                        </button>
                                     </div>
                                 </div>
                             </div>
                         }
                     </div>
-                </section>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Newsletter Section -->
-<section class="newsletter-section py-4 bg-danger text-white">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-lg-6">
-                <h3 class="fw-bold fs-5"><i class="bi bi-envelope-fill me-2"></i>Đăng Ký Nhận Khuyến Mãi</h3>
-                <p class="mb-0">Cập nhật ngay những ưu đãi hấp dẫn và sản phẩm mới từ BHGD Store!</p>
-            </div>
-            <div class="col-lg-6">
-                <div class="input-group">
-                    <input type="email" class="form-control" placeholder="Nhập email của bạn...">
-                    <button class="btn btn-dark" type="button">
-                        <i class="bi bi-send-fill me-1"></i>Đăng Ký
-                    </button>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<style>
-    .product-card {
-        transition: transform 0.2s ease;
-        border-radius: 8px;
-        overflow: hidden;
-    }
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            updateCartCount();
+            $('.add-to-cart-btn').click(function () {
+                var btn = $(this);
+                var productId = btn.data('product-id');
+                var productName = btn.data('product-name');
+                var quantity = 1;
+                btn.prop('disabled', true).html('<i class="bi bi-arrow-repeat spinner-border spinner-border-sm me-1"></i> Đang thêm...');
+                $.ajax({
+                    url: '@Url.Action("AddToCart", "ShoppingCart")',
+                    type: 'POST',
+                    data: {
+                        productId: productId,
+                        quantity: quantity,
+                        __RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val()
+                    },
+                    success: function (response) {
+                        showToast('success', `Đã thêm ${productName} vào giỏ hàng.`);
+                        updateCartCount();
+                        btn.prop('disabled', false).html('<i class="bi bi-cart-plus me-1"></i>Thêm vào giỏ');
+                    },
+                    error: function () {
+                        showToast('error', 'Lỗi khi thêm sản phẩm vào giỏ hàng.');
+                        btn.prop('disabled', false).html('<i class="bi bi-cart-plus me-1"></i>Thêm vào giỏ');
+                    }
+                });
+            });
+        });
 
-    .product-card:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
+        function showToast(type, message) {
+            var toastClass = type === 'success' ? 'alert-success' : 'alert-danger';
+            var icon = type === 'success' ? 'bi-check-circle' : 'bi-exclamation-circle';
+            var toast = `<div class="toast align-items-center ${toastClass} border-0 position-fixed" style="top: 20px; right: 20px; z-index: 9999;" role="alert">
+                        <div class="d-flex">
+                            <div class="toast-body"><i class="bi ${icon} me-2"></i>${message}</div>
+                            <button type="btn-close me-0 m-auto" data-bs-dismiss="toast"></button>
+                        </div>
+                    </div>`;
+            $('body').append(toast);
+            $('.toast').toast({ delay: 1000 }).toast('show');
+        }
 
-    .product-card h6 {
-        font-size: 14px;
-        min-height: 40px;
-    }
-
-    .price-section {
-        font-size: 14px;
-    }
-</style>
+        function updateCartCount() {
+            $.get('@Url.Action("GetCartItemCount", "ShoppingCart")', function (data) {
+                $('.cart-count').text(data.count);
+            });
+        }
+    </script>
+}

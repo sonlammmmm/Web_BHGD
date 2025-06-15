@@ -3,48 +3,8 @@
   "WorkspaceRootPath": "E:\\Web_BHGD\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A6418685-FD53-4E84-8DFE-508828CF1C98}|Web_BHGD\\Web_BHGD.csproj|e:\\web_bhgd\\web_bhgd\\controllers\\productcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A6418685-FD53-4E84-8DFE-508828CF1C98}|Web_BHGD\\Web_BHGD.csproj|solutionrelative:web_bhgd\\controllers\\productcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A6418685-FD53-4E84-8DFE-508828CF1C98}|Web_BHGD\\Web_BHGD.csproj|e:\\web_bhgd\\web_bhgd\\areas\\admin\\controllers\\productcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A6418685-FD53-4E84-8DFE-508828CF1C98}|Web_BHGD\\Web_BHGD.csproj|solutionrelative:web_bhgd\\areas\\admin\\controllers\\productcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A6418685-FD53-4E84-8DFE-508828CF1C98}|Web_BHGD\\Web_BHGD.csproj|e:\\web_bhgd\\web_bhgd\\areas\\admin\\controllers\\categoriescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A6418685-FD53-4E84-8DFE-508828CF1C98}|Web_BHGD\\Web_BHGD.csproj|solutionrelative:web_bhgd\\areas\\admin\\controllers\\categoriescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A6418685-FD53-4E84-8DFE-508828CF1C98}|Web_BHGD\\Web_BHGD.csproj|e:\\web_bhgd\\web_bhgd\\models\\productimage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A6418685-FD53-4E84-8DFE-508828CF1C98}|Web_BHGD\\Web_BHGD.csproj|solutionrelative:web_bhgd\\models\\productimage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A6418685-FD53-4E84-8DFE-508828CF1C98}|Web_BHGD\\Web_BHGD.csproj|e:\\web_bhgd\\web_bhgd\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A6418685-FD53-4E84-8DFE-508828CF1C98}|Web_BHGD\\Web_BHGD.csproj|solutionrelative:web_bhgd\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A6418685-FD53-4E84-8DFE-508828CF1C98}|Web_BHGD\\Web_BHGD.csproj|e:\\web_bhgd\\web_bhgd\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{A6418685-FD53-4E84-8DFE-508828CF1C98}|Web_BHGD\\Web_BHGD.csproj|solutionrelative:web_bhgd\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A6418685-FD53-4E84-8DFE-508828CF1C98}|Web_BHGD\\Web_BHGD.csproj|e:\\web_bhgd\\web_bhgd\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{A6418685-FD53-4E84-8DFE-508828CF1C98}|Web_BHGD\\Web_BHGD.csproj|solutionrelative:web_bhgd\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A6418685-FD53-4E84-8DFE-508828CF1C98}|Web_BHGD\\Web_BHGD.csproj|e:\\web_bhgd\\web_bhgd\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{A6418685-FD53-4E84-8DFE-508828CF1C98}|Web_BHGD\\Web_BHGD.csproj|solutionrelative:web_bhgd\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A6418685-FD53-4E84-8DFE-508828CF1C98}|Web_BHGD\\Web_BHGD.csproj|e:\\web_bhgd\\web_bhgd\\areas\\admin\\views\\product\\update.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{A6418685-FD53-4E84-8DFE-508828CF1C98}|Web_BHGD\\Web_BHGD.csproj|solutionrelative:web_bhgd\\areas\\admin\\views\\product\\update.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A6418685-FD53-4E84-8DFE-508828CF1C98}|Web_BHGD\\Web_BHGD.csproj|e:\\web_bhgd\\web_bhgd\\areas\\admin\\views\\product\\add.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{A6418685-FD53-4E84-8DFE-508828CF1C98}|Web_BHGD\\Web_BHGD.csproj|solutionrelative:web_bhgd\\areas\\admin\\views\\product\\add.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A6418685-FD53-4E84-8DFE-508828CF1C98}|Web_BHGD\\Web_BHGD.csproj|e:\\web_bhgd\\web_bhgd\\areas\\admin\\views\\categories\\add.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{A6418685-FD53-4E84-8DFE-508828CF1C98}|Web_BHGD\\Web_BHGD.csproj|solutionrelative:web_bhgd\\areas\\admin\\views\\categories\\add.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{A6418685-FD53-4E84-8DFE-508828CF1C98}|Web_BHGD\\Web_BHGD.csproj|e:\\web_bhgd\\web_bhgd\\models\\category.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A6418685-FD53-4E84-8DFE-508828CF1C98}|Web_BHGD\\Web_BHGD.csproj|solutionrelative:web_bhgd\\models\\category.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -54,21 +14,8 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 3,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "ProductController.cs",
-              "DocumentMoniker": "E:\\Web_BHGD\\Web_BHGD\\Controllers\\ProductController.cs",
-              "RelativeDocumentMoniker": "Web_BHGD\\Controllers\\ProductController.cs",
-              "ToolTip": "E:\\Web_BHGD\\Web_BHGD\\Controllers\\ProductController.cs",
-              "RelativeToolTip": "Web_BHGD\\Controllers\\ProductController.cs",
-              "ViewState": "AgIAAEcAAAAAAAAAAAAwwA4AAAAzAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-13T11:46:20.811Z",
-              "EditorCaption": ""
-            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{b1e99781-ab81-11d0-b683-00aa00a3ee26}"
@@ -83,125 +30,16 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "CategoriesController.cs",
-              "DocumentMoniker": "E:\\Web_BHGD\\Web_BHGD\\Areas\\Admin\\Controllers\\CategoriesController.cs",
-              "RelativeDocumentMoniker": "Web_BHGD\\Areas\\Admin\\Controllers\\CategoriesController.cs",
-              "ToolTip": "E:\\Web_BHGD\\Web_BHGD\\Areas\\Admin\\Controllers\\CategoriesController.cs",
-              "RelativeToolTip": "Web_BHGD\\Areas\\Admin\\Controllers\\CategoriesController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAEAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-13T11:49:16.858Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "ProductImage.cs",
-              "DocumentMoniker": "E:\\Web_BHGD\\Web_BHGD\\Models\\ProductImage.cs",
-              "RelativeDocumentMoniker": "Web_BHGD\\Models\\ProductImage.cs",
-              "ToolTip": "E:\\Web_BHGD\\Web_BHGD\\Models\\ProductImage.cs",
-              "RelativeToolTip": "Web_BHGD\\Models\\ProductImage.cs",
+              "DocumentIndex": 0,
+              "Title": "Category.cs",
+              "DocumentMoniker": "E:\\Web_BHGD\\Web_BHGD\\Models\\Category.cs",
+              "RelativeDocumentMoniker": "Web_BHGD\\Models\\Category.cs",
+              "ToolTip": "E:\\Web_BHGD\\Web_BHGD\\Models\\Category.cs",
+              "RelativeToolTip": "Web_BHGD\\Models\\Category.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-13T11:22:04.541Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "launchSettings.json",
-              "DocumentMoniker": "E:\\Web_BHGD\\Web_BHGD\\Properties\\launchSettings.json",
-              "RelativeDocumentMoniker": "Web_BHGD\\Properties\\launchSettings.json",
-              "ToolTip": "E:\\Web_BHGD\\Web_BHGD\\Properties\\launchSettings.json",
-              "RelativeToolTip": "Web_BHGD\\Properties\\launchSettings.json",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAAB0AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-06-13T11:07:14.847Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "appsettings.Development.json",
-              "DocumentMoniker": "E:\\Web_BHGD\\Web_BHGD\\appsettings.Development.json",
-              "RelativeDocumentMoniker": "Web_BHGD\\appsettings.Development.json",
-              "ToolTip": "E:\\Web_BHGD\\Web_BHGD\\appsettings.Development.json",
-              "RelativeToolTip": "Web_BHGD\\appsettings.Development.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-06-13T11:06:58.393Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Program.cs",
-              "DocumentMoniker": "E:\\Web_BHGD\\Web_BHGD\\Program.cs",
-              "RelativeDocumentMoniker": "Web_BHGD\\Program.cs",
-              "ToolTip": "E:\\Web_BHGD\\Web_BHGD\\Program.cs",
-              "RelativeToolTip": "Web_BHGD\\Program.cs",
-              "ViewState": "AgIAACAAAAAAAAAAAAAAwEEAAAAKAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-13T11:06:47.548Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "E:\\Web_BHGD\\Web_BHGD\\appsettings.json",
-              "RelativeDocumentMoniker": "Web_BHGD\\appsettings.json",
-              "ToolTip": "E:\\Web_BHGD\\Web_BHGD\\appsettings.json",
-              "RelativeToolTip": "Web_BHGD\\appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-06-13T11:06:42.274Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "Update.cshtml",
-              "DocumentMoniker": "E:\\Web_BHGD\\Web_BHGD\\Areas\\Admin\\Views\\Product\\Update.cshtml",
-              "RelativeDocumentMoniker": "Web_BHGD\\Areas\\Admin\\Views\\Product\\Update.cshtml",
-              "ToolTip": "E:\\Web_BHGD\\Web_BHGD\\Areas\\Admin\\Views\\Product\\Update.cshtml",
-              "RelativeToolTip": "Web_BHGD\\Areas\\Admin\\Views\\Product\\Update.cshtml",
-              "ViewState": "AgIAAGcAAAAAAAAAAAAtwHoAAAAuAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-06-13T10:48:32.066Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "ProductController.cs",
-              "DocumentMoniker": "E:\\Web_BHGD\\Web_BHGD\\Areas\\Admin\\Controllers\\ProductController.cs",
-              "RelativeDocumentMoniker": "Web_BHGD\\Areas\\Admin\\Controllers\\ProductController.cs",
-              "ToolTip": "E:\\Web_BHGD\\Web_BHGD\\Areas\\Admin\\Controllers\\ProductController.cs",
-              "RelativeToolTip": "Web_BHGD\\Areas\\Admin\\Controllers\\ProductController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-13T10:40:59.081Z",
+              "WhenOpened": "2025-06-15T19:58:43.8Z",
               "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "Add.cshtml",
-              "DocumentMoniker": "E:\\Web_BHGD\\Web_BHGD\\Areas\\Admin\\Views\\Categories\\Add.cshtml",
-              "RelativeDocumentMoniker": "Web_BHGD\\Areas\\Admin\\Views\\Categories\\Add.cshtml",
-              "ToolTip": "E:\\Web_BHGD\\Web_BHGD\\Areas\\Admin\\Views\\Categories\\Add.cshtml",
-              "RelativeToolTip": "Web_BHGD\\Areas\\Admin\\Views\\Categories\\Add.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-06-13T10:43:56.134Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "Add.cshtml",
-              "DocumentMoniker": "E:\\Web_BHGD\\Web_BHGD\\Areas\\Admin\\Views\\Product\\Add.cshtml",
-              "RelativeDocumentMoniker": "Web_BHGD\\Areas\\Admin\\Views\\Product\\Add.cshtml",
-              "ToolTip": "E:\\Web_BHGD\\Web_BHGD\\Areas\\Admin\\Views\\Product\\Add.cshtml",
-              "RelativeToolTip": "Web_BHGD\\Areas\\Admin\\Views\\Product\\Add.cshtml",
-              "ViewState": "AgIAADQAAAAAAAAAAAAhwEcAAABRAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-06-13T10:43:59.227Z"
             }
           ]
         },

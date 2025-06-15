@@ -29,6 +29,14 @@
       "PackagePath": "staticwebassets\\images\\images (2).jpg"
     },
     {
+      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\invoices\\Invoice.cs",
+      "PackagePath": "staticwebassets\\invoices\\Invoice.cs"
+    },
+    {
+      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\invoices\\Invoice.tex",
+      "PackagePath": "staticwebassets\\invoices\\Invoice.tex"
+    },
+    {
       "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\js\\site.js",
       "PackagePath": "staticwebassets\\js\\site.js"
     },

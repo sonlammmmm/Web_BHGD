@@ -1,5 +1,4 @@
-﻿```css
-/* General Styles */
+﻿/* _Layout.cshtml.css */
 html {
     font-size: 14px;
 }
@@ -11,11 +10,10 @@ html {
 }
 
 body {
-    margin-bottom: 0;
-    font-family: 'Arial', sans-serif;
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
 }
 
-/* Links */
 a {
     color: #dc3545;
     text-decoration: none;
@@ -25,30 +23,30 @@ a {
         color: #ffcc00;
     }
 
-/* Navbar */
-.navbar-brand {
-    font-size: 1.5rem;
-    font-weight: bold;
+header {
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.navbar {
+    background-color: #dc3545;
 }
 
 .navbar-nav .nav-link {
+    color: #fff !important;
+    padding: 0.75rem 1.25rem;
     font-weight: 500;
-    padding: 0.5rem 1rem;
 }
 
     .navbar-nav .nav-link:hover {
-        background-color: #ffcc00;
-        color: #212529 !important;
+        background-color: #c82333;
     }
 
-/* Buttons */
-.btn-primary {
+.btn-danger {
     background-color: #dc3545;
     border-color: #dc3545;
-    color: #fff;
 }
 
-    .btn-primary:hover {
+    .btn-danger:hover {
         background-color: #c82333;
         border-color: #c82333;
     }
@@ -63,86 +61,29 @@ a {
         border-color: #343a40;
     }
 
-/* Footer */
 .footer {
-    position: relative;
-    width: 100%;
+    background-color: #212529;
 }
 
-/* Borders and Shadows */
-.border-top {
-    border-top: 1px solid #e5e5e5;
-}
-
-.border-bottom {
-    border-bottom: 1px solid #e5e5e5;
-}
-
-.box-shadow {
-    box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.05);
-}
-
-/* Input Focus */
-.btn:focus, .btn:active:focus, .form-control:focus, .form-check-input:focus {
-    box-shadow: 0 0 0 0.1rem #fff, 0 0 0 0.25rem #dc3545;
-}
-
-/* Custom Styles for Vietnamese Theme */
-header {
-    border-bottom: 3px solid #dc3545;
-}
-
-.navbar {
-    border-top: 3px solid #000;
-}
-
-.sidebar {
-    border: 3px solid #dc3545;
-}
-
-.product-card, .category-card {
-    border: 2px solid #000;
+.product-card {
+    border: 1px solid #e5e5e5;
     transition: all 0.3s ease;
 }
 
-    .product-card:hover, .category-card:hover {
-        transform: scale(1.05);
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    .product-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     }
 
-/* Accordion for Sidebar */
-.accordion-button {
-    font-weight: bold;
-    transition: all 0.3s ease;
+.form-control:focus {
+    border-color: #dc3545;
+    box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
 }
 
-    .accordion-button:not(.collapsed) {
-        background-color: #dc3545;
-        color: #fff;
-    }
-
-.accordion-body {
-    padding: 0;
+.badge.bg-danger {
+    background-color: #dc3545 !important;
 }
 
-    .accordion-body a {
-        display: block;
-        padding: 0.5rem 1rem;
-        transition: all 0.3s ease;
-    }
-
-        .accordion-body a:hover {
-            background-color: #ffcc00;
-            color: #212529;
-        }
-
-        .accordion-body a.active {
-            background-color: #dc3545;
-            color: #fff;
-        }
-
-/* Sticky Sidebar */
 .sticky-top {
-    z-index: 1;
+    z-index: 1000;
 }
-

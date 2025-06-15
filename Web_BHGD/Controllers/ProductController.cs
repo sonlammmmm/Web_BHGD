@@ -16,38 +16,38 @@ namespace Web_BHGD.Controllers
             _categoryRepository = categoryRepository;
         }
 
-        // Hiển thị danh sách sản phẩm cho khách hàng
-        public async Task<IActionResult> Index(int? categoryId, string searchString, string sortOrder)
+        public async Task<IActionResult> Index(int? categoryId, string searchString, string sortOrder, int page = 1)
         {
-            var products = await _productRepository.GetAllAsync();
+            const int pageSize = 12; // 12 sản phẩm mỗi trang
 
-            // Lọc theo danh mục
-            if (categoryId.HasValue && categoryId.Value > 0)
-            {
-                products = products.Where(p => p.CategoryId == categoryId.Value);
-            }
-
-            // Tìm kiếm theo tên sản phẩm
-            if (!string.IsNullOrEmpty(searchString))
-            {
-                products = products.Where(p => p.Name.ToLower().Contains(searchString.ToLower()));
-            }
-
-            // Sắp xếp
-            products = sortOrder switch
-            {
-                "name_desc" => products.OrderByDescending(p => p.Name),
-                "price" => products.OrderBy(p => p.Price),
-                "price_desc" => products.OrderByDescending(p => p.Price),
-                _ => products.OrderBy(p => p.Name),
-            };
+            // Lấy sản phẩm với lọc, sắp xếp và phân trang
+            var (products, totalCount) = await _productRepository.GetFilteredAndPagedAsync(
+                categoryId, searchString, sortOrder, page, pageSize);
 
             // Chuẩn bị dữ liệu cho filter
             var categories = await _categoryRepository.GetAllAsync();
-            ViewBag.Categories = new SelectList(categories, "Id", "Name", categoryId);
+
+            // SelectList cho dropdown danh mục
+            var categoryList = new List<SelectListItem>
+            {
+                new SelectListItem { Value = "", Text = "Tất cả danh mục" }
+            };
+            categoryList.AddRange(categories.Select(c => new SelectListItem
+            {
+                Value = c.Id.ToString(),
+                Text = c.Name
+            }));
+            ViewBag.CategorySelectList = new SelectList(categoryList, "Value", "Text", categoryId?.ToString());
+
+            // Danh sách danh mục cho _CategoryMenu
+            ViewBag.CategoryList = categories;
+
+            // Các ViewBag khác
             ViewBag.CurrentFilter = searchString;
             ViewBag.CurrentSort = sortOrder;
             ViewBag.CurrentCategory = categoryId;
+            ViewBag.CurrentPage = page;
+            ViewBag.TotalPages = (int)Math.Ceiling(totalCount / (double)pageSize);
 
             return View(products);
         }
@@ -62,13 +62,9 @@ namespace Web_BHGD.Controllers
             }
 
             // Lấy danh sách sản phẩm liên quan (cùng danh mục)
-            var relatedProducts = await _productRepository.GetAllAsync();
-            ViewBag.RelatedProducts = relatedProducts
-                .Where(p => p.CategoryId == product.CategoryId && p.Id != id)
-                .Take(4)
-                .ToList();
+            ViewBag.RelatedProducts = await _productRepository.GetRelatedProductsAsync(product.CategoryId, product.Id, 4);
 
-            return View(product);
+            return View("Details", product);
         }
 
         // API để lấy sản phẩm theo danh mục (dùng cho Ajax)

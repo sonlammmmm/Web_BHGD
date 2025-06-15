@@ -4,61 +4,118 @@
     ViewData["Title"] = "Đăng ký";
 }
 
-<div class="container py-5">
-    <div class="row justify-content-center">
-        <div class="col-md-6 col-lg-5">
-            <div class="card shadow-lg border-0">
-                <div class="card-body p-4">
-                    <h2 class="text-center mb-4 fw-bold">Tạo tài khoản mới</h2>
-                    <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-                        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert" style="display: none;"></div>
-                        <div class="mb-3">
-                            <label asp-for="Input.FullName" class="form-label">Họ và tên</label>
-                            <input asp-for="Input.FullName" class="form-control rounded-pill" autocomplete="name" aria-required="true" placeholder="Nhập họ và tên" />
-                            <span asp-validation-for="Input.FullName" class="text-danger"></span>
-                        </div>
-                        <div class="mb-3">
-                            <label asp-for="Input.Email" class="form-label">Địa chỉ email</label>
-                            <input asp-for="Input.Email" class="form-control rounded-pill" autocomplete="username" aria-required="true" placeholder="Nhập email của bạn" />
-                            <span asp-validation-for="Input.Email" class="text-danger"></span>
-                        </div>
-                        <div class="mb-3">
-                            <label asp-for="Input.Password" class="form-label">Mật khẩu</label>
-                            <input asp-for="Input.Password" class="form-control rounded-pill" autocomplete="new-password" aria-required="true" placeholder="Tạo mật khẩu" />
-                            <span asp-validation-for="Input.Password" class="text-danger"></span>
-                        </div>
-                        <div class="mb-3">
-                            <label asp-for="Input.ConfirmPassword" class="form-label">Xác nhận mật khẩu</label>
-                            <input asp-for="Input.ConfirmPassword" class="form-control rounded-pill" autocomplete="new-password" aria-required="true" placeholder="Nhập lại mật khẩu" />
-                            <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
-                        </div>
-                        <div class="mb-4">
-                            <label asp-for="Input.Role" class="form-label">Vai trò</label>
-                            <select asp-for="Input.Role" asp-items="@Model.Input.RoleList" class="form-select rounded-pill">
-                                <option disabled selected>Chọn vai trò</option>
-                            </select>
-                        </div>
-                        <button id="registerSubmit" type="submit" class="btn btn-primary w-100 rounded-pill py-2">Đăng ký</button>
-                    </form>
-                    <div class="text-center mt-3">
-                        <p>Đã có tài khoản? <a asp-page="./Login" class="text-primary">Đăng nhập</a></p>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+<style>
+    body {
+        background-color: #eaf3fb;
+    }
+
+    .register-container {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .register-card {
+        background-color: white;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 0 30px rgba(0, 123, 255, 0.2);
+    }
+
+    .register-image {
+        background: url('https://media.istockphoto.com/id/1254771309/vi/anh/b%E1%BB%99-%C4%91%E1%BB%93-gia-d%E1%BB%A5ng-trong-nh%C3%A0-b%E1%BA%BFp.jpg?s=612x612&w=0&k=20&c=7eqiNNmZem8NmGU9ZRH0gqxyW7Z43nqs_YEexkN-zsk=') no-repeat center center;
+        background-size: cover;
+    }
+
+    .form-control:focus,
+    .form-select:focus {
+        border-color: #3399ff;
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    }
+
+    .btn-primary {
+        background-color: #3399ff;
+        border-color: #3399ff;
+    }
+
+    .btn-outline-secondary:hover {
+        background-color: #3399ff;
+        color: white;
+    }
+</style>
+
+<div class="container-fluid register-container">
+    <div class="row w-100" style="max-width: 1000px;">
+        <!-- LEFT: IMAGE -->
+        <div class="col-md-6 d-none d-md-block register-image"></div>
+
+        <!-- RIGHT: REGISTER FORM -->
+        <div class="col-md-6 p-4 register-card">
+            <div class="card-body">
+                <h2 class="text-center mb-4 fw-bold text-primary">Tạo tài khoản mới</h2>
+                <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                    <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert" style="display: none;"></div>
+
+                    <div class="mb-3">
+                        <label asp-for="Input.FullName" class="form-label">Họ và tên</label>
+                        <input asp-for="Input.FullName" class="form-control rounded-pill" autocomplete="name" aria-required="true" placeholder="Nhập họ và tên" />
+                        <span asp-validation-for="Input.FullName" class="text-danger"></span>
                     </div>
-                    @if (Model.ExternalLogins?.Count > 0)
-                    {
-                        <div class="text-center mt-4">
-                            <hr class="my-4">
-                            <h5>Hoặc đăng ký bằng</h5>
-                            <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-                                <div class="d-flex justify-content-center gap-2">
-                                    @foreach (var provider in Model.ExternalLogins!)
-                                    {
-                                        <button type="submit" class="btn btn-outline-secondary rounded-pill" name="provider" value="@provider.Name" title="Đăng ký bằng @provider.DisplayName">@provider.DisplayName</button>
-                                    }
-                                </div>
-                            </form>
-                        </div>
-                    }
+
+                    <div class="mb-3">
+                        <label asp-for="Input.Email" class="form-label">Địa chỉ email</label>
+                        <input asp-for="Input.Email" class="form-control rounded-pill" autocomplete="username" aria-required="true" placeholder="Nhập email của bạn" />
+                        <span asp-validation-for="Input.Email" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Input.Password" class="form-label">Mật khẩu</label>
+                        <input asp-for="Input.Password" class="form-control rounded-pill" autocomplete="new-password" aria-required="true" placeholder="Tạo mật khẩu" />
+                        <span asp-validation-for="Input.Password" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Input.ConfirmPassword" class="form-label">Xác nhận mật khẩu</label>
+                        <input asp-for="Input.ConfirmPassword" class="form-control rounded-pill" autocomplete="new-password" aria-required="true" placeholder="Nhập lại mật khẩu" />
+                        <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-4">
+                        <label asp-for="Input.Role" class="form-label">Vai trò</label>
+                        <select asp-for="Input.Role" asp-items="@Model.Input.RoleList" class="form-select rounded-pill">
+                            <option disabled selected>Chọn vai trò</option>
+                        </select>
+                        <span asp-validation-for="Input.Role" class="text-danger"></span>
+                    </div>
+
+                    <button id="registerSubmit" type="submit" class="btn btn-primary w-100 rounded-pill py-2">Đăng ký</button>
+                </form>
+
+                <div class="text-center mt-3">
+                    <p>Đã có tài khoản? <a asp-page="./Login" class="text-primary">Đăng nhập</a></p>
                 </div>
+
+                @if (Model.ExternalLogins?.Count > 0)
+                {
+                    <div class="text-center mt-4">
+                        <hr class="my-4">
+                        <h5>Hoặc đăng ký bằng</h5>
+                        <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                            <div class="d-flex justify-content-center gap-2 flex-wrap">
+                                @foreach (var provider in Model.ExternalLogins!)
+                                {
+                                    <button type="submit" class="btn btn-outline-secondary rounded-pill" name="provider" value="@provider.Name" title="Đăng ký bằng @provider.DisplayName">
+                                        @provider.DisplayName
+                                    </button>
+                                }
+                            </div>
+                        </form>
+                    </div>
+                }
             </div>
         </div>
     </div>
@@ -66,6 +123,4 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 }

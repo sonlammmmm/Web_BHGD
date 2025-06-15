@@ -1,281 +1,245 @@
 ﻿@model IEnumerable<Web_BHGD.Models.Product>
 @{
-    ViewData["Title"] = "Danh sách sản phẩm";
+    ViewData["Title"] = "Sản Phẩm - BHGD Store";
 }
 
-<div class="container my-4">
-    <!-- Page Header -->
-    <div class="row mb-4">
-        <div class="col">
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Trang chủ</a></li>
-                    <li class="breadcrumb-item active">Sản phẩm</li>
-                </ol>
-            </nav>
-            <h1 class="h2 mb-0">
-                <i class="bi bi-grid-3x3-gap text-primary me-2"></i>
-                Danh sách sản phẩm
-            </h1>
-            <p class="text-muted">Khám phá các sản phẩm gia dụng chất lượng cao</p>
-        </div>
+<!-- Breadcrumb -->
+<section class="bg-light py-3">
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-0">
+                <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Trang chủ</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Sản phẩm</li>
+            </ol>
+        </nav>
     </div>
+</section>
 
-    <!-- Filters and Search -->
-    <div class="row mb-4">
-        <div class="col-lg-12">
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <form method="get" asp-action="Index">
-                        <div class="row g-3 align-items-end">
-                            <!-- Search -->
+<!-- Main Content -->
+<section class="py-4">
+    <div class="container">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-lg-3 mb-4">
+                <div class="sticky-top" style="top: 20px;">
+                    <partial name="_CategoryMenu" model="ViewBag.CategoryList" />
+                </div>
+            </div>
+            <!-- Products -->
+            <div class="col-lg-9">
+                <!-- Filters -->
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                        <form method="get" asp-action="Index" class="row g-3 align-items-end">
                             <div class="col-md-4">
                                 <label class="form-label fw-semibold">Tìm kiếm</label>
                                 <div class="input-group">
-                                    <span class="input-group-text"><i class="bi bi-search"></i></span>
+                                    <span class="input-group-text bg-danger text-white"><i class="bi bi-search"></i></span>
                                     <input type="text" name="searchString" class="form-control"
-                                           placeholder="Nhập tên sản phẩm..."
-                                           value="@ViewBag.CurrentFilter">
+                                           placeholder="Tìm sản phẩm..." value="@ViewBag.CurrentFilter" />
                                 </div>
                             </div>
-
-                            <!-- Category Filter -->
                             <div class="col-md-3">
                                 <label class="form-label fw-semibold">Danh mục</label>
-                                @Html.DropDownList("categoryId", ViewBag.Categories as SelectList, "Tất cả danh mục",
-                                         new { @class = "form-select" })
+                                @Html.DropDownList("categoryId", ViewBag.CategorySelectList as SelectList, "Tất cả danh mục",
+                                         new { @class = "form-select", value = ViewBag.CurrentCategory })
                             </div>
-
-                            <!-- Sort -->
                             <div class="col-md-3">
                                 <label class="form-label fw-semibold">Sắp xếp</label>
                                 <select name="sortOrder" class="form-select">
-                                    <option value="">Tên A-Z</option>
-                                    <option value="name_desc" selected="@(ViewBag.CurrentSort == "name_desc")">Tên Z-A</option>
-                                    <option value="price" selected="@(ViewBag.CurrentSort == "price")">Giá thấp đến cao</option>
-                                    <option value="price_desc" selected="@(ViewBag.CurrentSort == "price_desc")">Giá cao đến thấp</option>
+                                    @{
+                                        var sortOptions = new Dictionary<string, string>
+                                    {
+                                    { "", "Tên A-Z" },
+                                    { "name_desc", "Tên Z-A" },
+                                    { "price", "Giá thấp đến cao" },
+                                    { "price_desc", "Giá cao đến thấp" }
+                                    };
+                                    }
+                                    @foreach (var option in sortOptions)
+                                    {
+                                        if (ViewBag.CurrentSort == option.Key)
+                                        {
+                                            <option value="@option.Key" selected>@option.Value</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@option.Key">@option.Value</option>
+                                        }
+                                    }
                                 </select>
                             </div>
-
-                            <!-- Submit Button -->
                             <div class="col-md-2">
-                                <button type="submit" class="btn btn-primary w-100">
+                                <button type="submit" class="btn btn-danger w-100">
                                     <i class="bi bi-funnel me-1"></i>Lọc
                                 </button>
                             </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
+
+                <!-- Product Grid -->
+                @if (!Model.Any())
+                {
+                    <div class="alert alert-warning text-center">
+                        Không tìm thấy sản phẩm nào. Vui lòng thay đổi bộ lọc hoặc tìm kiếm.
+                    </div>
+                }
+                else
+                {
+                    <div class="row">
+                        @foreach (var product in Model)
+                        {
+                            <div class="col-lg-4 col-md-6 mb-4">
+                                <div class="product-card bg-white shadow-sm rounded h-100">
+                                    <a asp-controller="Product" asp-action="Details" asp-route-id="@product.Id">
+                                        <div class="position-relative">
+                                            <img src="@(string.IsNullOrEmpty(product.ImageUrl) ? "/images/no-image.jpg" : product.ImageUrl)"
+                                                 class="card-img-top rounded-top" alt="@product.Name"
+                                                 style="height: 200px; object-fit: cover;" />
+                                            @if (product.Price < 500000)
+                                            {
+                                                <span class="badge bg-danger position-absolute top-0 start-0 m-2">Giá Sốc</span>
+                                            }
+                                        </div>
+                                    </a>
+                                    <div class="p-3 d-flex flex-column">
+                                        <a asp-controller="Product" asp-action="Details" asp-route-id="@product.Id" class="text-dark">
+                                            <h6 class="text-truncate fw-bold mb-2">@product.Name</h6>
+                                        </a>
+                                        <div class="mb-2">
+                                            <span class="text-danger fw-bold">@product.Price.ToString("#,##0")₫</span>
+                                            @if (product.Price > 200000)
+                                            {
+                                                <small class="text-muted text-decoration-line-through ms-2">
+                                                    @((product.Price * 1.2m).ToString("#,##0"))₫
+                                                </small>
+                                            }
+                                        </div>
+                                        <div class="mb-3">
+                                            @for (int i = 0; i < 5; i++)
+                                            {
+                                                <i class="bi bi-star-fill text-warning" style="font-size: 12px;"></i>
+                                            }
+                                            <small class="text-muted ms-1">(1k+)</small>
+                                        </div>
+                                        <button type="button" class="btn btn-danger btn-sm w-100 add-to-cart-btn mt-auto"
+                                                data-product-id="@product.Id" data-product-name="@product.Name">
+                                            <i class="bi bi-cart-plus me-1"></i>Thêm vào giỏ
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+
+                    <!-- Pagination -->
+                    <nav aria-label="Page navigation" class="mt-4">
+                        <ul class="pagination justify-content-center">
+                            @if (ViewBag.CurrentPage > 1)
+                            {
+                                <li class="page-item">
+                                    <a class="page-link" asp-action="Index"
+                                       asp-route-categoryId="@ViewBag.CurrentCategory"
+                                       asp-route-searchString="@ViewBag.CurrentFilter"
+                                       asp-route-sortOrder="@ViewBag.CurrentSort"
+                                       asp-route-page="@(ViewBag.CurrentPage - 1)">Trước</a>
+                                </li>
+                            }
+                            @for (int i = 1; i <= ViewBag.TotalPages; i++)
+                            {
+                                <li class="page-item @(i == ViewBag.CurrentPage ? "active" : "")">
+                                    <a class="page-link" asp-action="Index"
+                                       asp-route-categoryId="@ViewBag.CurrentCategory"
+                                       asp-route-searchString="@ViewBag.CurrentFilter"
+                                       asp-route-sortOrder="@ViewBag.CurrentSort"
+                                       asp-route-page="@i">@i</a>
+                                </li>
+                            }
+                            @if (ViewBag.CurrentPage < ViewBag.TotalPages)
+                            {
+                                <li class="page-item">
+                                    <a class="page-link" asp-action="Index"
+                                       asp-route-categoryId="@ViewBag.CurrentCategory"
+                                       asp-route-searchString="@ViewBag.CurrentFilter"
+                                       asp-route-sortOrder="@ViewBag.CurrentSort"
+                                       asp-route-page="@(ViewBag.CurrentPage + 1)">Sau</a>
+                                </li>
+                            }
+                        </ul>
+                    </nav>
+                }
             </div>
         </div>
     </div>
-
-    <!-- Products Grid -->
-    <div class="row">
-        @if (Model != null && Model.Any())
-        {
-            @foreach (var product in Model)
-            {
-                <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-                    <div class="product-card">
-                        <div class="card h-100 border-0 shadow-sm">
-                            <!-- Product Image -->
-                            <div class="position-relative overflow-hidden">
-                                <img src="@(string.IsNullOrEmpty(product.ImageUrl) ? "/images/no-image.jpg" : product.ImageUrl)"
-                                     class="card-img-top product-image" alt="@product.Name"
-                                     style="height: 250px; object-fit: cover; transition: transform 0.3s;">
-
-                                <!-- Quick View Overlay -->
-                                <div class="product-overlay position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center">
-                                    <a asp-action="Details" asp-route-id="@product.Id"
-                                       class="btn btn-light btn-sm rounded-pill shadow">
-                                        <i class="bi bi-eye me-1"></i> Xem chi tiết
-                                    </a>
-                                </div>
-
-                                <!-- Price Badge -->
-                                @if (product.Price < 500000)
-                                {
-                                    <div class="position-absolute top-0 start-0 m-2">
-                                        <span class="badge bg-success">Giá tốt</span>
-                                    </div>
-                                }
-                            </div>
-
-                            <div class="card-body d-flex flex-column">
-                                <!-- Product Name -->
-                                <h5 class="card-title text-truncate mb-2" title="@product.Name">@product.Name</h5>
-
-                                <!-- Category -->
-                                <p class="text-muted small mb-2">
-                                    <i class="bi bi-tag me-1"></i>@(product.Category?.Name ?? "Chưa phân loại")
-                                </p>
-
-                                <!-- Description -->
-                                <p class="card-text text-muted small mb-3" style="height: 40px; overflow: hidden;">
-                                    @(product.Description?.Length > 80 ? product.Description.Substring(0, 80) + "..." : product.Description)
-                                </p>
-
-                                <!-- Price -->
-                                <div class="price-section mb-3 mt-auto">
-                                    <span class="h5 text-primary fw-bold">@product.Price.ToString("N0")₫</span>
-                                    @if (product.Price > 200000)
-                                    {
-                                        <small class="text-muted text-decoration-line-through ms-2">
-                                            @((product.Price * 1.2m).ToString("N0"))₫
-                                        </small>
-                                    }
-                                </div>
-
-                                <!-- Rating -->
-                                <div class="rating mb-3">
-                                    @for (int i = 0; i < 5; i++)
-                                    {
-                                        <i class="bi bi-star-fill text-warning"></i>
-                                    }
-                                    <small class="text-muted ms-1">(4.8)</small>
-                                </div>
-
-                                <!-- Action Buttons -->
-                                <div class="d-grid gap-2">
-                                    @if (User.Identity.IsAuthenticated)
-                                    {
-                                        <button type="button" class="btn btn-primary add-to-cart-btn"
-                                                data-product-id="@product.Id"
-                                                data-product-name="@product.Name">
-                                            <i class="bi bi-cart-plus me-1"></i> Thêm vào giỏ
-                                        </button>
-                                    }
-                                    else
-                                    {
-                                        <a asp-area="Identity" asp-page="/Account/Login" class="btn btn-outline-primary">
-                                            <i class="bi bi-box-arrow-in-right me-1"></i> Đăng nhập để mua
-                                        </a>
-                                    }
-
-                                    <a asp-action="Details" asp-route-id="@product.Id" class="btn btn-outline-secondary btn-sm">
-                                        <i class="bi bi-info-circle me-1"></i> Chi tiết
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            }
-        }
-        else
-        {
-            <div class="col-12">
-                <div class="text-center py-5">
-                    <i class="bi bi-search display-1 text-muted"></i>
-                    <h3 class="mt-3">Không tìm thấy sản phẩm nào</h3>
-                    <p class="text-muted">Hãy thử thay đổi từ khóa tìm kiếm hoặc bộ lọc</p>
-                    <a asp-controller="Home" asp-action="Index" class="btn btn-primary">
-                        <i class="bi bi-arrow-left me-1"></i> Về trang chủ
-                    </a>
-                </div>
-            </div>
-        }
-    </div>
-</div>
+</section>
 
 <style>
     .product-card {
-        transition: transform 0.2s ease-in-out;
+        transition: transform 0.3s ease;
     }
 
         .product-card:hover {
             transform: translateY(-5px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
 
-    .product-overlay {
-        background: rgba(0,0,0,0.7);
-        opacity: 0;
-        transition: opacity 0.3s ease;
-    }
+        .product-card img {
+            transition: transform 0.3s ease;
+        }
 
-    .product-card:hover .product-overlay {
-        opacity: 1;
-    }
-
-    .product-card:hover .product-image {
-        transform: scale(1.05);
-    }
-
-    .card {
-        transition: box-shadow 0.3s ease;
-    }
-
-        .card:hover {
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15) !important;
+        .product-card:hover img {
+            transform: scale(1.05);
         }
 </style>
 
 @section Scripts {
     <script>
         $(document).ready(function () {
-            // Add to cart functionality
+            updateCartCount();
             $('.add-to-cart-btn').click(function () {
                 var btn = $(this);
                 var productId = btn.data('product-id');
                 var productName = btn.data('product-name');
-
-                // Disable button and show loading
-                btn.prop('disabled', true);
-                btn.html('<i class="bi bi-arrow-repeat spinner-border spinner-border-sm me-1"></i> Đang thêm...');
-
+                var quantity = 1;
+                btn.prop('disabled', true).html('<i class="bi bi-arrow-repeat spinner-border spinner-border-sm me-1"></i> Đang thêm...');
                 $.ajax({
                     url: '@Url.Action("AddToCart", "ShoppingCart")',
                     type: 'POST',
                     data: {
                         productId: productId,
-                        quantity: 1
+                        quantity: quantity,
+                        __RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val()
                     },
                     success: function (response) {
-                        if (response.success) {
-                            // Show success message
-                            showToast('success', response.message);
-
-                            // Update cart count in navbar
-                            updateCartCount();
-
-                            // Reset button
-                            btn.prop('disabled', false);
-                            btn.html('<i class="bi bi-cart-plus me-1"></i> Thêm vào giỏ');
-                        } else {
-                            showToast('error', 'Có lỗi xảy ra khi thêm sản phẩm vào giỏ hàng!');
-                            btn.prop('disabled', false);
-                            btn.html('<i class="bi bi-cart-plus me-1"></i> Thêm vào giỏ');
-                        }
+                        showToast('success', `Đã thêm ${productName} vào giỏ hàng.`);
+                        updateCartCount();
+                        btn.prop('disabled', false).html('<i class="bi bi-cart-plus me-1"></i>Thêm vào giỏ');
                     },
                     error: function () {
-                        showToast('error', 'Có lỗi xảy ra! Vui lòng thử lại.');
-                        btn.prop('disabled', false);
-                        btn.html('<i class="bi bi-cart-plus me-1"></i> Thêm vào giỏ');
+                        showToast('error', 'Lỗi khi thêm sản phẩm vào giỏ hàng.');
+                        btn.prop('disabled', false).html('<i class="bi bi-cart-plus me-1"></i>Thêm vào giỏ');
                     }
                 });
             });
         });
 
         function showToast(type, message) {
-            // Simple toast notification
             var toastClass = type === 'success' ? 'alert-success' : 'alert-danger';
+            var icon = type === 'success' ? 'bi-check-circle' : 'bi-exclamation-triangle';
             var toast = `<div class="alert ${toastClass} alert-dismissible fade show position-fixed"
                                     style="top: 20px; right: 20px; z-index: 9999; min-width: 300px;" role="alert">
-                                    ${message}
+                                    <i class="bi ${icon} me-2"></i>${message}
                                     <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                                  </div>`;
-
             $('body').append(toast);
-
-            // Auto dismiss after 3 seconds
             setTimeout(function () {
                 $('.alert').alert('close');
             }, 3000);
         }
 
         function updateCartCount() {
-            $.get('@Url.Action("GetCartCount", "ShoppingCart")', function (data) {
+            $.get('@Url.Action("GetCartItemCount", "ShoppingCart")', function (data) {
                 $('.cart-count').text(data.count);
             });
         }

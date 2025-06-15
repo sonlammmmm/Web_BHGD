@@ -1,0 +1,92 @@
+﻿@model Web_BHGD.Models.Order
+@{
+    ViewData["Title"] = $"Chi tiết đơn hàng #{Model.Id}";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="p-4">
+    <h2>Chi tiết đơn hàng #@Model.Id</h2>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success">@TempData["Success"]</div>
+    }
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger">@TempData["Error"]</div>
+    }
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h4 class="card-title">Thông tin khách hàng</h4>
+                    <p><strong>Tên:</strong> @(Model.ApplicationUser?.UserName ?? Model.CustomerName)</p>
+                    <p><strong>Điện thoại:</strong> @Model.CustomerPhone</p>
+                    <p><strong>Email:</strong> @Model.CustomerEmail</p>
+                    <p><strong>Địa chỉ:</strong> @Model.ShippingAddress</p>
+                    <p><strong>Ghi chú:</strong> @(string.IsNullOrEmpty(Model.Notes) ? "Không có" : Model.Notes)</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h4 class="card-title">Thông tin đơn hàng</h4>
+                    <p><strong>Mã đơn hàng:</strong> #@Model.Id</p>
+                    <p><strong>Ngày đặt:</strong> @Model.OrderDate.ToString("dd/MM/yyyy HH:mm")</p>
+                    <form asp-action="UpdateStatus" method="post">
+                        <input type="hidden" name="id" value="@Model.Id" />
+                        <div class="mb-3">
+                            <label class="form-label"><strong>Trạng thái:</strong></label>
+                            <select name="status" class="form-select">
+                                <option value="Pending" selected="@(Model.Status == "Pending")">Chưa thanh toán</option>
+                                <option value="Confirmed" selected="@(Model.Status == "Confirmed")">Đã thanh toán</option>
+                                <option value="Cancelled" selected="@(Model.Status == "Cancelled")">Đã hủy</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Cập nhật trạng thái</button>
+                    </form>
+                    <p><strong>Tổng tiền:</strong> @Model.TotalPrice.ToString("C0") VNĐ</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Danh sách sản phẩm</h4>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Sản phẩm</th>
+                        <th>Đơn giá</th>
+                        <th>Số lượng</th>
+                        <th>Thành tiền</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var detail in Model.OrderDetails)
+                    {
+                        <tr>
+                            <td>@detail.Product.Name</td>
+                            <td>@detail.Price.ToString("C0") VNĐ</td>
+                            <td>@detail.Quantity</td>
+                            <td>@((detail.Price * detail.Quantity).ToString("C0")) VNĐ</td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="3" class="text-end"><strong>Tổng cộng:</strong></td>
+                        <td>@Model.TotalPrice.ToString("C0") VNĐ</td>
+                    </tr>
+                </tfoot>
+            </table>
+            <div class="text-end">
+                <a asp-action="Index" class="btn btn-outline-primary">Quay lại</a>
+                <a asp-action="GenerateInvoice" asp-route-id="@Model.Id" class="btn btn-primary">In hóa đơn</a>
+            </div>
+        </div>
+    </div>
+</div>

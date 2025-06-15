@@ -23,6 +23,26 @@
     </div>
 </section>
 
+<!-- Notifications -->
+@if (TempData["Success"] != null)
+{
+    <div class="container mt-3">
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="bi bi-check-circle me-2"></i>@TempData["Success"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </div>
+}
+@if (TempData["Error"] != null)
+{
+    <div class="container mt-3">
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="bi bi-exclamation-triangle me-2"></i>@TempData["Error"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </div>
+}
+
 <!-- Categories Section -->
 <section class="categories-section py-4">
     <div class="container">
@@ -55,21 +75,19 @@
     </div>
 </section>
 
-@section Scripts {
-    <style>
-        .category-card {
-            transition: all 0.2s ease;
-            border-radius: 8px;
-            overflow: hidden;
+<style>
+    .category-card {
+        transition: all 0.2s ease;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+        .category-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
-            .category-card:hover {
-                transform: translateY(-4px);
-                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            }
-
-            .category-card h6 {
-                font-size: 14px;
-            }
-    </style>
-}
+        .category-card h6 {
+            font-size: 14px;
+        }
+</style>

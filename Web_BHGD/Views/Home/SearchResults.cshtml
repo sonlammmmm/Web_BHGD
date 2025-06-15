@@ -1,46 +1,40 @@
-﻿@model IEnumerable<Web_BHGD.Models.Product>
+﻿<!-- Views/Home/SearchResults.cshtml -->
+@model IEnumerable<Web_BHGD.Models.Product>
 @{
     ViewData["Title"] = "Kết Quả Tìm Kiếm - BHGD Store";
 }
 
-<!-- Page Header -->
-<section class="page-header py-5 bg-light">
+<!-- Breadcrumb -->
+<section class="py-4 bg-light">
     <div class="container">
-        <div class="row align-items-center">
-            <div class="col">
-                <h1 class="fw-bold mb-0">Kết Quả Tìm Kiếm</h1>
-                <p class="text-muted">
-                    Kết quả cho từ khóa: <strong>@ViewBag.SearchTerm</strong> (@(Model?.Count() ?? 0) sản phẩm)
-                </p>
-            </div>
-            <div class="col-auto">
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb mb-0">
-                        <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Trang chủ</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Tìm kiếm</li>
-                    </ol>
-                </nav>
-            </div>
-        </div>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Trang chủ</a></li>
+                <li class="breadcrumb-item active">Tìm kiếm</li>
+            </ol>
+        </nav>
+        <h2 class="fw-bold">Kết Quả Tìm Kiếm</h2>
+        <p class="text-muted">
+            Tìm thấy <strong>@(Model?.Count() ?? 0)</strong> sản phẩm cho từ khóa: <strong>@ViewBag.SearchTerm</strong>
+        </p>
     </div>
 </section>
 
 <!-- Search Results -->
-<section class="search-results py-5 bg-white">
+<section class="py-4">
     <div class="container">
         <div class="row">
-            <!-- Sidebar Categories -->
-            <div class="col-lg-3 col-md-4 mb-4">
-                <div class="sidebar bg-white p-4 sticky-top" style="border: 3px solid #dc3545; top: 20px;">
-                    <partial name="_CategoryMenu" model="ViewBag.Categories" />
+            <!-- Sidebar -->
+            <div class="col-lg-3 mb-4">
+                <div class="sticky-top" style="top: 20px;">
+                    <partial name="_CategoryMenu" />
                 </div>
             </div>
-
             <!-- Results -->
-            <div class="col-lg-9 col-md-8">
-                @if (Model == null || !Model.Any())
+            <div class="col-lg-9">
+                @if (!Model.Any())
                 {
-                    <div class="alert alert-warning text-center" role="alert">
+                    <div class="alert alert-warning text-center">
                         Không tìm thấy sản phẩm nào cho từ khóa "<strong>@ViewBag.SearchTerm</strong>".
                     </div>
                 }
@@ -49,20 +43,24 @@
                     <div class="row">
                         @foreach (var item in Model)
                         {
-                            <div class="col-lg-4 col-md-6 mb-4">
-                                <div class="product-card bg-white" style="border: 2px solid #000;">
-                                    <div class="position-relative overflow-hidden">
-                                        <img src="@(string.IsNullOrEmpty(item.ImageUrl) ? "/images/no-image.jpg" : item.ImageUrl)"
-                                             class="card-img-top" alt="@item.Name" style="height: 200px; object-fit: cover;">
-                                        @if (item.Price < 500000)
-                                        {
-                                            <span class="badge bg-danger position-absolute top-0 start-0 m-2">Giá Sốc</span>
-                                        }
-                                    </div>
+                            <div class="col-lg-4 col-md-6 mb-3">
+                                <div class="product-card bg-white shadow-sm rounded">
+                                    <a asp-controller="Product" asp-action="Details" asp-route-id="@item.Id">
+                                        <div class="position-relative">
+                                            <img src="@(string.IsNullOrEmpty(item.ImageUrl) ? "/images/no-image.jpg" : item.ImageUrl)"
+                                                 class="card-img-top rounded-top" alt="@item.Name" style="height: 200px; object-fit: cover;" />
+                                            @if (item.Price < 500000)
+                                            {
+                                                <span class="badge bg-danger position-absolute top-0 start-0 m-2">Giá Sốc</span>
+                                            }
+                                        </div>
+                                    </a>
                                     <div class="p-3">
-                                        <h6 class="text-truncate fw-bold" title="@item.Name">@item.Name</h6>
-                                        <div class="price-section mb-2">
-                                            <span class="h6 text-danger fw-bold">@item.Price.ToString("#,##0")₫</span>
+                                        <a asp-controller="Product" asp-action="Details" asp-route-id="@item.Id" class="text-dark">
+                                            <h6 class="text-truncate fw-bold">@item.Name</h6>
+                                        </a>
+                                        <div class="mb-2">
+                                            <span class="text-danger fw-bold">@item.Price.ToString("#,##0")₫</span>
                                             @if (item.Price > 200000)
                                             {
                                                 <small class="text-muted text-decoration-line-through ms-2">
@@ -70,29 +68,17 @@
                                                 </small>
                                             }
                                         </div>
-                                        <div class="rating mb-2">
+                                        <div class="mb-2">
                                             @for (int i = 0; i < 5; i++)
                                             {
-                                                <i class="bi bi-star-fill text-warning"></i>
+                                                <i class="bi bi-star-fill text-warning" style="font-size: 12px;"></i>
                                             }
                                             <small class="text-muted ms-1">(1k+)</small>
                                         </div>
-                                        @if (User.Identity.IsAuthenticated)
-                                        {
-                                            <form asp-controller="ShoppingCart" asp-action="AddToCart" method="post" class="d-inline">
-                                                <input type="hidden" name="productId" value="@item.Id" />
-                                                <input type="hidden" name="quantity" value="1" />
-                                                <button type="submit" class="btn btn-danger w-100">
-                                                    <i class="bi bi-cart-plus me-1"></i>Thêm Vào Giỏ
-                                                </button>
-                                            </form>
-                                        }
-                                        else
-                                        {
-                                            <a asp-area="Identity" asp-page="/Account/Login" class="btn btn-outline-danger w-100">
-                                                <i class="bi bi-box-arrow-in-right me-1"></i>Đăng Nhập Để Mua
-                                            </a>
-                                        }
+                                        <button type="button" class="btn btn-danger btn-sm w-100 add-to-cart-btn"
+                                                data-product-id="@item.Id" data-product-name="@item.Name">
+                                            <i class="bi bi-cart-plus me-1"></i>Thêm vào giỏ
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -103,3 +89,55 @@
         </div>
     </div>
 </section>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            updateCartCount();
+            $('.add-to-cart-btn').click(function () {
+                var btn = $(this);
+                var productId = btn.data('product-id');
+                var productName = btn.data('product-name');
+                var quantity = 1;
+                btn.prop('disabled', true).html('<i class="bi bi-arrow-repeat spinner-border spinner-border-sm me-1"></i> Đang thêm...');
+                $.ajax({
+                    url: '@Url.Action("AddToCart", "ShoppingCart")',
+                    type: 'POST',
+                    data: {
+                        productId: productId,
+                        quantity: quantity,
+                        __RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val()
+                    },
+                    success: function (response) {
+                        showToast('success', `Đã thêm ${productName} vào giỏ hàng.`);
+                        updateCartCount();
+                        btn.prop('disabled', false).html('<i class="bi bi-cart-plus me-1"></i>Thêm vào giỏ');
+                    },
+                    error: function () {
+                        showToast('error', 'Lỗi khi thêm sản phẩm vào giỏ hàng.');
+                        btn.prop('disabled', false).html('<i class="bi bi-cart-plus me-1"></i>Thêm vào giỏ');
+                    }
+                });
+            });
+        });
+
+        function showToast(type, message) {
+            var toastClass = type === 'success' ? 'alert-success' : 'alert-danger';
+            var icon = type === 'success' ? 'bi-check-circle' : 'bi-exclamation-circle';
+            var toast = `<div class="toast align-items-center ${toastClass} border-0 position-fixed" style="top: 20px; right: 20px; z-index: 9999;" role="alert">
+                        <div class="d-flex">
+                            <div class="toast-body"><i class="bi ${icon} me-2"></i>${message}</div>
+                            <button type="button" class="btn-close me-0 m-auto" data-bs-dismiss="toast"></button>
+                        </div>
+                    </div>`;
+            $('body').append(toast);
+            $('.toast').toast({ delay: 3000 }).toast('show');
+        }
+
+        function updateCartCount() {
+            $.get('@Url.Action("GetCartItemCount", "ShoppingCart")', function (data) {
+                $('.cart-count').text(data.count);
+            });
+        }
+    </script>
+}

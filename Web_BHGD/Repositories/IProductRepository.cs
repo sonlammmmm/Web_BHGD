@@ -1,4 +1,6 @@
 ﻿using Web_BHGD.Models;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Web_BHGD
 {
@@ -10,5 +12,8 @@ namespace Web_BHGD
         Task AddAsync(Product product);
         Task UpdateAsync(Product product);
         Task DeleteAsync(int id);
+        Task<IEnumerable<Product>> GetRelatedProductsAsync(int categoryId, int productId, int take);
+        Task<(IEnumerable<Product> Products, int TotalCount)> GetFilteredAndPagedAsync(
+            int? categoryId, string searchString, string sortOrder, int page, int pageSize); // Thêm mới
     }
 }

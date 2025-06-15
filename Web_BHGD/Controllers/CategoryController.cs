@@ -23,8 +23,8 @@ namespace Web_BHGD.Controllers
             var categories = await _categoryRepository.GetAllAsync();
             var products = await _productRepository.GetAllAsync();
 
-            // Gửi danh mục và số lượng sản phẩm trực tiếp qua ViewBag
             ViewBag.ProductCounts = categories.ToDictionary(c => c.Id, c => products.Count(p => p.CategoryId == c.Id));
+            ViewBag.Categories = categories;
 
             return View(categories);
         }

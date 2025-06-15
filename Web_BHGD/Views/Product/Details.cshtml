@@ -1,450 +1,304 @@
 ﻿@model Web_BHGD.Models.Product
 @{
-    ViewData["Title"] = "Chi tiết sản phẩm - " + Model.Name;
+    ViewData["Title"] = $"@Model.Name - BHGD Store";
 }
 
-<div class="container my-4">
-    <!-- Breadcrumb -->
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Trang chủ</a></li>
-            <li class="breadcrumb-item"><a asp-controller="Product" asp-action="Index">Sản phẩm</a></li>
-            <li class="breadcrumb-item active">@Model.Name</li>
-        </ol>
-    </nav>
+<!-- Breadcrumb -->
+<section class="bg-light py-3">
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-0">
+                <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Trang chủ</a></li>
+                <li class="breadcrumb-item"><a asp-controller="Product" asp-action="Index">Sản phẩm</a></li>
+                <li class="breadcrumb-item active">@Model.Name</li>
+            </ol>
+        </nav>
+    </div>
+</section>
 
-    <div class="row">
-        <!-- Product Images -->
-        <div class="col-lg-6 mb-4">
-            <div class="product-images">
-                <!-- Main Image -->
-                <div class="main-image mb-3">
-                    <img id="mainImage"
-                         src="@(string.IsNullOrEmpty(Model.ImageUrl) ? "/images/default_product.png" : Model.ImageUrl)"
-                         class="img-fluid rounded shadow"
-                         alt="@Model.Name"
-                         style="width: 100%; height: 400px; object-fit: cover;">
+<!-- Product Details -->
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <!-- Product Image -->
+            <div class="col-lg-6 mb-4">
+                <div class="main-image bg-white shadow-sm rounded p-3">
+                    <img src="@(string.IsNullOrEmpty(Model.ImageUrl) ? "/images/no-image.jpg" : Model.ImageUrl)"
+                         class="img-fluid rounded" alt="@Model.Name"
+                         style="width: 100%; height: 400px; object-fit: cover;" />
                 </div>
-
-                <!-- Thumbnail Images -->
-                @if (Model.Images != null && Model.Images.Any())
-                {
-                    <div class="thumbnails d-flex gap-2 flex-wrap">
-                        <img src="@Model.ImageUrl"
-                             class="img-thumbnail thumbnail-img active"
-                             style="width: 80px; height: 80px; object-fit: cover; cursor: pointer;"
-                             onclick="changeMainImage(this.src)">
-                        @foreach (var image in Model.Images.Take(4))
-                        {
-                            <img src="@image.Url"
-                                 class="img-thumbnail thumbnail-img"
-                                 style="width: 80px; height: 80px; object-fit: cover; cursor: pointer;"
-                                 onclick="changeMainImage(this.src)">
-                        }
-                    </div>
-                }
             </div>
-        </div>
-
-        <!-- Product Information -->
-        <div class="col-lg-6">
-            <div class="product-info">
-                <!-- Category -->
-                <div class="mb-2">
-                    <span class="badge bg-primary">
-                        <i class="bi bi-tag me-1"></i>@(Model.Category?.Name ?? "Chưa phân loại")
-                    </span>
+            <!-- Product Info -->
+            <div class="col-lg-6">
+                <h2 class="fw-bold mb-3">@Model.Name</h2>
+                <div class="mb-3">
+                    <span class="badge bg-primary">@(Model.Category?.Name ?? "Chưa phân loại")</span>
                 </div>
-
-                <!-- Product Name -->
-                <h1 class="display-6 fw-bold mb-3">@Model.Name</h1>
-
-                <!-- Rating -->
                 <div class="rating mb-3">
-                    <div class="d-flex align-items-center">
-                        @for (int i = 0; i < 5; i++)
-                        {
-                            <i class="bi bi-star-fill text-warning me-1"></i>
-                        }
-                        <span class="text-muted ms-2">(4.8 - 124 đánh giá)</span>
-                    </div>
+                    @for (int i = 0; i < 5; i++)
+                    {
+                        <i class="bi bi-star-fill text-warning me-1"></i>
+                    }
+                    <span class="text-muted ms-2">(1k+ đánh giá)</span>
                 </div>
-
-                <!-- Price -->
                 <div class="price-section mb-4">
-                    <div class="current-price">
-                        <span class="h2 text-primary fw-bold">@Model.Price.ToString("N0")₫</span>
-                        @if (Model.Price > 200000)
-                        {
-                            <span class="h5 text-muted text-decoration-line-through ms-3">
-                                @((Model.Price * 1.2m).ToString("N0"))₫
-                            </span>
-                            <span class="badge bg-danger ms-2">Giảm 20%</span>
-                        }
+                    <span class="h3 text-danger fw-bold">@Model.Price.ToString("#,##0")₫</span>
+                    @if (Model.Price > 200000)
+                    {
+                        <small class="text-muted text-decoration-line-through ms-2">
+                            @((Model.Price * 1.2m).ToString("#,##0"))₫
+                        </small>
+                        <span class="badge bg-danger ms-2">Giảm 20%</span>
+                    }
+                </div>
+                <div class="quantity-section mb-4">
+                    <label class="form-label fw-semibold">Số lượng:</label>
+                    <div class="input-group w-50">
+                        <button class="btn btn-outline-secondary" type="button" onclick="decreaseQuantity()">
+                            <i class="bi bi-dash"></i>
+                        </button>
+                        <input type="number" id="quantity" class="form-control text-center" value="1" min="1" max="99" />
+                        <button class="btn btn-outline-secondary" type="button" onclick="increaseQuantity()">
+                            <i class="bi bi-plus"></i>
+                        </button>
                     </div>
-                    <small class="text-muted">Đã bao gồm VAT</small>
                 </div>
-
-                <!-- Product Features -->
-                <div class="features mb-4">
-                    <h5 class="mb-3">Đặc điểm nổi bật:</h5>
-                    <ul class="list-unstyled">
-                        <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>Chất lượng cao, bền bỉ</li>
-                        <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>Thiết kế hiện đại, tiện dụng</li>
-                        <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>Bảo hành chính hãng 12 tháng</li>
-                        <li class="mb-2"><i class="bi bi-check-circle text-success me-2"></i>Giao hàng miễn phí toàn quốc</li>
-                    </ul>
+                <div class="d-flex gap-3 mb-4">
+                    <button type="button" class="btn btn-danger flex-fill add-to-cart-btn"
+                            data-product-id="@Model.Id" data-product-name="@Model.Name">
+                        <i class="bi bi-cart-plus me-2"></i>Thêm vào giỏ
+                    </button>
+                    <button type="button" class="btn btn-success flex-fill buy-now-btn"
+                            data-product-id="@Model.Id" data-product-name="@Model.Name">
+                        <i class="bi bi-lightning me-2"></i>Mua ngay
+                    </button>
                 </div>
-
-                <!-- Quantity and Add to Cart -->
-                <div class="purchase-section">
-                    @if (User.Identity.IsAuthenticated)
-                    {
-                        <div class="row g-3 mb-4">
-                            <div class="col-md-4">
-                                <label class="form-label">Số lượng:</label>
-                                <div class="input-group">
-                                    <button class="btn btn-outline-secondary" type="button" onclick="decreaseQuantity()">
-                                        <i class="bi bi-dash"></i>
-                                    </button>
-                                    <input type="number" id="quantity" class="form-control text-center" value="1" min="1" max="99">
-                                    <button class="btn btn-outline-secondary" type="button" onclick="increaseQuantity()">
-                                        <i class="bi bi-plus"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="d-grid gap-2 d-md-flex">
-                            <button type="button"
-                                    class="btn btn-primary btn-lg flex-fill add-to-cart-btn"
-                                    data-product-id="@Model.Id"
-                                    data-product-name="@Model.Name">
-                                <i class="bi bi-cart-plus me-2"></i>Thêm vào giỏ hàng
-                            </button>
-                            <button type="button" class="btn btn-success btn-lg flex-fill">
-                                <i class="bi bi-lightning me-2"></i>Mua ngay
-                            </button>
-                        </div>
-                    }
-                    else
-                    {
-                        <div class="alert alert-info">
-                            <i class="bi bi-info-circle me-2"></i>
-                            <a asp-area="Identity" asp-page="/Account/Login" class="alert-link">Đăng nhập</a>
-                            để thêm sản phẩm vào giỏ hàng
-                        </div>
-                    }
-                </div>
-
-                <!-- Additional Info -->
-                <div class="additional-info mt-4">
+                <div class="additional-info border-top pt-3">
                     <div class="row text-center">
                         <div class="col-4">
-                            <i class="bi bi-truck text-primary h4"></i>
-                            <p class="small mb-0">Giao hàng nhanh</p>
+                            <i class="bi bi-truck text-danger h4"></i>
+                            <p class="small mb-0">Giao hàng miễn phí</p>
                         </div>
                         <div class="col-4">
                             <i class="bi bi-shield-check text-success h4"></i>
                             <p class="small mb-0">Bảo hành 12 tháng</p>
                         </div>
                         <div class="col-4">
-                            <i class="bi bi-arrow-repeat text-info h4"></i>
+                            <i class="bi bi-arrow-repeat text-primary h4"></i>
                             <p class="small mb-0">Đổi trả 7 ngày</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Product Tabs -->
-    <div class="row mt-5">
-        <div class="col-12">
-            <ul class="nav nav-tabs" id="productTabs" role="tablist">
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link active" id="description-tab" data-bs-toggle="tab"
-                            data-bs-target="#description" type="button" role="tab">
-                        <i class="bi bi-info-circle me-1"></i>Mô tả sản phẩm
-                    </button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="specifications-tab" data-bs-toggle="tab"
-                            data-bs-target="#specifications" type="button" role="tab">
-                        <i class="bi bi-list-ul me-1"></i>Thông số kỹ thuật
-                    </button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="reviews-tab" data-bs-toggle="tab"
-                            data-bs-target="#reviews" type="button" role="tab">
-                        <i class="bi bi-star me-1"></i>Đánh giá (124)
-                    </button>
-                </li>
-            </ul>
-
-            <div class="tab-content" id="productTabsContent">
-                <!-- Description Tab -->
-                <div class="tab-pane fade show active" id="description" role="tabpanel">
-                    <div class="py-4">
-                        <h5>Mô tả chi tiết</h5>
-                        <p class="lead">@Model.Description</p>
-                        <p>Sản phẩm @Model.Name là một trong những sản phẩm gia dụng chất lượng cao, được thiết kế với công nghệ hiện đại và chất liệu bền bỉ. Sản phẩm mang lại sự tiện ích và hiệu quả cao trong việc sử dụng hàng ngày.</p>
-
-                        <h6>Ưu điểm nổi bật:</h6>
-                        <ul>
-                            <li>Chất liệu cao cấp, an toàn cho sức khỏe</li>
-                            <li>Thiết kế thông minh, dễ sử dụng</li>
-                            <li>Tiết kiệm thời gian và công sức</li>
-                            <li>Bảo hành chính hãng, hỗ trợ tận tình</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Specifications Tab -->
-                <div class="tab-pane fade" id="specifications" role="tabpanel">
-                    <div class="py-4">
-                        <h5>Thông số kỹ thuật</h5>
-                        <table class="table table-striped">
-                            <tbody>
-                                <tr>
-                                    <td class="fw-bold">Tên sản phẩm</td>
-                                    <td>@Model.Name</td>
-                                </tr>
-                                <tr>
-                                    <td class="fw-bold">Danh mục</td>
-                                    <td>@(Model.Category?.Name ?? "Chưa phân loại")</td>
-                                </tr>
-                                <tr>
-                                    <td class="fw-bold">Giá bán</td>
-                                    <td class="text-primary fw-bold">@Model.Price.ToString("N0")₫</td>
-                                </tr>
-                                <tr>
-                                    <td class="fw-bold">Bảo hành</td>
-                                    <td>12 tháng</td>
-                                </tr>
-                                <tr>
-                                    <td class="fw-bold">Xuất xứ</td>
-                                    <td>Việt Nam</td>
-                                </tr>
-                                <tr>
-                                    <td class="fw-bold">Thương hiệu</td>
-                                    <td>BHGD Store</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <!-- Reviews Tab -->
-                <div class="tab-pane fade" id="reviews" role="tabpanel">
-                    <div class="py-4">
-                        <h5>Đánh giá khách hàng</h5>
-
-                        <!-- Rating Summary -->
-                        <div class="row mb-4">
-                            <div class="col-md-4">
-                                <div class="text-center">
-                                    <div class="display-4 text-warning">4.8</div>
-                                    <div class="rating">
-                                        @for (int i = 0; i < 5; i++)
-                                        {
-                                            <i class="bi bi-star-fill text-warning"></i>
-                                        }
-                                    </div>
-                                    <p class="text-muted">124 đánh giá</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Sample Reviews -->
-                        <div class="review-item border-bottom pb-3 mb-3">
-                            <div class="d-flex align-items-center mb-2">
-                                <strong>Nguyễn Văn A</strong>
-                                <div class="rating ms-3">
-                                    @for (int i = 0; i < 5; i++)
-                                    {
-                                        <i class="bi bi-star-fill text-warning"></i>
-                                    }
-                                </div>
-                                <small class="text-muted ms-auto">2 ngày trước</small>
-                            </div>
-                            <p>Sản phẩm rất tốt, chất lượng như mô tả. Giao hàng nhanh, đóng gói cẩn thận. Sẽ ủng hộ shop lần sau!</p>
-                        </div>
-
-                        <div class="review-item border-bottom pb-3 mb-3">
-                            <div class="d-flex align-items-center mb-2">
-                                <strong>Trần Thị B</strong>
-                                <div class="rating ms-3">
-                                    @for (int i = 0; i < 4; i++)
-                                    {
-                                        <i class="bi bi-star-fill text-warning"></i>
-                                    }
-                                    <i class="bi bi-star text-warning"></i>
-                                </div>
-                                <small class="text-muted ms-auto">1 tuần trước</small>
-                            </div>
-                            <p>Sản phẩm ổn, dùng được. Giá cả hợp lý. Chỉ hơi lâu ship thôi.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Related Products -->
-    @if (ViewBag.RelatedProducts != null && ((List<Web_BHGD.Models.Product>)ViewBag.RelatedProducts).Any())
-    {
+        <!-- Tabs -->
         <div class="row mt-5">
             <div class="col-12">
-                <h3 class="mb-4">Sản phẩm liên quan</h3>
-                <div class="row">
-                    @foreach (var relatedProduct in (List<Web_BHGD.Models.Product>)ViewBag.RelatedProducts)
-                    {
-                        <div class="col-lg-3 col-md-6 mb-4">
-                            <div class="card h-100 border-0 shadow-sm">
-                                <img src="@(string.IsNullOrEmpty(relatedProduct.ImageUrl) ? "/images/default_product.png" : relatedProduct.ImageUrl)"
-                                     class="card-img-top" alt="@relatedProduct.Name"
-                                     style="height: 200px; object-fit: cover;">
-                                <div class="card-body">
-                                    <h6 class="card-title text-truncate">@relatedProduct.Name</h6>
-                                    <p class="text-primary fw-bold">@relatedProduct.Price.ToString("N0")₫</p>
-                                    <a asp-action="Details" asp-route-id="@relatedProduct.Id"
-                                       class="btn btn-outline-primary btn-sm">
-                                        Xem chi tiết
-                                    </a>
-                                </div>
-                            </div>
+                <ul class="nav nav-tabs" id="productTabs">
+                    <li class="nav-item">
+                        <button class="nav-link active" id="description-tab" data-bs-toggle="tab"
+                                data-bs-target="#description">
+                            Mô tả
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link" id="specifications-tab" data-bs-toggle="tab"
+                                data-bs-target="#specifications">
+                            Thông số
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link" id="reviews-tab" data-bs-toggle="tab"
+                                data-bs-target="#reviews">
+                            Đánh giá
+                        </button>
+                    </li>
+                </ul>
+                <div class="tab-content p-4 border rounded-bottom shadow-sm">
+                    <div class="tab-pane fade show active" id="description">
+                        <h5>Mô tả sản phẩm</h5>
+                        <p>@(string.IsNullOrEmpty(Model.Description) ? "Chưa có mô tả." : Model.Description)</p>
+                        <p>Sản phẩm chất lượng cao, thiết kế hiện đại, phù hợp với mọi gia đình.</p>
+                    </div>
+                    <div class="tab-pane fade" id="specifications">
+                        <h5>Thông số kỹ thuật</h5>
+                        <table class="table">
+                            <tr><th>Tên sản phẩm</th><td>@Model.Name</td></tr>
+                            <tr><th>Danh mục</th><td>@(Model.Category?.Name ?? "Chưa phân loại")</td></tr>
+                            <tr><th>Giá</th><td>@Model.Price.ToString("#,##0")₫</td></tr>
+                            <tr><th>Bảo hành</th><td>12 tháng</td></tr>
+                        </table>
+                    </div>
+                    <div class="tab-pane fade" id="reviews">
+                        <h5>Đánh giá khách hàng</h5>
+                        <div class="text-center mb-4">
+                            <h3 class="text-warning">4.8</h3>
+                            <div>@for (int i = 0; i < 5; i++)
+                                {
+                                    <i class="bi bi-star-fill text-warning"></i>
+                                }</div>
+                            <p class="text-muted">1k+ đánh giá</p>
                         </div>
-                    }
+                        <div class="p-3 bg-light rounded mb-3">
+                            <p><strong>Nguyễn Văn A</strong> - 5 sao - Sản phẩm tuyệt vời, giao hàng nhanh!</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    }
-</div>
+
+        <!-- Related Products -->
+        @if (ViewBag.RelatedProducts != null && ((List<Web_BHGD.Models.Product>)ViewBag.RelatedProducts).Any())
+        {
+            <div class="row mt-5">
+                <div class="col-12">
+                    <h4 class="fw-bold mb-4">Sản phẩm liên quan</h4>
+                    <div class="row">
+                        @foreach (var related in (List<Web_BHGD.Models.Product>)ViewBag.RelatedProducts)
+                        {
+                            <div class="col-lg-3 col-md-6 mb-4">
+                                <div class="product-card bg-white shadow-sm rounded">
+                                    <a asp-controller="Product" asp-action="Details" asp-route-id="@related.Id">
+                                        <img src="@(string.IsNullOrEmpty(related.ImageUrl) ? "/images/no-image.jpg" : related.ImageUrl)"
+                                             class="card-img-top rounded-top" alt="@related.Name"
+                                             style="height: 180px; object-fit: cover;" />
+                                    </a>
+                                    <div class="p-3">
+                                        <a asp-controller="Product" asp-action="Details" asp-route-id="@related.Id" class="text-dark">
+                                            <h6 class="text-truncate fw-bold">@related.Name</h6>
+                                        </a>
+                                        <div class="mb-2">
+                                            <span class="text-danger fw-bold">@related.Price.ToString("#,##0")₫</span>
+                                        </div>
+                                        <button type="button" class="btn btn-danger btn-sm w-100 add-to-cart-btn"
+                                                data-product-id="@related.Id" data-product-name="@related.Name">
+                                            <i class="bi bi-cart-plus me-1"></i>Thêm vào giỏ
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</section>
 
 <style>
-    .thumbnail-img {
-        transition: all 0.3s ease;
-        border: 2px solid transparent;
-    }
-
-        .thumbnail-img:hover,
-        .thumbnail-img.active {
-            border-color: #0d6efd;
-            opacity: 0.8;
-        }
-
-    .product-images .main-image img {
+    .main-image img {
         transition: transform 0.3s ease;
     }
 
-    .product-images .main-image:hover img {
+    .main-image:hover img {
         transform: scale(1.05);
     }
 
     .nav-tabs .nav-link {
-        border: none;
-        color: #6c757d;
+        color: #212529;
         font-weight: 500;
     }
 
         .nav-tabs .nav-link.active {
-            background-color: #fff;
-            border-bottom: 2px solid #0d6efd;
-            color: #0d6efd;
+            color: #dc3545;
+            border-bottom-color: #dc3545;
         }
-
-    .review-item {
-        background-color: #f8f9fa;
-        padding: 1rem;
-        border-radius: 0.5rem;
-        margin-bottom: 1rem;
-    }
 </style>
 
 @section Scripts {
     <script>
         $(document).ready(function () {
-            // Add to cart functionality
+            updateCartCount();
+
+            // Add to cart
             $('.add-to-cart-btn').click(function () {
                 var btn = $(this);
                 var productId = btn.data('product-id');
                 var productName = btn.data('product-name');
-                var quantity = parseInt($('#quantity').val());
-
-                // Disable button and show loading
-                btn.prop('disabled', true);
-                btn.html('<i class="bi bi-arrow-repeat spinner-border spinner-border-sm me-2"></i>Đang thêm...');
-
+                var quantity = parseInt($('#quantity').val()) || 1;
+                if (quantity < 1 || quantity > 99) {
+                    showToast('error', 'Số lượng phải từ 1 đến 99.');
+                    return;
+                }
+                btn.prop('disabled', true).html('<i class="bi bi-arrow-repeat spinner-border spinner-border-sm me-1"></i> Đang thêm...');
                 $.ajax({
                     url: '@Url.Action("AddToCart", "ShoppingCart")',
                     type: 'POST',
                     data: {
                         productId: productId,
-                        quantity: quantity
+                        quantity: quantity,
+                        __RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val()
                     },
-                    success: function (response) {
-                        if (response.success) {
-                            showToast('success', `Đã thêm ${quantity} ${productName} vào giỏ hàng!`);
-                            updateCartCount();
-                        } else {
-                            showToast('error', 'Có lỗi xảy ra khi thêm sản phẩm vào giỏ hàng!');
-                        }
-
-                        // Reset button
-                        btn.prop('disabled', false);
-                        btn.html('<i class="bi bi-cart-plus me-2"></i>Thêm vào giỏ hàng');
+                    success: function () {
+                        showToast('success', `Đã thêm ${productName} vào giỏ hàng.`);
+                        updateCartCount();
+                        btn.prop('disabled', false).html('<i class="bi bi-cart-plus me-1"></i>Thêm vào giỏ');
                     },
                     error: function () {
-                        showToast('error', 'Có lỗi xảy ra! Vui lòng thử lại.');
-                        btn.prop('disabled', false);
-                        btn.html('<i class="bi bi-cart-plus me-2"></i>Thêm vào giỏ hàng');
+                        showToast('error', 'Lỗi khi thêm sản phẩm vào giỏ hàng.');
+                        btn.prop('disabled', false).html('<i class="bi bi-cart-plus me-1"></i>Thêm vào giỏ');
+                    }
+                });
+            });
+
+            // Buy now
+            $('.buy-now-btn').click(function () {
+                var btn = $(this);
+                var productId = btn.data('product-id');
+                var productName = btn.data('product-name');
+                var quantity = parseInt($('#quantity').val()) || 1;
+                if (quantity < 1 || quantity > 99) {
+                    showToast('error', 'Số lượng phải từ 1 đến 99.');
+                    return;
+                }
+                btn.prop('disabled', true).html('<i class="bi bi-arrow-repeat spinner-border spinner-border-sm me-1"></i> Đang xử lý...');
+                $.ajax({
+                    url: '@Url.Action("AddToCart", "ShoppingCart")',
+                    type: 'POST',
+                    data: {
+                        productId: productId,
+                        quantity: quantity,
+                        __RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val()
+                    },
+                    success: function () {
+                        window.location.href = '@Url.Action("Checkout", "ShoppingCart")';
+                    },
+                    error: function () {
+                        showToast('error', 'Lỗi khi xử lý. Vui lòng thử lại.');
+                        btn.prop('disabled', false).html('<i class="bi bi-lightning me-2"></i>Mua ngay');
                     }
                 });
             });
         });
 
-        function changeMainImage(src) {
-            $('#mainImage').attr('src', src);
-            $('.thumbnail-img').removeClass('active');
-            $(`img[src="${src}"]`).addClass('active');
-        }
-
         function increaseQuantity() {
             var qty = parseInt($('#quantity').val());
-            if (qty < 99) {
-                $('#quantity').val(qty + 1);
-            }
+            if (qty < 99) $('#quantity').val(qty + 1);
         }
 
         function decreaseQuantity() {
             var qty = parseInt($('#quantity').val());
-            if (qty > 1) {
-                $('#quantity').val(qty - 1);
-            }
+            if (qty > 1) $('#quantity').val(qty - 1);
         }
 
         function showToast(type, message) {
             var toastClass = type === 'success' ? 'alert-success' : 'alert-danger';
             var icon = type === 'success' ? 'bi-check-circle' : 'bi-exclamation-triangle';
-
             var toast = `<div class="alert ${toastClass} alert-dismissible fade show position-fixed"
-                                        style="top: 20px; right: 20px; z-index: 9999; min-width: 350px;" role="alert">
-                                        <i class="bi ${icon} me-2"></i>${message}
-                                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                                     </div>`;
-
+                                    style="top: 20px; right: 20px; z-index: 9999; min-width: 300px;" role="alert">
+                                    <i class="bi ${icon} me-2"></i>${message}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                                 </div>`;
             $('body').append(toast);
-
-            // Auto dismiss after 4 seconds
             setTimeout(function () {
                 $('.alert').alert('close');
-            }, 4000);
+            }, 3000);
         }
 
         function updateCartCount() {
-            $.get('@Url.Action("GetCartItemCount", "ShoppingCart")', function (count) {
-                $('.cart-count').text(count);
+            $.get('@Url.Action("GetCartItemCount", "ShoppingCart")', function (data) {
+                $('.cart-count').text(data.count);
             });
         }
     </script>
