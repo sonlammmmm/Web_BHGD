@@ -6,7 +6,7 @@
     <title>@ViewData["Title"] - Admin Panel</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
 </head>
 <body>
     <main>
@@ -49,15 +49,15 @@
                                     <span class="badge bg-secondary ms-auto">Order</span>
                                 </a>
 
+                                <a class="nav-link text-white-50" asp-controller="User" asp-action="Index">
+                                    <i class="fas fa-users me-2"></i>
+                                    Người dùng
+                                    <span class="badge bg-secondary ms-auto">User</span>
+                                </a>
+
                                 <hr class="text-white-50">
 
                                 <h6 class="text-white-50 text-uppercase small mb-3">Hệ thống</h6>
-
-                                <a class="nav-link text-white-50" href="#" id="users-link">
-                                    <i class="fas fa-users me-2"></i>
-                                    Người dùng
-                                    <small class="text-muted d-block">Sắp có</small>
-                                </a>
 
                                 <a class="nav-link text-white-50" href="#" id="reports-link">
                                     <i class="fas fa-chart-bar me-2"></i>

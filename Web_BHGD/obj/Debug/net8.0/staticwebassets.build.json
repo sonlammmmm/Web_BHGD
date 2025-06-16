@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "6peZqgcO/Mv4jLmj/3O1iC369NQP2+QvBpph8AO+uYM=",
+  "Hash": "ifC4Qnig91IiAZ66zzllaHfLtIccnmtllSh84slK4d8=",
   "Source": "Web_BHGD",
   "BasePath": "_content/Web_BHGD",
   "Mode": "Default",
@@ -1193,6 +1193,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "E:\\Web_BHGD\\Web_BHGD\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\Web_BHGD.bundle.scp.css"
+    },
+    {
+      "Identity": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\css\\admin.css",
+      "SourceId": "Web_BHGD",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\",
+      "BasePath": "_content/Web_BHGD",
+      "RelativePath": "css/admin.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\admin.css"
     },
     {
       "Identity": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\css\\site.css",

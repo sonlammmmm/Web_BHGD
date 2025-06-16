@@ -1,0 +1,44 @@
+﻿@model Web_BHGD.Areas.Admin.Models.UserViewModel
+@{
+    ViewData["Title"] = "Chi tiết người dùng";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2 class="mb-4">Chi tiết người dùng</h2>
+
+<div class="card">
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">Họ tên</dt>
+            <dd class="col-sm-9">@Model.FullName</dd>
+
+            <dt class="col-sm-3">Email</dt>
+            <dd class="col-sm-9">@Model.Email</dd>
+
+            <dt class="col-sm-3">Số điện thoại</dt>
+            <dd class="col-sm-9">@Model.PhoneNumber</dd>
+
+            <dt class="col-sm-3">Địa chỉ</dt>
+            <dd class="col-sm-9">@Model.Address</dd>
+
+            <dt class="col-sm-3">Tuổi</dt>
+            <dd class="col-sm-9">@Model.Age</dd>
+
+            <dt class="col-sm-3">Vai trò</dt>
+            <dd class="col-sm-9">@string.Join(", ", Model.Roles)</dd>
+
+            <dt class="col-sm-3">Trạng thái</dt>
+            <dd class="col-sm-9">
+                @if (Model.IsLocked)
+                {
+                    <span class="text-danger fw-bold">Bị khóa</span>
+                }
+                else
+                {
+                    <span class="text-success">Hoạt động</span>
+                }
+            </dd>
+        </dl>
+        <a asp-action="Index" class="btn btn-secondary">Quay lại danh sách</a>
+    </div>
+</div>

@@ -1,37 +1,32 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using Web_BHGD.Models
-
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 
-<ul class="navbar-nav ms-auto align-items-center">
-    @if (SignInManager.IsSignedIn(User))
-    {
-        <li class="nav-item dropdown">
-            <a class="nav-link text-dark dropdown-toggle d-flex align-items-center" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="bi bi-person-circle me-2"></i>Xin chào, @UserManager.GetUserName(User)!
-            </a>
-            <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0" aria-labelledby="userDropdown">
-                <li><a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index">Quản lý tài khoản</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li>
-                    <a class="dropdown-item text-danger" href="#" onclick="event.preventDefault(); document.getElementById('logoutForm').submit();">Đăng xuất</a>
+@if (SignInManager.IsSignedIn(User))
+{
+    <div class="dropdown">
+        <a class="nav-link dropdown-toggle text-white" href="#" role="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="bi bi-person-circle me-1"></i> @User.Identity?.Name
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="userDropdown">
+            <li><a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index"><i class="bi bi-person-lines-fill me-1"></i> Thông tin cá nhân</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li>
+                <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="/" method="post" class="d-inline">
+                    <button type="submit" class="dropdown-item"><i class="bi bi-box-arrow-right me-1"></i> Đăng xuất</button>
+                </form>
+            </li>
+        </ul>
+    </div>
+}
+else
+{
+    <a class="nav-link text-white" asp-area="Identity" asp-page="/Account/Login">
+        <i class="bi bi-box-arrow-in-right me-1"></i> Đăng nhập
+    </a>
+}
 
-                    <form id="logoutForm" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" method="post" style="display: none;"></form>
-                </li>
-            </ul>
-        </li>
-    }
-    else
-    {
-        <li class="nav-item">
-            <a class="nav-link btn btn-outline-primary me-2 px-4" asp-area="Identity" asp-page="/Account/Login">Đăng nhập</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link btn btn-primary text-white px-4" asp-area="Identity" asp-page="/Account/Register">Đăng ký</a>
-        </li>
-    }
-</ul>
 
 @section Scripts {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

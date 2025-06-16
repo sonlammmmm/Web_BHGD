@@ -1,47 +1,15 @@
 ﻿@model IEnumerable<Web_BHGD.Models.Category>
 
-@{
-    var categories = Model ?? ViewBag.Categories as IEnumerable<Web_BHGD.Models.Category> ?? Enumerable.Empty<Category>();
-    var currentCategoryId = ViewBag.CurrentCategoryId ?? 0;
-}
-
-
-<div class="card shadow-sm">
-    <div class="card-header bg-danger text-white">
-        <h5 class="mb-0">Danh mục sản phẩm</h5>
-    </div>
-    <div class="card-body p-0">
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item">
-                <a asp-controller="Product" asp-action="Index" class="text-dark">Tất cả danh mục</a>
+<div class="category-menu bg-white shadow-sm rounded">
+    <h5 class="category-header px-3 py-2 fw-bold text-uppercase text-primary mb-0">Danh mục sản phẩm</h5>
+    <ul class="list-unstyled mb-0">
+        @foreach (var category in Model)
+        {
+            <li>
+                <a asp-action="Index" asp-controller="Product" asp-route-categoryId="@category.Id" class="category-link d-block px-3 py-2">
+                    @category.Name
+                </a>
             </li>
-            @foreach (var category in Model)
-            {
-                <li class="list-group-item">
-                    <a asp-controller="Product" asp-action="Index" asp-route-categoryId="@category.Id" class="text-dark">@category.Name</a>
-                </li>
-            }
-        </ul>
-    </div>
-</div>
-
-<style>
-    .category-sidebar {
-        border-radius: 8px;
-    }
-
-        .category-sidebar a {
-            text-decoration: none;
-            transition: all 0.2s ease;
         }
-
-            .category-sidebar a:hover {
-                background-color: #ffcc00;
-                color: #212529;
-            }
-
-            .category-sidebar a.bg-danger:hover {
-                background-color: #c82333;
-                color: #fff;
-            }
-</style>
+    </ul>
+</div>

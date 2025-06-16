@@ -5,6 +5,10 @@
       "PackagePath": "staticwebassets\\Web_BHGD.bundle.scp.css"
     },
     {
+      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\css\\admin.css",
+      "PackagePath": "staticwebassets\\css\\admin.css"
+    },
+    {
       "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\css\\site.css",
       "PackagePath": "staticwebassets\\css\\site.css"
     },
