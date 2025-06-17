@@ -38,20 +38,35 @@ namespace Web_BHGD.Controllers
         {
             if (productId <= 0)
             {
+                if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+                {
+                    return Json(new { success = false, message = "ID sản phẩm không hợp lệ." });
+                }
                 TempData["Error"] = "ID sản phẩm không hợp lệ.";
                 return RedirectToAction("Index", "Product");
             }
+
             if (quantity <= 0 || quantity > 99)
             {
+                if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+                {
+                    return Json(new { success = false, message = "Số lượng phải từ 1 đến 99." });
+                }
                 TempData["Error"] = "Số lượng phải từ 1 đến 99.";
                 return RedirectToAction("Details", "Product", new { id = productId });
             }
+
             var product = await _productRepository.GetByIdAsync(productId);
             if (product == null)
             {
+                if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+                {
+                    return Json(new { success = false, message = "Sản phẩm không tồn tại." });
+                }
                 TempData["Error"] = "Sản phẩm không tồn tại.";
                 return RedirectToAction("Index", "Product");
             }
+
             try
             {
                 var cartItem = new CartItem
@@ -61,14 +76,33 @@ namespace Web_BHGD.Controllers
                     Price = product.Price,
                     Quantity = quantity
                 };
+
                 var cart = HttpContext.Session.GetObjectFromJson<ShoppingCart>("Cart") ?? new ShoppingCart();
                 cart.AddItem(cartItem);
                 HttpContext.Session.SetObjectAsJson("Cart", cart);
+
+                // Trả về JSON cho AJAX request
+                if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+                {
+                    var itemCount = cart.Items.Sum(i => i.Quantity);
+                    return Json(new
+                    {
+                        success = true,
+                        message = $"Đã thêm {product.Name} vào giỏ hàng.",
+                        itemCount = itemCount
+                    });
+                }
+
+                // Redirect cho request thường
                 TempData["Success"] = $"Đã thêm {product.Name} vào giỏ hàng.";
                 return RedirectToAction("Details", "Product", new { id = productId });
             }
             catch (Exception ex)
             {
+                if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+                {
+                    return Json(new { success = false, message = $"Lỗi khi thêm sản phẩm: {ex.Message}" });
+                }
                 TempData["Error"] = $"Lỗi khi thêm sản phẩm: {ex.Message}";
                 return RedirectToAction("Details", "Product", new { id = productId });
             }
@@ -145,7 +179,7 @@ namespace Web_BHGD.Controllers
                 TempData["Error"] = "Giỏ hàng của bạn đang trống.";
                 return RedirectToAction("Index");
             }
-
+            
             var order = new Order
             {
                 OrderDate = DateTime.UtcNow,

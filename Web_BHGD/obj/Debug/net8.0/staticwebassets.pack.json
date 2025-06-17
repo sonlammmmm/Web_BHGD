@@ -1,10 +1,6 @@
 {
   "Files": [
     {
-      "Id": "E:\\Web_BHGD\\Web_BHGD\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\Web_BHGD.bundle.scp.css",
-      "PackagePath": "staticwebassets\\Web_BHGD.bundle.scp.css"
-    },
-    {
       "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\css\\admin.css",
       "PackagePath": "staticwebassets\\css\\admin.css"
     },
@@ -41,8 +37,8 @@
       "PackagePath": "staticwebassets\\invoices\\Invoice.tex"
     },
     {
-      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\js\\site.js",
-      "PackagePath": "staticwebassets\\js\\site.js"
+      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\js\\cart-manager.js",
+      "PackagePath": "staticwebassets\\js\\cart-manager.js"
     },
     {
       "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\LICENSE",

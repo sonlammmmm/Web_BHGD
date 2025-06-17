@@ -22,16 +22,26 @@ namespace Web_BHGD.Controllers
 
         public async Task<IActionResult> Index()
         {
-            // Lấy sản phẩm nổi bật (có thể là sản phẩm mới nhất, bán chạy, v.v.)
+            // Lấy tất cả sản phẩm
             var allProducts = await _productRepository.GetAllAsync();
-            var featuredProducts = allProducts.Take(8).ToList(); // Hiển thị 8 sản phẩm đầu tiên
 
-            // Lấy danh mục để hiển thị menu
+            // Lấy 8 sản phẩm nổi bật (có thể tùy chỉnh theo tiêu chí như mới nhất, bán chạy, v.v.)
+            var featuredProducts = allProducts.Take(8).ToList();
+
+            // Lấy tất cả danh mục
             var categories = await _categoryRepository.GetAllAsync();
 
+            // Tính số lượng sản phẩm trong mỗi danh mục
+            var productCounts = allProducts
+                .GroupBy(p => p.CategoryId)
+                .ToDictionary(g => g.Key, g => g.Count());
+
+            // Truyền dữ liệu vào ViewBag
             ViewBag.Categories = categories;
+            ViewBag.ProductCounts = productCounts;
             ViewBag.FeaturedProducts = featuredProducts;
 
+            // Trả về danh sách tất cả sản phẩm làm model
             return View(allProducts.ToList());
         }
 

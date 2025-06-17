@@ -8,7 +8,7 @@
     <div class="container">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
-                <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Trang chủ</a></li>
+                <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index" class="text-primary">Trang chủ</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Sản phẩm</li>
             </ol>
         </nav>
@@ -28,25 +28,25 @@
             <!-- Products -->
             <div class="col-lg-9">
                 <!-- Filters -->
-                <div class="card mb-4 shadow-sm">
+                <div class="card mb-4 shadow-sm border-primary">
                     <div class="card-body">
                         <form method="get" asp-action="Index" class="row g-3 align-items-end">
                             <div class="col-md-4">
-                                <label class="form-label fw-semibold">Tìm kiếm</label>
+                                <label class="form-label fw-semibold text-dark">Tìm kiếm</label>
                                 <div class="input-group">
-                                    <span class="input-group-text bg-danger text-white"><i class="bi bi-search"></i></span>
-                                    <input type="text" name="searchString" class="form-control"
+                                    <span class="input-group-text bg-primary text-white"><i class="bi bi-search"></i></span>
+                                    <input type="text" name="searchString" class="form-control border-primary"
                                            placeholder="Tìm sản phẩm..." value="@ViewBag.CurrentFilter" />
                                 </div>
                             </div>
                             <div class="col-md-3">
-                                <label class="form-label fw-semibold">Danh mục</label>
-                                @Html.DropDownList("categoryId", ViewBag.CategorySelectList as SelectList, "Tất cả danh mục",
-                                         new { @class = "form-select", value = ViewBag.CurrentCategory })
+                                <label class="form-label fw-semibold text-dark">Danh mục</label>
+                                @Html.DropDownList("categoryId", ViewBag.CategorySelectList as SelectList, "-- Chọn danh mục --",
+                                         new { @class = "form-select border-primary", value = ViewBag.CurrentCategory })
                             </div>
                             <div class="col-md-3">
-                                <label class="form-label fw-semibold">Sắp xếp</label>
-                                <select name="sortOrder" class="form-select">
+                                <label class="form-label fw-semibold text-dark">Sắp xếp</label>
+                                <select name="sortOrder" class="form-select border-primary">
                                     @{
                                         var sortOptions = new Dictionary<string, string>
                                     {
@@ -70,7 +70,7 @@
                                 </select>
                             </div>
                             <div class="col-md-2">
-                                <button type="submit" class="btn btn-danger w-100">
+                                <button type="submit" class="btn btn-primary w-100">
                                     <i class="bi bi-funnel me-1"></i>Lọc
                                 </button>
                             </div>
@@ -99,7 +99,7 @@
                                                  style="height: 200px; object-fit: cover;" />
                                             @if (product.Price < 500000)
                                             {
-                                                <span class="badge bg-danger position-absolute top-0 start-0 m-2">Giá Sốc</span>
+                                                <span class="badge bg-primary text-white position-absolute top-0 start-0 m-2">Giá Sốc</span>
                                             }
                                         </div>
                                     </a>
@@ -108,7 +108,7 @@
                                             <h6 class="text-truncate fw-bold mb-2">@product.Name</h6>
                                         </a>
                                         <div class="mb-2">
-                                            <span class="text-danger fw-bold">@product.Price.ToString("#,##0")₫</span>
+                                            <span class="text-primary fw-bold">@product.Price.ToString("#,##0")₫</span>
                                             @if (product.Price > 200000)
                                             {
                                                 <small class="text-muted text-decoration-line-through ms-2">
@@ -123,7 +123,7 @@
                                             }
                                             <small class="text-muted ms-1">(1k+)</small>
                                         </div>
-                                        <button type="button" class="btn btn-danger btn-sm w-100 add-to-cart-btn mt-auto"
+                                        <button type="button" class="btn btn-primary btn-sm w-100 add-to-cart-btn mt-auto"
                                                 data-product-id="@product.Id" data-product-name="@product.Name">
                                             <i class="bi bi-cart-plus me-1"></i>Thêm vào giỏ
                                         </button>
@@ -139,7 +139,7 @@
                             @if (ViewBag.CurrentPage > 1)
                             {
                                 <li class="page-item">
-                                    <a class="page-link" asp-action="Index"
+                                    <a class="page-link text-primary" asp-action="Index"
                                        asp-route-categoryId="@ViewBag.CurrentCategory"
                                        asp-route-searchString="@ViewBag.CurrentFilter"
                                        asp-route-sortOrder="@ViewBag.CurrentSort"
@@ -149,7 +149,7 @@
                             @for (int i = 1; i <= ViewBag.TotalPages; i++)
                             {
                                 <li class="page-item @(i == ViewBag.CurrentPage ? "active" : "")">
-                                    <a class="page-link" asp-action="Index"
+                                    <a class="page-link @(i == ViewBag.CurrentPage ? "text-white" : "text-primary")" asp-action="Index"
                                        asp-route-categoryId="@ViewBag.CurrentCategory"
                                        asp-route-searchString="@ViewBag.CurrentFilter"
                                        asp-route-sortOrder="@ViewBag.CurrentSort"
@@ -159,7 +159,7 @@
                             @if (ViewBag.CurrentPage < ViewBag.TotalPages)
                             {
                                 <li class="page-item">
-                                    <a class="page-link" asp-action="Index"
+                                    <a class="page-link text-primary" asp-action="Index"
                                        asp-route-categoryId="@ViewBag.CurrentCategory"
                                        asp-route-searchString="@ViewBag.CurrentFilter"
                                        asp-route-sortOrder="@ViewBag.CurrentSort"
@@ -176,12 +176,13 @@
 
 <style>
     .product-card {
-        transition: transform 0.3s ease;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        box-shadow: 0 2px 8px rgba(var(--bs-primary-rgb), 0.1);
     }
 
         .product-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 6px 12px rgba(var(--bs-primary-rgb), 0.2);
         }
 
         .product-card img {
@@ -191,57 +192,24 @@
         .product-card:hover img {
             transform: scale(1.05);
         }
+
+    .pagination .page-link:hover {
+        background-color: var(--bs-primary);
+        color: #fff;
+        border-color: var(--bs-primary);
+    }
+
+    .pagination .page-item.active .page-link {
+        background-color: var(--bs-primary);
+        border-color: var(--bs-primary);
+        color: #fff;
+    }
 </style>
 
 @section Scripts {
     <script>
         $(document).ready(function () {
-            updateCartCount();
-            $('.add-to-cart-btn').click(function () {
-                var btn = $(this);
-                var productId = btn.data('product-id');
-                var productName = btn.data('product-name');
-                var quantity = 1;
-                btn.prop('disabled', true).html('<i class="bi bi-arrow-repeat spinner-border spinner-border-sm me-1"></i> Đang thêm...');
-                $.ajax({
-                    url: '@Url.Action("AddToCart", "ShoppingCart")',
-                    type: 'POST',
-                    data: {
-                        productId: productId,
-                        quantity: quantity,
-                        __RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val()
-                    },
-                    success: function (response) {
-                        showToast('success', `Đã thêm ${productName} vào giỏ hàng.`);
-                        updateCartCount();
-                        btn.prop('disabled', false).html('<i class="bi bi-cart-plus me-1"></i>Thêm vào giỏ');
-                    },
-                    error: function () {
-                        showToast('error', 'Lỗi khi thêm sản phẩm vào giỏ hàng.');
-                        btn.prop('disabled', false).html('<i class="bi bi-cart-plus me-1"></i>Thêm vào giỏ');
-                    }
-                });
-            });
+            console.log('Product Index page loaded - CartManager handling all cart operations');
         });
-
-        function showToast(type, message) {
-            var toastClass = type === 'success' ? 'alert-success' : 'alert-danger';
-            var icon = type === 'success' ? 'bi-check-circle' : 'bi-exclamation-triangle';
-            var toast = `<div class="alert ${toastClass} alert-dismissible fade show position-fixed"
-                                    style="top: 20px; right: 20px; z-index: 9999; min-width: 300px;" role="alert">
-                                    <i class="bi ${icon} me-2"></i>${message}
-                                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                                 </div>`;
-            $('body').append(toast);
-            setTimeout(function () {
-                $('.alert').alert('close');
-            }, 3000);
-        }
-
-        function updateCartCount() {
-            $.get('@Url.Action("GetCartItemCount", "ShoppingCart")', function (data) {
-                $('.cart-count').text(data.count);
-            });
-        }
     </script>
 }

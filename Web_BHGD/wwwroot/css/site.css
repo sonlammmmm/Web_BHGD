@@ -1,22 +1,100 @@
-html {
-  font-size: 14px;
+﻿html {
+    font-size: 14px;
+    height: 100%; /* Đảm bảo html chiếm toàn bộ chiều cao */
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem rgba(var(--bs-primary-rgb), 0.25);
 }
 
 body {
-  margin-bottom: 60px;
+    margin: 0;
+    height: 100%; /* Đảm bảo body chiếm toàn bộ chiều cao */
+    display: flex;
+    flex-direction: column;
 }
+
+.main-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%; /* Đảm bảo wrapper chiếm toàn bộ chiều cao */
+    min-height: 100vh; /* Đảm bảo tối thiểu toàn màn hình */
+}
+
+.main-content {
+    flex: 1 0 auto; /* Cho phép nội dung chính mở rộng và không co lại dưới min-height */
+}
+
+footer {
+    flex-shrink: 0; /* Ngăn footer co lại */
+}
+
+:root {
+    --bs-primary: #FF6200;
+    --bs-primary-rgb: 255, 98, 0;
+    --bs-primary-dark: #e65b00; /* Màu cam đậm cho hover */
+}
+
+.btn-primary, .badge.bg-primary {
+    background-color: var(--bs-primary) !important;
+    border-color: var(--bs-primary) !important;
+}
+
+    .btn-primary:hover, .badge.bg-primary:hover {
+        background-color: var(--bs-primary-dark) !important;
+        border-color: var(--bs-primary-dark) !important;
+    }
+
+.btn-outline-primary {
+    color: var(--bs-primary);
+    border-color: var(--bs-primary);
+}
+
+    .btn-outline-primary:hover {
+        background-color: var(--bs-primary-dark);
+        color: #fff;
+    }
+
+.navbar-brand, .text-primary {
+    color: var(--bs-primary) !important;
+}
+
+    .navbar-brand:hover, .text-primary:hover {
+        color: var(--bs-primary-dark) !important;
+    }
+
+.bg-primary {
+    background-color: var(--bs-primary) !important;
+}
+
+.search-box input {
+    border-radius: 5px 0 0 5px;
+}
+
+.search-box button {
+    border-radius: 0 5px 5px 0;
+}
+
+.navbar-nav .nav-link {
+    color: #000 !important;
+    font-weight: 500;
+}
+
+    .navbar-nav .nav-link:hover {
+        color: var(--bs-primary) !important;
+    }
+
+.form-control.border-primary, .form-select.border-primary {
+    border-color: var(--bs-primary);
+}
+
+    .form-control.border-primary:focus, .form-select.border-primary:focus {
+        border-color: var(--bs-primary-dark);
+        box-shadow: 0 0 0 0.25rem rgba(var(--bs-primary-rgb), 0.25);
+    }

@@ -240,7 +240,8 @@
                     updateQuantity(input.data('product-id'), quantity, input);
                 } else {
                     input.val(1);
-                    showToast('error', 'Số lượng phải từ 1 đến 99.');
+                    // SỬ DỤNG CartManager.showToast thay vì function local
+                    CartManager.showToast('error', 'Số lượng phải từ 1 đến 99.');
                 }
             });
 
@@ -260,18 +261,22 @@
                         if (response.success) {
                             btn.closest('tr').remove();
                             updateTotalPrice(response.totalPrice);
-                            updateCartCount(response.count);
-                            showToast('success', 'Đã xóa sản phẩm khỏi giỏ hàng.');
+                            // SỬ DỤNG CartManager.updateCartCount thay vì function local
+                            CartManager.updateCartCount();
+                            // SỬ DỤNG CartManager.showToast thay vì function local
+                            CartManager.showToast('success', 'Đã xóa sản phẩm khỏi giỏ hàng.');
                             if ($('tbody tr').length === 0) {
                                 location.reload();
                             }
                         } else {
-                            showToast('error', 'Lỗi khi xóa sản phẩm.');
+                            // SỬ DỤNG CartManager.showToast thay vì function local
+                            CartManager.showToast('error', 'Lỗi khi xóa sản phẩm.');
                             btn.prop('disabled', false).html('<i class="bi bi-trash"></i> Xóa');
                         }
                     },
                     error: function () {
-                        showToast('error', 'Lỗi khi xóa sản phẩm.');
+                        // SỬ DỤNG CartManager.showToast thay vì function local
+                        CartManager.showToast('error', 'Lỗi khi xóa sản phẩm.');
                         btn.prop('disabled', false).html('<i class="bi bi-trash"></i> Xóa');
                     }
                 });
@@ -289,17 +294,20 @@
                         if (response.success) {
                             location.reload();
                         } else {
-                            showToast('error', 'Lỗi khi xóa giỏ hàng.');
+                            // SỬ DỤNG CartManager.showToast thay vì function local
+                            CartManager.showToast('error', 'Lỗi khi xóa giỏ hàng.');
                             btn.prop('disabled', false).html('<i class="bi bi-trash me-1"></i> Xóa toàn bộ');
                         }
                     },
                     error: function () {
-                        showToast('error', 'Lỗi khi xóa giỏ hàng.');
+                        // SỬ DỤNG CartManager.showToast thay vì function local
+                        CartManager.showToast('error', 'Lỗi khi xóa giỏ hàng.');
                         btn.prop('disabled', false).html('<i class="bi bi-trash me-1"></i> Xóa toàn bộ');
                     }
                 });
             });
 
+            // FUNCTION ĐẶC THÙ CHO CART PAGE - GIỮ LẠI
             function updateQuantity(productId, quantity, input) {
                 $.ajax({
                     url: '@Url.Action("UpdateQuantity", "ShoppingCart")',
@@ -312,44 +320,29 @@
                     success: function (response) {
                         if (response.success) {
                             input.val(quantity);
-                            // Kiểm tra và sử dụng giá trị itemTotal, nếu không có thì tính thủ công
                             var itemTotal = response.itemTotal ? response.itemTotal : '0';
                             var totalPrice = response.totalPrice ? response.totalPrice : '0';
                             input.closest('tr').find('.item-total').text(itemTotal + '₫');
                             updateTotalPrice(totalPrice);
-                            showToast('success', 'Đã cập nhật số lượng.');
+                            // SỬ DỤNG CartManager.showToast thay vì function local
+                            CartManager.showToast('success', 'Đã cập nhật số lượng.');
                         } else {
-                            showToast('error', response.message || 'Lỗi khi cập nhật số lượng.');
+                            // SỬ DỤNG CartManager.showToast thay vì function local
+                            CartManager.showToast('error', response.message || 'Lỗi khi cập nhật số lượng.');
                         }
                     },
                     error: function () {
-                        showToast('error', 'Lỗi khi cập nhật số lượng.');
+                        // SỬ DỤNG CartManager.showToast thay vì function local
+                        CartManager.showToast('error', 'Lỗi khi cập nhật số lượng.');
                     }
                 });
             }
 
+            // FUNCTION ĐẶC THÙ CHO CART PAGE - GIỮ LẠI
             function updateTotalPrice(totalPrice) {
                 $('.total-price').text((totalPrice || '0') + '₫');
             }
 
-            function updateCartCount(count) {
-                $('.cart-count').text(count || '0');
-            }
-
-            function showToast(type, message) {
-                var toastClass = type === 'success' ? 'alert-success' : 'alert-danger';
-                var icon = type === 'success' ? 'bi-check-circle' : 'bi-exclamation-triangle';
-                var toast = `<div class="alert ${toastClass} alert-dismissible fade show position-fixed"
-                                        style="top: 20px; right: 20px; z-index: 9999; min-width: 300px; border-radius: 8px;"
-                                        role="alert">
-                                        <i class="bi ${icon} me-2"></i>${message}
-                                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                                     </div>`;
-                $('body').append(toast);
-                setTimeout(function () {
-                    $('.alert').alert('close');
-                }, 3000);
-            }
         });
     </script>
 }

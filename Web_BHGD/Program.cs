@@ -46,14 +46,16 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-// Đặt trước UseRouting
-app.UseSession();
 
 app.UseRouting();
+
+app.UseSession();
+
 app.UseAuthorization();
+
 app.MapRazorPages();
 
-app.UseEndpoints(endpoints =>
+/*app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllerRoute(
     name: "Admin",
@@ -61,6 +63,12 @@ app.UseEndpoints(endpoints =>
     endpoints.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
-});
+});*/
+
+app.MapControllerRoute(name: "Admin", pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
