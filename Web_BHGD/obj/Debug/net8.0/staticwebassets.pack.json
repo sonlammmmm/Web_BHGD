@@ -1,271 +1,295 @@
 {
   "Files": [
     {
-      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\css\\admin.css",
+      "Id": "C:\\Users\\Administrator\\Desktop\\Web_BHGD\\Web_BHGD\\wwwroot\\css\\admin.css",
       "PackagePath": "staticwebassets\\css\\admin.css"
     },
     {
-      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\css\\site.css",
+      "Id": "C:\\Users\\Administrator\\Desktop\\Web_BHGD\\Web_BHGD\\wwwroot\\css\\site.css",
       "PackagePath": "staticwebassets\\css\\site.css"
     },
     {
-      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\favicon.ico",
+      "Id": "C:\\Users\\Administrator\\Desktop\\Web_BHGD\\Web_BHGD\\wwwroot\\favicon.ico",
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
-      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\images\\90539e42-a813-4876-b395-9a5b29671271.jpg",
+      "Id": "C:\\Users\\Administrator\\Desktop\\Web_BHGD\\Web_BHGD\\wwwroot\\images\\0129bc1d-711d-4883-ac2e-a0b84fad9a5d.jpg",
+      "PackagePath": "staticwebassets\\images\\0129bc1d-711d-4883-ac2e-a0b84fad9a5d.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\Web_BHGD\\Web_BHGD\\wwwroot\\images\\12ca7c2b-64e9-4349-a833-5f6608f47b01.jpg",
+      "PackagePath": "staticwebassets\\images\\12ca7c2b-64e9-4349-a833-5f6608f47b01.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\Web_BHGD\\Web_BHGD\\wwwroot\\images\\17bc4b97-df85-4ee5-b772-d4a94fb8fb72.jpg",
+      "PackagePath": "staticwebassets\\images\\17bc4b97-df85-4ee5-b772-d4a94fb8fb72.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\Web_BHGD\\Web_BHGD\\wwwroot\\images\\3c791ef0-a5c5-439b-be77-419bf6b88ba8.jpg",
+      "PackagePath": "staticwebassets\\images\\3c791ef0-a5c5-439b-be77-419bf6b88ba8.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\Web_BHGD\\Web_BHGD\\wwwroot\\images\\3d551914-822e-42ab-8bc1-0ae49abf5877.jpeg",
+      "PackagePath": "staticwebassets\\images\\3d551914-822e-42ab-8bc1-0ae49abf5877.jpeg"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\Web_BHGD\\Web_BHGD\\wwwroot\\images\\90539e42-a813-4876-b395-9a5b29671271.jpg",
       "PackagePath": "staticwebassets\\images\\90539e42-a813-4876-b395-9a5b29671271.jpg"
     },
     {
-      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\images\\banner_bhgd.png",
+      "Id": "C:\\Users\\Administrator\\Desktop\\Web_BHGD\\Web_BHGD\\wwwroot\\images\\banner_bhgd.png",
       "PackagePath": "staticwebassets\\images\\banner_bhgd.png"
     },
     {
-      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\images\\default_product.png",
+      "Id": "C:\\Users\\Administrator\\Desktop\\Web_BHGD\\Web_BHGD\\wwwroot\\images\\default_product.png",
       "PackagePath": "staticwebassets\\images\\default_product.png"
     },
     {
-      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\images\\images (2).jpg",
+      "Id": "C:\\Users\\Administrator\\Desktop\\Web_BHGD\\Web_BHGD\\wwwroot\\images\\f46feff9-fef3-4671-801c-bbaaa252cf61.jpg",
+      "PackagePath": "staticwebassets\\images\\f46feff9-fef3-4671-801c-bbaaa252cf61.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Administrator\\Desktop\\Web_BHGD\\Web_BHGD\\wwwroot\\images\\images (2).jpg",
       "PackagePath": "staticwebassets\\images\\images (2).jpg"
     },
     {
-      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\invoices\\Invoice.cs",
+      "Id": "C:\\Users\\Administrator\\Desktop\\Web_BHGD\\Web_BHGD\\wwwroot\\invoices\\Invoice.cs",
       "PackagePath": "staticwebassets\\invoices\\Invoice.cs"
     },
     {
-      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\invoices\\Invoice.tex",
+      "Id": "C:\\Users\\Administrator\\Desktop\\Web_BHGD\\Web_BHGD\\wwwroot\\invoices\\Invoice.tex",
       "PackagePath": "staticwebassets\\invoices\\Invoice.tex"
     },
     {
-      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\js\\cart-manager.js",
+      "Id": "C:\\Users\\Administrator\\Desktop\\Web_BHGD\\Web_BHGD\\wwwroot\\js\\cart-manager.js",
       "PackagePath": "staticwebassets\\js\\cart-manager.js"
     },
     {
-      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\LICENSE",
+      "Id": "C:\\Users\\Administrator\\Desktop\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\LICENSE",
       "PackagePath": "staticwebassets\\lib\\bootstrap"
     },
     {
-      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css",
+      "Id": "C:\\Users\\Administrator\\Desktop\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css"
     },
     {
-      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map",
+      "Id": "C:\\Users\\Administrator\\Desktop\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map"
     },
     {
-      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css",
+      "Id": "C:\\Users\\Administrator\\Desktop\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css"
     },
     {
-      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css.map",
+      "Id": "C:\\Users\\Administrator\\Desktop\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css.map"
     },
     {
-      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css",
+      "Id": "C:\\Users\\Administrator\\Desktop\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css"
     },
     {
-      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css.map",
+      "Id": "C:\\Users\\Administrator\\Desktop\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css.map"
     },
     {
-      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css",
+      "Id": "C:\\Users\\Administrator\\Desktop\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css"
     },
     {
-      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css.map",
+      "Id": "C:\\Users\\Administrator\\Desktop\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css.map"
     },
     {
-      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css",
+      "Id": "C:\\Users\\Administrator\\Desktop\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css"
     },
     {
-      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css.map",
+      "Id": "C:\\Users\\Administrator\\Desktop\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css.map"
     },
     {
-      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css",
+      "Id": "C:\\Users\\Administrator\\Desktop\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css"
     },
     {
-      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css.map",
+      "Id": "C:\\Users\\Administrator\\Desktop\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css.map"
     },
     {
-      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css",
+      "Id": "C:\\Users\\Administrator\\Desktop\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css"
     },
     {
-      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css.map",
+      "Id": "C:\\Users\\Administrator\\Desktop\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css.map"
     },
     {
-      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css",
+      "Id": "C:\\Users\\Administrator\\Desktop\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css"
     },
     {
-      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css.map",
+      "Id": "C:\\Users\\Administrator\\Desktop\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css.map"
     },
     {
-      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css",
+      "Id": "C:\\Users\\Administrator\\Desktop\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css"
     },
     {
-      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css.map",
+      "Id": "C:\\Users\\Administrator\\Desktop\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css.map"
     },
     {
-      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css",
+      "Id": "C:\\Users\\Administrator\\Desktop\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css"
     },
     {
-      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css.map",
+      "Id": "C:\\Users\\Administrator\\Desktop\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css.map"
     },
     {
-      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css",
+      "Id": "C:\\Users\\Administrator\\Desktop\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css"
     },
     {
-      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css.map",
+      "Id": "C:\\Users\\Administrator\\Desktop\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css.map"
     },
     {
-      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css",
+      "Id": "C:\\Users\\Administrator\\Desktop\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css"
     },
     {
-      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css.map",
+      "Id": "C:\\Users\\Administrator\\Desktop\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css.map"
     },
     {
-      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css",
+      "Id": "C:\\Users\\Administrator\\Desktop\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.css"
     },
     {
-      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css.map",
+      "Id": "C:\\Users\\Administrator\\Desktop\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.css.map"
     },
     {
-      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css",
+      "Id": "C:\\Users\\Administrator\\Desktop\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.min.css"
     },
     {
-      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map",
+      "Id": "C:\\Users\\Administrator\\Desktop\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map"
     },
     {
-      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css",
+      "Id": "C:\\Users\\Administrator\\Desktop\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css"
     },
     {
-      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css.map",
+      "Id": "C:\\Users\\Administrator\\Desktop\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css.map"
     },
     {
-      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css",
+      "Id": "C:\\Users\\Administrator\\Desktop\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css"
     },
     {
-      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css.map",
+      "Id": "C:\\Users\\Administrator\\Desktop\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css.map"
     },
     {
-      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js",
+      "Id": "C:\\Users\\Administrator\\Desktop\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js"
     },
     {
-      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js.map",
+      "Id": "C:\\Users\\Administrator\\Desktop\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js.map"
     },
     {
-      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js",
+      "Id": "C:\\Users\\Administrator\\Desktop\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js"
     },
     {
-      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js.map",
+      "Id": "C:\\Users\\Administrator\\Desktop\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js.map"
     },
     {
-      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js",
+      "Id": "C:\\Users\\Administrator\\Desktop\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js"
     },
     {
-      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js.map",
+      "Id": "C:\\Users\\Administrator\\Desktop\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js.map"
     },
     {
-      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js",
+      "Id": "C:\\Users\\Administrator\\Desktop\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js"
     },
     {
-      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js.map",
+      "Id": "C:\\Users\\Administrator\\Desktop\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js.map"
     },
     {
-      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js",
+      "Id": "C:\\Users\\Administrator\\Desktop\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.js"
     },
     {
-      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js.map",
+      "Id": "C:\\Users\\Administrator\\Desktop\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.js.map"
     },
     {
-      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js",
+      "Id": "C:\\Users\\Administrator\\Desktop\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.min.js"
     },
     {
-      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js.map",
+      "Id": "C:\\Users\\Administrator\\Desktop\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.min.js.map"
     },
     {
-      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt",
+      "Id": "C:\\Users\\Administrator\\Desktop\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt",
       "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\LICENSE.txt"
     },
     {
-      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js",
+      "Id": "C:\\Users\\Administrator\\Desktop\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js",
       "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js"
     },
     {
-      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js",
+      "Id": "C:\\Users\\Administrator\\Desktop\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js",
       "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js"
     },
     {
-      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\jquery-validation\\LICENSE.md",
+      "Id": "C:\\Users\\Administrator\\Desktop\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\jquery-validation\\LICENSE.md",
       "PackagePath": "staticwebassets\\lib\\jquery-validation\\LICENSE.md"
     },
     {
-      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.js",
+      "Id": "C:\\Users\\Administrator\\Desktop\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.js",
       "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\additional-methods.js"
     },
     {
-      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.min.js",
+      "Id": "C:\\Users\\Administrator\\Desktop\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.min.js",
       "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\additional-methods.min.js"
     },
     {
-      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.js",
+      "Id": "C:\\Users\\Administrator\\Desktop\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.js",
       "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\jquery.validate.js"
     },
     {
-      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.min.js",
+      "Id": "C:\\Users\\Administrator\\Desktop\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.min.js",
       "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\jquery.validate.min.js"
     },
     {
-      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\jquery\\LICENSE.txt",
+      "Id": "C:\\Users\\Administrator\\Desktop\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\jquery\\LICENSE.txt",
       "PackagePath": "staticwebassets\\lib\\jquery\\LICENSE.txt"
     },
     {
-      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\jquery\\dist\\jquery.js",
+      "Id": "C:\\Users\\Administrator\\Desktop\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\jquery\\dist\\jquery.js",
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.js"
     },
     {
-      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\jquery\\dist\\jquery.min.js",
+      "Id": "C:\\Users\\Administrator\\Desktop\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\jquery\\dist\\jquery.min.js",
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.js"
     },
     {
-      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\jquery\\dist\\jquery.min.map",
+      "Id": "C:\\Users\\Administrator\\Desktop\\Web_BHGD\\Web_BHGD\\wwwroot\\lib\\jquery\\dist\\jquery.min.map",
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.map"
     },
     {
