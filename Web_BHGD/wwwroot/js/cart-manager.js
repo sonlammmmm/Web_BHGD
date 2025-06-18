@@ -8,7 +8,8 @@ window.CartManager = {
     config: {
         addToCartUrl: '',
         getCartCountUrl: '',
-        toastDuration: 3000
+        toastDuration: 3000,
+        maxToasts: 3 // Số lượng toast tối đa hiển thị cùng lúc
     },
 
     // Khởi tạo CartManager
@@ -35,8 +36,8 @@ window.CartManager = {
             self.handleAddToCartClick($(this));
         });
 
-        // Xử lý form tìm kiếm
-        $(document).on('submit', '.search-box', function (e) {
+        // Xử lý form tìm kiếm (trong product page)
+        $(document).on('submit', '.product-search-form', function (e) {
             self.handleSearchSubmit($(this), e);
         });
     },
@@ -63,7 +64,7 @@ window.CartManager = {
 
     // Xử lý submit form tìm kiếm
     handleSearchSubmit: function (form, event) {
-        var searchTerm = form.find('input[name="searchTerm"]').val().trim();
+        var searchTerm = form.find('input[name="searchString"]').val().trim();
         if (!searchTerm) {
             event.preventDefault();
             this.showToast('error', 'Vui lòng nhập từ khóa tìm kiếm.');
@@ -171,25 +172,52 @@ window.CartManager = {
         return $('input[name="__RequestVerificationToken"]').val() || '';
     },
 
-    // Hiển thị thông báo toast
+    // Quản lý số lượng toast hiển thị
+    manageToasts: function () {
+        var toasts = $('#toast-container .alert');
+        if (toasts.length > this.config.maxToasts) {
+            // Xóa toast cũ nhất nếu vượt quá số lượng cho phép
+            toasts.first().alert('close');
+        }
+    },
+
+    // Hiển thị thông báo toast với container tập trung
     showToast: function (type, message) {
         var toastClass = type === 'success' ? 'alert-success' : 'alert-danger';
         var icon = type === 'success' ? 'bi-check-circle' : 'bi-exclamation-triangle';
         var toastId = 'toast-' + Date.now();
 
+        // Đảm bảo container tồn tại
+        if ($('#toast-container').length === 0) {
+            $('body').append('<div id="toast-container" class="position-fixed" style="top: 80px; right: 20px; z-index: 9999; width: 350px;"></div>');
+        }
+
         var toast = `
-            <div id="${toastId}" class="alert ${toastClass} alert-dismissible fade show position-fixed"
-                 style="top: 20px; right: 20px; z-index: 9999; min-width: 300px;" role="alert">
+            <div id="${toastId}" class="alert ${toastClass} alert-dismissible fade show mb-2" role="alert">
                 <i class="bi ${icon} me-2"></i>${message}
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>`;
 
-        $('body').append(toast);
+        // Thêm toast vào container
+        $('#toast-container').append(toast);
 
-        // Tự động ẩn
+        // Quản lý số lượng toast
+        this.manageToasts();
+
+        // Tự động ẩn toast
         setTimeout(function () {
             $('#' + toastId).alert('close');
         }, this.config.toastDuration);
+
+        // Animation khi toast xuất hiện
+        $('#' + toastId).hide().slideDown(300);
+
+        // Xử lý khi toast bị đóng
+        $('#' + toastId).on('closed.bs.alert', function () {
+            $(this).slideUp(200, function () {
+                $(this).remove();
+            });
+        });
     },
 
     // Utility methods

@@ -5,49 +5,80 @@
     ViewData["ActivePage"] = "Index";
 }
 
-<div class="card border-0 shadow-sm">
-    <div class="card-header bg-light py-3">
-        <h4 class="mb-0">@ViewData["Title"]</h4>
-    </div>
-    <div class="card-body">
-        <partial name="_StatusMessage" for="StatusMessage" />
-
-        <div class="row">
-            <div class="col-lg-8">
-                <form id="profile-form" method="post">
-                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
-
-                    <div class="mb-4">
-                        <label asp-for="Username" class="form-label text-muted">Tên đăng nhập</label>
-                        <input asp-for="Username" class="form-control p-3" disabled />
+<div class="container-fluid profile-container manage-page">
+    <div class="row">
+        <!-- Nội dung chính -->
+        <div class="col-lg-9">
+            <div class="profile-card">
+                <div class="d-flex align-items-center mb-4">
+                    <div class="avatar-placeholder me-3">
+                        @(Model.Input.FullName?.Substring(0, 1).ToUpper() ?? "U")
                     </div>
-
-                    <div class="mb-4">
-                        <label asp-for="Input.PhoneNumber" class="form-label text-muted">Số điện thoại</label>
-                        <input asp-for="Input.PhoneNumber" class="form-control p-3"
-                               placeholder="Nhập số điện thoại của bạn" />
-                        <span asp-validation-for="Input.PhoneNumber" class="text-danger small mt-1 d-block"></span>
-                    </div>
-
-                    <button id="update-profile-button" type="submit"
-                            class="btn btn-primary w-100 py-2 fw-medium">
-                        <i class="bi bi-save me-2"></i>Lưu thay đổi
-                    </button>
-                </form>
-            </div>
-            <div class="col-lg-4 mt-4 mt-lg-0">
-                <div class="bg-light p-4 rounded">
-                    <h5 class="fw-medium mb-3">Bảo mật tài khoản</h5>
-                    <p class="text-muted mb-4">
-                        <i class="bi bi-info-circle me-2 text-primary"></i>
-                        Cập nhật thông tin liên hệ giúp chúng tôi hỗ trợ bạn tốt hơn
-                    </p>
-                    <div class="d-grid gap-2">
-                        <a asp-page="./ChangePassword" class="btn btn-outline-secondary">
-                            <i class="bi bi-shield-lock me-2"></i>Thay đổi mật khẩu
-                        </a>
+                    <div>
+                        <h4 class="fw-bold mb-1">@Model.Input.FullName</h4>
+                        <span class="text-muted">@Model.Input.Email</span>
                     </div>
                 </div>
+                <h5 class="fw-semibold mb-3">Thông tin cá nhân</h5>
+                <partial name="_StatusMessage" for="StatusMessage" />
+                
+                @if (ViewData["EditMode"]?.ToString() != "true")
+                {
+                    <!-- Chế độ xem -->
+                    <div class="mb-4">
+                        <div class="info-label">Họ và tên</div>
+                        <div class="info-value">@(Model.Input.FullName ?? "Chưa cập nhật")</div>
+                        
+                        <div class="info-label">Email</div>
+                        <div class="info-value">@Model.Input.Email</div>
+                        
+                        <div class="info-label">Số điện thoại</div>
+                        <div class="info-value">@(Model.Input.PhoneNumber ?? "Chưa cập nhật")</div>
+                        
+                        <div class="info-label">Địa chỉ</div>
+                        <div class="info-value">@(Model.Input.Address ?? "Chưa cập nhật")</div>
+                    </div>
+                    <div class="d-flex justify-content-end">
+                        <a asp-page="./Index" asp-route-editMode="true" class="btn btn-primary">
+                            <i class="bi bi-pencil me-2"></i>Chỉnh sửa
+                        </a>
+                    </div>
+                }
+                else
+                {
+                    <!-- Chế độ chỉnh sửa -->
+                    <form id="profile-form" method="post">
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger rounded-6 mb-3" role="alert" style="display: none;"></div>
+                        <div class="mb-3">
+                            <label asp-for="Input.FullName" class="form-label">Họ và tên <span class="text-danger">*</span></label>
+                            <input asp-for="Input.FullName" class="form-control" placeholder="Nhập họ và tên" />
+                            <span asp-validation-for="Input.FullName" class="text-danger small mt-1 d-block"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Input.Email" class="form-label">Email</label>
+                            <input asp-for="Input.Email" class="form-control" readonly />
+                            <!-- Thêm hidden input để đảm bảo Email được gửi lên server -->
+                            <input asp-for="Input.Email" type="hidden" />
+                            <small class="text-muted">Email không thể thay đổi</small>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Input.PhoneNumber" class="form-label">Số điện thoại</label>
+                            <input asp-for="Input.PhoneNumber" class="form-control" placeholder="Nhập số điện thoại (tùy chọn)" />
+                            <span asp-validation-for="Input.PhoneNumber" class="text-danger small mt-1 d-block"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Input.Address" class="form-label">Địa chỉ</label>
+                            <input asp-for="Input.Address" class="form-control" placeholder="Nhập địa chỉ (tùy chọn)" />
+                            <span asp-validation-for="Input.Address" class="text-danger small mt-1 d-block"></span>
+                        </div>
+                        <div class="d-flex justify-content-end gap-2">
+                            <a asp-page="./Index" class="btn btn-outline-secondary">Hủy</a>
+                            <button id="update-profile-button" type="submit" class="btn btn-primary">
+                                <i class="bi bi-save me-2"></i>Lưu thay đổi
+                            </button>
+                        </div>
+                    </form>
+                }
             </div>
         </div>
     </div>
@@ -55,4 +86,23 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script>
+        $(document).ready(function() {
+            // Tắt validation cho các trường không bắt buộc
+            $('#Input_PhoneNumber').removeAttr('data-val-required');
+            $('#Input_Address').removeAttr('data-val-required');
+            
+            // Xóa các validator rule cho PhoneNumber và Address
+            if ($.validator) {
+                var validator = $('#profile-form').validate();
+                delete validator.settings.rules['Input.PhoneNumber'];
+                delete validator.settings.rules['Input.Address'];
+                
+                // Chỉ giữ validation cho FullName
+                validator.settings.rules['Input.FullName'] = {
+                    required: true
+                };
+            }
+        });
+    </script>
 }

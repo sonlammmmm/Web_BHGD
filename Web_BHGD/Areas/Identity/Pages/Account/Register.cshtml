@@ -4,123 +4,143 @@
     ViewData["Title"] = "Đăng ký";
 }
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 <style>
     body {
-        background-color: #eaf3fb;
-    }
-
-    .register-container {
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
         min-height: 100vh;
         display: flex;
         align-items: center;
         justify-content: center;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
 
     .register-card {
-        background-color: white;
-        border-radius: 20px;
-        overflow: hidden;
-        box-shadow: 0 0 30px rgba(0, 123, 255, 0.2);
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        padding: 2rem;
+        max-width: 400px;
+        width: 100%;
+        transition: transform 0.3s ease;
     }
 
-    .register-image {
-        background: url('https://media.istockphoto.com/id/1254771309/vi/anh/b%E1%BB%99-%C4%91%E1%BB%93-gia-d%E1%BB%A5ng-trong-nh%C3%A0-b%E1%BA%BFp.jpg?s=612x612&w=0&k=20&c=7eqiNNmZem8NmGU9ZRH0gqxyW7Z43nqs_YEexkN-zsk=') no-repeat center center;
-        background-size: cover;
-    }
-
-    .form-control:focus,
-    .form-select:focus {
-        border-color: #3399ff;
-        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
-    }
+        .register-card:hover {
+            transform: translateY(-5px);
+        }
 
     .btn-primary {
-        background-color: #3399ff;
-        border-color: #3399ff;
+        background: var(--bs-primary);
+        border: none;
+        border-radius: 8px;
+        padding: 0.75rem;
+        font-weight: 600;
+        transition: background 0.3s ease, transform 0.2s ease;
     }
 
-    .btn-outline-secondary:hover {
-        background-color: #3399ff;
-        color: white;
+        .btn-primary:hover {
+            background: var(--bs-primary-dark);
+            transform: scale(1.02);
+        }
+
+    .form-control {
+        border-radius: 8px;
+        border: 1px solid #e0e0e0;
+        padding: 0.75rem;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+        .form-control:focus {
+            border-color: var(--bs-primary);
+            box-shadow: 0 0 0 0.2rem rgba(var(--bs-primary-rgb), 0.15);
+        }
+
+    .text-primary {
+        color: var(--bs-primary) !important;
+        transition: color 0.3s ease;
+    }
+
+        .text-primary:hover {
+            color: var(--bs-primary-dark) !important;
+        }
+
+    .flatpickr-input {
+        background: white;
     }
 </style>
 
-<div class="container-fluid register-container">
-    <div class="row w-100" style="max-width: 1000px;">
-        <!-- LEFT: IMAGE -->
-        <div class="col-md-6 d-none d-md-block register-image"></div>
-
-        <!-- RIGHT: REGISTER FORM -->
-        <div class="col-md-6 p-4 register-card">
-            <div class="card-body">
-                <h2 class="text-center mb-4 fw-bold text-primary">Tạo tài khoản mới</h2>
-                <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-                    <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert" style="display: none;"></div>
-
-                    <div class="mb-3">
-                        <label asp-for="Input.FullName" class="form-label">Họ và tên</label>
-                        <input asp-for="Input.FullName" class="form-control rounded-pill" autocomplete="name" aria-required="true" placeholder="Nhập họ và tên" />
-                        <span asp-validation-for="Input.FullName" class="text-danger"></span>
-                    </div>
-
-                    <div class="mb-3">
-                        <label asp-for="Input.Email" class="form-label">Địa chỉ email</label>
-                        <input asp-for="Input.Email" class="form-control rounded-pill" autocomplete="username" aria-required="true" placeholder="Nhập email của bạn" />
-                        <span asp-validation-for="Input.Email" class="text-danger"></span>
-                    </div>
-
-                    <div class="mb-3">
-                        <label asp-for="Input.Password" class="form-label">Mật khẩu</label>
-                        <input asp-for="Input.Password" class="form-control rounded-pill" autocomplete="new-password" aria-required="true" placeholder="Tạo mật khẩu" />
-                        <span asp-validation-for="Input.Password" class="text-danger"></span>
-                    </div>
-
-                    <div class="mb-3">
-                        <label asp-for="Input.ConfirmPassword" class="form-label">Xác nhận mật khẩu</label>
-                        <input asp-for="Input.ConfirmPassword" class="form-control rounded-pill" autocomplete="new-password" aria-required="true" placeholder="Nhập lại mật khẩu" />
-                        <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
-                    </div>
-
-                    <div class="mb-4">
-                        <label asp-for="Input.Role" class="form-label">Vai trò</label>
-                        <select asp-for="Input.Role" asp-items="@Model.Input.RoleList" class="form-select rounded-pill">
-                            <option disabled selected>Chọn vai trò</option>
-                        </select>
-                        <span asp-validation-for="Input.Role" class="text-danger"></span>
-                    </div>
-
-                    <button id="registerSubmit" type="submit" class="btn btn-primary w-100 rounded-pill py-2">Đăng ký</button>
-                </form>
-
-                <div class="text-center mt-3">
-                    <p>Đã có tài khoản? <a asp-page="./Login" class="text-primary">Đăng nhập</a></p>
-                </div>
-
-                @if (Model.ExternalLogins?.Count > 0)
-                {
-                    <div class="text-center mt-4">
-                        <hr class="my-4">
-                        <h5>Hoặc đăng ký bằng</h5>
-                        <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-                            <div class="d-flex justify-content-center gap-2 flex-wrap">
-                                @foreach (var provider in Model.ExternalLogins!)
-                                {
-                                    <button type="submit" class="btn btn-outline-secondary rounded-pill" name="provider" value="@provider.Name" title="Đăng ký bằng @provider.DisplayName">
-                                        @provider.DisplayName
-                                    </button>
-                                }
-                            </div>
-                        </form>
-                    </div>
-                }
+<div class="container-fluid d-flex align-items-center justify-content-center min-vh-100">
+    <div class="register-card">
+        <h2 class="text-center mb-4 fw-bold" style="color: var(--bs-primary);">Tạo tài khoản mới</h2>
+        <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger rounded-6" role="alert" style="display: none;"></div>
+            <div class="mb-3">
+                <label asp-for="Input.FullName" class="form-label">Họ và tên</label>
+                <input asp-for="Input.FullName" class="form-control" autocomplete="name" aria-required="true" placeholder="Nhập họ và tên" />
+                <span asp-validation-for="Input.FullName" class="text-danger"></span>
             </div>
+            <div class="mb-3">
+                <label asp-for="Input.Email" class="form-label">Email</label>
+                <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="Nhập email của bạn" />
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Input.DateOfBirth" class="form-label">Ngày sinh</label>
+                <input asp-for="Input.DateOfBirth" type="text" class="form-control flatpickr" aria-required="true" id="dob" placeholder="Chọn ngày sinh" />
+                <input asp-for="Input.Age" type="hidden" id="age" />
+                <span asp-validation-for="Input.DateOfBirth" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Input.Password" class="form-label">Mật khẩu</label>
+                <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="Tạo mật khẩu" />
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Input.ConfirmPassword" class="form-label">Xác nhận mật khẩu</label>
+                <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="Nhập lại mật khẩu" />
+                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+            </div>
+            <button id="registerSubmit" type="submit" class="btn btn-primary w-100">Đăng ký</button>
+        </form>
+        <div class="text-center mt-3">
+            <p>Đã có tài khoản? <a asp-page="./Login" class="text-primary">Đăng nhập</a></p>
         </div>
     </div>
 </div>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>
+        flatpickr("#dob", {
+            dateFormat: "Y-m-d",
+            maxDate: "today",
+            minDate: "1900-01-01",
+            locale: {
+                firstDayOfWeek: 1,
+                weekdays: {
+                    shorthand: ["CN", "T2", "T3", "T4", "T5", "T6", "T7"],
+                    longhand: ["Chủ nhật", "Thứ hai", "Thứ ba", "Thứ tư", "Thứ năm", "Thứ sáu", "Thứ bảy"]
+                },
+                months: {
+                    shorthand: ["Th1", "Th2", "Th3", "Th4", "Th5", "Th6", "Th7", "Th8", "Th9", "Th10", "Th11", "Th12"],
+                    longhand: ["Tháng Một", "Tháng Hai", "Tháng Ba", "Tháng Tư", "Tháng Năm", "Tháng Sáu", "Tháng Bảy", "Tháng Tám", "Tháng Chín", "Tháng Mười", "Tháng Mười Một", "Tháng Mười Hai"]
+                }
+            },
+            onChange: function (selectedDates, dateStr, instance) {
+                if (selectedDates.length > 0) {
+                    const dob = selectedDates[0];
+                    const today = new Date();
+                    let age = today.getFullYear() - dob.getFullYear();
+                    const monthDiff = today.getMonth() - dob.getMonth();
+                    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
+                        age--;
+                    }
+                    document.getElementById('age').value = age;
+                } else {
+                    document.getElementById('age').value = '';
+                }
+            }
+        });
+    </script>
 }
