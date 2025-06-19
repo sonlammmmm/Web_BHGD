@@ -1,63 +1,83 @@
 ﻿@model Web_BHGD.Models.Order
+
 @{
     ViewData["Title"] = $"Chi tiết đơn hàng #{Model.Id}";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 
-<div class="p-4">
-    <h2>Chi tiết đơn hàng #@Model.Id</h2>
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
 
-    @if (TempData["Success"] != null)
-    {
-        <div class="alert alert-success">@TempData["Success"]</div>
-    }
-    @if (TempData["Error"] != null)
-    {
-        <div class="alert alert-danger">@TempData["Error"]</div>
-    }
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
 
-    <div class="row">
-        <div class="col-md-6">
-            <div class="card mb-4">
-                <div class="card-body">
-                    <h4 class="card-title">Thông tin khách hàng</h4>
-                    <p><strong>Tên:</strong> @(Model.ApplicationUser?.UserName ?? Model.CustomerName)</p>
-                    <p><strong>Điện thoại:</strong> @Model.CustomerPhone</p>
-                    <p><strong>Email:</strong> @Model.CustomerEmail</p>
-                    <p><strong>Địa chỉ:</strong> @Model.ShippingAddress</p>
-                    <p><strong>Ghi chú:</strong> @(string.IsNullOrEmpty(Model.Notes) ? "Không có" : Model.Notes)</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="card mb-4">
-                <div class="card-body">
-                    <h4 class="card-title">Thông tin đơn hàng</h4>
-                    <p><strong>Mã đơn hàng:</strong> #@Model.Id</p>
-                    <p><strong>Ngày đặt:</strong> @Model.OrderDate.ToString("dd/MM/yyyy HH:mm")</p>
-                    <form asp-action="UpdateStatus" method="post">
-                        <input type="hidden" name="id" value="@Model.Id" />
-                        <div class="mb-3">
-                            <label class="form-label"><strong>Trạng thái:</strong></label>
-                            <select name="status" class="form-select">
-                                <option value="Pending" selected="@(Model.Status == "Pending")">Chưa thanh toán</option>
-                                <option value="Confirmed" selected="@(Model.Status == "Confirmed")">Đã thanh toán</option>
-                                <option value="Cancelled" selected="@(Model.Status == "Cancelled")">Đã hủy</option>
-                            </select>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Cập nhật trạng thái</button>
-                    </form>
-                    <p><strong>Tổng tiền:</strong> @Model.TotalPrice.ToString("C0") VNĐ</p>
-                </div>
+<div class="row">
+    <!-- Thông tin khách hàng -->
+    <div class="col-md-6">
+        <div class="card mb-4 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">Thông tin khách hàng</h5>
+                <p><strong>Tên:</strong> @(Model.ApplicationUser?.UserName ?? Model.CustomerName)</p>
+                <p><strong>Điện thoại:</strong> @Model.CustomerPhone</p>
+                <p><strong>Email:</strong> @Model.CustomerEmail</p>
+                <p><strong>Địa chỉ:</strong> @Model.ShippingAddress</p>
+                <p>
+                    <strong>Phương thức thanh toán:</strong>
+                    @{
+                        var method = Model.PaymentMethod switch
+                        {
+                            "COD" => "Thanh toán khi nhận hàng",
+                            "Bank" => "Ngân hàng",
+                            "MoMo" => "MoMo",
+                            _ => Model.PaymentMethod
+                        };
+                    }
+                    @method
+                </p>
+                <p><strong>Ghi chú:</strong> @(string.IsNullOrWhiteSpace(Model.Notes) ? "Không có" : Model.Notes)</p>
             </div>
         </div>
     </div>
 
-    <div class="card">
-        <div class="card-body">
-            <h4 class="card-title">Danh sách sản phẩm</h4>
-            <table class="table">
-                <thead>
+    <!-- Thông tin đơn hàng -->
+    <div class="col-md-6">
+        <div class="card mb-4 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">Thông tin đơn hàng</h5>
+                <p><strong>Mã đơn hàng:</strong> #@Model.Id</p>
+                <p><strong>Ngày đặt:</strong> @Model.OrderDate.ToString("dd/MM/yyyy HH:mm")</p>
+
+                <form asp-action="UpdateStatus" method="post">
+                    <input type="hidden" name="id" value="@Model.Id" />
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Trạng thái:</label>
+                        <select name="status" class="form-select">
+                            <option value="Đợi xác nhận" selected="@(Model.Status == "Đợi xác nhận")">Đợi xác nhận</option>
+                            <option value="Đang vận chuyển" selected="@(Model.Status == "Đang vận chuyển")">Đang vận chuyển</option>
+                            <option value="Đã thanh toán" selected="@(Model.Status == "Đã thanh toán")">Đã thanh toán</option>
+                            <option value="Đã hủy" selected="@(Model.Status == "Đã hủy")">Đã hủy</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Cập nhật trạng thái</button>
+                </form>
+
+                <p class="mt-3"><strong>Tổng tiền:</strong> @Model.TotalPrice.ToString("#,##0") VNĐ</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Danh sách sản phẩm -->
+<div class="card shadow-sm">
+    <div class="card-body">
+        <h5 class="card-title">Danh sách sản phẩm</h5>
+        <div class="table-responsive">
+            <table class="table table-bordered align-middle">
+                <thead class="table-light">
                     <tr>
                         <th>Sản phẩm</th>
                         <th>Đơn giá</th>
@@ -70,23 +90,31 @@
                     {
                         <tr>
                             <td>@detail.Product.Name</td>
-                            <td>@detail.Price.ToString("C0") VNĐ</td>
+                            <td>@detail.Price.ToString("#,##0") VNĐ</td>
                             <td>@detail.Quantity</td>
-                            <td>@((detail.Price * detail.Quantity).ToString("C0")) VNĐ</td>
+                            <td>@(detail.Price * detail.Quantity).ToString("#,##0") VNĐ</td>
                         </tr>
                     }
                 </tbody>
                 <tfoot>
                     <tr>
-                        <td colspan="3" class="text-end"><strong>Tổng cộng:</strong></td>
-                        <td>@Model.TotalPrice.ToString("C0") VNĐ</td>
+                        <td colspan="3" class="text-end fw-bold">Tổng cộng:</td>
+                        <td class="fw-bold">@Model.TotalPrice.ToString("#,##0") VNĐ</td>
                     </tr>
                 </tfoot>
             </table>
-            <div class="text-end">
-                <a asp-action="Index" class="btn btn-outline-primary">Quay lại</a>
-                <a asp-action="GenerateInvoice" asp-route-id="@Model.Id" class="btn btn-primary">In hóa đơn</a>
-            </div>
+        </div>
+
+        <div class="text-end mt-4">
+            <a asp-action="Index" class="btn btn-outline-secondary me-2">Quay lại</a>
+            <a asp-action="GenerateInvoice" asp-route-id="@Model.Id" class="btn btn-primary me-2">In hóa đơn</a>
+            @if (Model.Status != "Đã hủy")
+            {
+                <form asp-action="ConfirmCancel" method="post" class="d-inline">
+                    <input type="hidden" name="id" value="@Model.Id" />
+                    <button type="submit" class="btn btn-danger" onclick="return confirm('Bạn có chắc muốn hủy đơn hàng này?');">Hủy đơn hàng</button>
+                </form>
+            }
         </div>
     </div>
 </div>

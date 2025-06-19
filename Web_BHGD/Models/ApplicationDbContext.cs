@@ -24,15 +24,15 @@ namespace Web_BHGD.Models
             // Cấu hình precision cho các thuộc tính decimal
             modelBuilder.Entity<Order>()
                 .Property(o => o.TotalPrice)
-                .HasPrecision(18, 0);
+                .HasPrecision(18, 2);
 
             modelBuilder.Entity<OrderDetail>()
                 .Property(od => od.Price)
-                .HasPrecision(18, 0);
+                .HasPrecision(18, 2);
 
             modelBuilder.Entity<Product>()
                 .Property(p => p.Price)
-                .HasPrecision(18, 0);
+                .HasPrecision(18, 2);
         }
     }
 }

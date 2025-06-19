@@ -7,84 +7,120 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
     <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
+    <style>
+        .sidebar-logo {
+            transition: all 0.3s ease;
+        }
+
+            .sidebar-logo:hover {
+                transform: scale(1.05);
+            }
+
+        .sidebar-sticky {
+            position: -webkit-sticky;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .nav-link .badge {
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover .badge {
+            background-color: rgba(255,255,255,0.3) !important;
+        }
+
+        .progress-bar {
+            transition: width 1s ease-in-out;
+        }
+    </style>
 </head>
 <body>
     <main>
         <div class="container-fluid">
             <div class="row">
                 <!-- Sidebar -->
-                <div class="col-md-3 col-lg-2 px-0">
-                    <div class="bg-dark min-vh-100">
-                        <div class="p-3">
-                            <h5 class="text-white mb-4">
-                                <i class="fas fa-user-shield me-2"></i>
-                                Admin Panel
-                            </h5>
-
-                            <nav class="nav flex-column">
-                                <a class="nav-link text-white-50" asp-controller="Home" asp-action="Index">
-                                    <i class="fas fa-tachometer-alt me-2"></i>
-                                    Dashboard
-                                </a>
-
-                                <hr class="text-white-50">
-
-                                <h6 class="text-white-50 text-uppercase small mb-3">Quản lý</h6>
-
-                                <a class="nav-link text-white-50" asp-controller="Product" asp-action="Index">
-                                    <i class="fas fa-box me-2"></i>
-                                    Sản phẩm
-                                    <span class="badge bg-secondary ms-auto">Products</span>
-                                </a>
-
-                                <a class="nav-link text-white-50" asp-controller="Categories" asp-action="Index">
-                                    <i class="fas fa-tags me-2"></i>
-                                    Danh mục
-                                    <span class="badge bg-secondary ms-auto">Categories</span>
-                                </a>
-
-                                <a class="nav-link text-white-50" asp-controller="Order" asp-action="Index">
-                                    <i class="fas fa-shopping-cart me-2"></i>
-                                    Đơn hàng
-                                    <span class="badge bg-secondary ms-auto">Order</span>
-                                </a>
-
-                                <a class="nav-link text-white-50" asp-controller="User" asp-action="Index">
-                                    <i class="fas fa-users me-2"></i>
-                                    Người dùng
-                                    <span class="badge bg-secondary ms-auto">User</span>
-                                </a>
-
-                                <hr class="text-white-50">
-
-                                <h6 class="text-white-50 text-uppercase small mb-3">Hệ thống</h6>
-
-                                <a class="nav-link text-white-50" href="#" id="reports-link">
-                                    <i class="fas fa-chart-bar me-2"></i>
-                                    Báo cáo
-                                    <small class="text-muted d-block">Sắp có</small>
-                                </a>
-                            </nav>
+                <div class="col-md-3 col-lg-2 px-0 bg-dark">
+                    <div class="sidebar-sticky">
+                        <div class="p-3 border-bottom border-dark">
+                            <div class="sidebar-logo d-flex align-items-center">
+                                <i class="fas fa-user-shield fa-2x text-primary me-2"></i>
+                                <h5 class="text-white mb-0">Admin Panel</h5>
+                            </div>
                         </div>
+
+                        <nav class="nav flex-column p-3">
+                            <a class="nav-link text-white-50" asp-controller="Home" asp-action="Index">
+                                <i class="fas fa-tachometer-alt me-2"></i>
+                                Dashboard
+                            </a>
+
+                            <hr class="text-white-50">
+
+                            <h6 class="text-white-50 text-uppercase small mb-3">Quản lý</h6>
+
+                            <a class="nav-link text-white-50" asp-controller="Product" asp-action="Index">
+                                <i class="fas fa-box me-2"></i>
+                                Sản phẩm
+                                <span class="badge bg-secondary ms-auto">@ViewContext.HttpContext.Items["ProductCount"]</span>
+                            </a>
+
+                            <a class="nav-link text-white-50" asp-controller="Categories" asp-action="Index">
+                                <i class="fas fa-tags me-2"></i>
+                                Danh mục
+                                <span class="badge bg-secondary ms-auto">Categories</span>
+                            </a>
+
+                            <a class="nav-link text-white-50" asp-controller="Order" asp-action="Index">
+                                <i class="fas fa-shopping-cart me-2"></i>
+                                Đơn hàng
+                                <span class="badge bg-secondary ms-auto">Order</span>
+                            </a>
+
+                            <a class="nav-link text-white-50" asp-controller="User" asp-action="Index">
+                                <i class="fas fa-users me-2"></i>
+                                Người dùng
+                                <span class="badge bg-secondary ms-auto">User</span>
+                            </a>
+
+                            <hr class="text-white-50">
+
+                            <h6 class="text-white-50 text-uppercase small mb-3">Hệ thống</h6>
+
+                            <a class="nav-link text-white-50 mt-4" asp-area="" asp-controller="Home" asp-action="Index">
+                                <i class="fas fa-store me-2"></i>
+                                Về trang bán hàng
+                            </a>
+
+                            <a class="nav-link text-white-50 mt-4" asp-area="" asp-controller="Home" asp-action="Index">
+                                <i class="fas fa-store me-2"></i>
+                                Về trang bán hàng
+                            </a>
+                        </nav>
                     </div>
                 </div>
 
                 <!-- Main Content -->
-                <div class="col-md-9 col-lg-10">
+                <div class="col-md-9 col-lg-10 bg-light p-4">
                     @RenderBody()
                 </div>
             </div>
         </div>
     </main>
 
-    <footer class="border-top footer text-muted">
+    <footer class="border-top footer text-muted bg-white">
         <div class="container">
             <div class="row py-3">
                 <div class="col-md-6">
-                    © 2024 - Admin Panel - Privacy
+                    © @DateTime.Now.Year - Admin Panel - Privacy
                 </div>
                 <div class="col-md-6 text-md-end">
-                    Powered by ASP.NET Core
+                    <span class="badge bg-info text-dark">
+                        <i class="fas fa-sync-alt me-1"></i>
+                        Last updated: @DateTime.Now.ToString("HH:mm:ss")
+                    </span>
                 </div>
             </div>
         </div>
@@ -93,21 +129,54 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+
+    <!-- Notification System -->
     @if (TempData["Success"] != null)
     {
-        <div class="alert alert-success alert-dismissible fade show">
-            @TempData["Success"]
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <div class="toast-container position-fixed bottom-0 end-0 p-3">
+            <div class="toast align-items-center text-white bg-success border-0 show" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="d-flex">
+                    <div class="toast-body">
+                        <i class="fas fa-check-circle me-2"></i> @TempData["Success"]
+                    </div>
+                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+            </div>
         </div>
     }
 
     @if (TempData["Error"] != null)
     {
-        <div class="alert alert-danger alert-dismissible fade show">
-            @TempData["Error"]
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <div class="toast-container position-fixed bottom-0 end-0 p-3">
+            <div class="toast align-items-center text-white bg-danger border-0 show" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="d-flex">
+                    <div class="toast-body">
+                        <i class="fas fa-exclamation-circle me-2"></i> @TempData["Error"]
+                    </div>
+                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+            </div>
         </div>
     }
+
+    <script>
+        // Auto update timestamp in footer
+        function updateTimestamp() {
+            const now = new Date();
+            document.querySelector('.bg-info').innerHTML =
+                `<i class="fas fa-sync-alt me-1"></i> Last updated: ${now.toLocaleTimeString()}`;
+        }
+        setInterval(updateTimestamp, 60000);
+
+        // Initialize tooltips
+        document.addEventListener('DOMContentLoaded', function () {
+            const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+            tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl);
+            });
+        });
+    </script>
+
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

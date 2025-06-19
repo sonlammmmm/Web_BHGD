@@ -1,9 +1,15 @@
 ﻿@model Web_BHGD.Models.Order
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<ApplicationUser> UserManager
 
 @{
     ViewData["Title"] = "Thanh toán";
     var cartItems = ViewBag.CartItems as List<Web_BHGD.Models.CartItem>;
     var totalAmount = ViewBag.TotalAmount;
+    var currentUser = await UserManager.GetUserAsync(User);
+    var fullName = currentUser?.FullName ?? "";
+    var address = currentUser?.Address ?? "";
+    var phoneNumber = currentUser?.PhoneNumber ?? "";
 }
 
 <!-- Breadcrumb -->
@@ -34,37 +40,57 @@
                 <div class="card shadow-sm">
                     <div class="card-body">
                         <h4 class="mb-4">Thông tin đơn hàng</h4>
-                        <form asp-action="Checkout" method="post">
+                        <form asp-action="Checkout" method="post" id="checkout-form">
                             <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
                             <div class="mb-3">
                                 <label asp-for="CustomerName" class="form-label fw-medium">Tên người nhận</label>
-                                <input asp-for="CustomerName" class="form-control border-primary" />
+                                <input asp-for="CustomerName" class="form-control border-primary" value="@fullName" />
                                 <span asp-validation-for="CustomerName" class="text-danger"></span>
                             </div>
+
                             <div class="mb-3">
                                 <label asp-for="CustomerPhone" class="form-label fw-medium">Số điện thoại</label>
-                                <input asp-for="CustomerPhone" class="form-control border-primary" />
+                                <input asp-for="CustomerPhone" class="form-control border-primary" value="@phoneNumber" />
                                 <span asp-validation-for="CustomerPhone" class="text-danger"></span>
                             </div>
+
                             <div class="mb-3">
                                 <label asp-for="CustomerEmail" class="form-label fw-medium">Email</label>
-                                <input asp-for="CustomerEmail" class="form-control border-primary" />
+                                <input asp-for="CustomerEmail" class="form-control border-primary" value="@User.Identity?.Name" />
                                 <span asp-validation-for="CustomerEmail" class="text-danger"></span>
                             </div>
+
                             <div class="mb-3">
                                 <label asp-for="ShippingAddress" class="form-label fw-medium">Địa chỉ giao hàng</label>
-                                <input asp-for="ShippingAddress" class="form-control border-primary" />
+                                <input asp-for="ShippingAddress" class="form-control border-primary" value="@address" />
                                 <span asp-validation-for="ShippingAddress" class="text-danger"></span>
                             </div>
+
+                            <div class="mb-3">
+                                <label asp-for="PaymentMethod" class="form-label fw-medium">Phương thức thanh toán</label>
+                                <select asp-for="PaymentMethod" class="form-select border-primary" id="PaymentMethod">
+                                    <option value="COD" selected>Thanh toán khi nhận hàng (COD)</option>
+                                    <option value="Bank">Ngân hàng</option>
+                                    <option value="MoMo">MoMo</option>
+                                </select>
+                                <span asp-validation-for="PaymentMethod" class="text-danger"></span>
+                            </div>
+
                             <div class="mb-4">
                                 <label asp-for="Notes" class="form-label fw-medium">Ghi chú</label>
                                 <textarea asp-for="Notes" class="form-control border-primary" rows="4"></textarea>
                             </div>
-                            <button type="submit" class="btn btn-primary w-100">Đặt hàng</button>
+
+                            <button type="submit" class="btn btn-primary w-100" id="submit-order">
+                                Đặt hàng
+                            </button>
                         </form>
                     </div>
                 </div>
             </div>
+
+            <!-- Bảng chi tiết giỏ hàng -->
             <div class="col-lg-6">
                 <div class="card shadow-sm">
                     <div class="card-body">
@@ -105,6 +131,88 @@
     </div>
 </section>
 
+<!-- Modal QR Payment -->
+<div class="modal fade" id="qrPaymentModal" tabindex="-1" aria-labelledby="qrPaymentModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="qrPaymentModalLabel">Thanh toán qua QR</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <img id="qr-code-image" src="" alt="QR Code" class="img-fluid mb-3" style="max-width: 200px;" />
+                <p><strong>Số tài khoản:</strong> <span id="account-number"></span></p>
+                <p><strong>Tên tài khoản:</strong> <span id="account-name"></span></p>
+                <div id="bank-info" style="display: none;">
+                    <p><strong>Ngân hàng:</strong> <span id="bank-name"></span></p>
+                </div>
+                <p class="text-muted">Vui lòng quét mã QR hoặc chuyển khoản theo thông tin trên.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-primary complete-payment">Hoàn tất thanh toán</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script>
+        $(document).ready(function () {
+            const qrModal = new bootstrap.Modal(document.getElementById('qrPaymentModal'));
+
+            const paymentData = {
+                MoMo: {
+                    logo: '/images/logomomo.png',
+                    qrCode: '/images/qrmomo.jpg',
+                    accountNumber: '0387744234',
+                    accountName: 'TRAN SY SON LAM',
+                    bankName: ''
+                },
+                Bank: {
+                    logo: '/images/logovcb.png',
+                    qrCode: '/images/qrvcb.jpg',
+                    accountNumber: '1030439923',
+                    accountName: 'TRAN SY SON LAM',
+                    bankName: 'VietcomBank'
+                }
+            };
+
+            function updateQRModal(method) {
+                const data = paymentData[method];
+                $('#qr-code-image').attr('src', data.qrCode);
+                $('#account-number').text(data.accountNumber);
+                $('#account-name').text(data.accountName);
+                $('#bank-name').text(data.bankName || '');
+                if (data.bankName) $('#bank-info').show(); else $('#bank-info').hide();
+            }
+
+            $('#checkout-form').on('submit', function (e) {
+                const method = $('#PaymentMethod').val();
+                if (method === 'MoMo' || method === 'Bank') {
+                    e.preventDefault();
+                    // Chỉ hiển thị modal nếu form chưa có isQrPaymentComplete
+                    if (!$('#checkout-form input[name="isQrPaymentComplete"]').length) {
+                        updateQRModal(method);
+                        qrModal.show();
+                    } else {
+                        // Nếu đã có isQrPaymentComplete, submit form
+                        $(this).off('submit').submit();
+                    }
+                }
+                // COD sẽ submit trực tiếp mà không cần xử lý thêm
+            });
+
+            $('.complete-payment').on('click', function () {
+                // Thêm input isQrPaymentComplete nếu chưa có
+                if (!$('#checkout-form input[name="isQrPaymentComplete"]').length) {
+                    $('#checkout-form').append('<input type="hidden" name="isQrPaymentComplete" value="true" />');
+                }
+                qrModal.hide();
+                // Submit form sau khi đóng modal
+                setTimeout(() => $('#checkout-form').off('submit').submit(), 500);
+            });
+        });
+    </script>
 }

@@ -1,73 +1,85 @@
 ﻿@model IEnumerable<Web_BHGD.Models.Order>
+
 @{
-    ViewData["Title"] = "Quảb lý đơn hàng";
+    ViewData["Title"] = "Quản lý đơn hàng";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
-<div class="container-fluid">
-    <h2>Quản lý đơn hàng</h2>
 
-    @if (TempData["Success"] != null)
-    {
-        <div class="alert alert-success">@TempData["Success"]</div>
-    }
-    @if (TempData["Error"] != null)
-    {
-        <div class="alert alert-danger">@TempData["Error"]</div>
-    }
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
 
-    <table class="table">
-        <thead>
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+
+<table class="table table-bordered table-hover align-middle">
+    <thead class="table-light">
+        <tr>
+            <th>Mã đơn hàng</th>
+            <th>Khách hàng</th>
+            <th>Ngày đặt</th>
+            <th>Phương thức thanh toán</th>
+            <th>Tổng tiền</th>
+            <th>Trạng thái</th>
+            <th class="text-center">Hành động</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var order in Model)
+        {
             <tr>
-                <th>Mã đơn hàng</th>
-                <th>Khách hàng</th>
-                <th>Ngày đặt</th>
-                <th>Tổng tiền</th>
-                <th>Trạng thái</th>
-                <th>Hành động</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var order in Model)
-            {
-                <tr>
-                    <td>#@order.Id</td>
-                    <td>@(order.ApplicationUser?.UserName ?? order.CustomerName)</td>
-                    <td>@order.OrderDate.ToString("dd/MM/yyyy HH:mm")</td>
-                    <td>@order.TotalPrice.ToString("C0") VNĐ</td>
-                    <td>
-                        <form asp-action="UpdateStatus" method="post" class="d-inline">
+                <td>#@order.Id</td>
+                <td>@(order.ApplicationUser?.UserName ?? order.CustomerName)</td>
+                <td>@order.OrderDate.ToString("dd/MM/yyyy HH:mm")</td>
+                <td>
+                    @{
+                        var paymentLabel = order.PaymentMethod switch
+                        {
+                            "COD" => "Thanh toán khi nhận hàng",
+                            "Bank" => "Ngân hàng",
+                            "MoMo" => "MoMo",
+                            _ => order.PaymentMethod
+                        };
+                    }
+                    @paymentLabel
+                </td>
+                <td>@order.TotalPrice.ToString("#,##0") VNĐ</td>
+                <td>
+                    <form asp-action="UpdateStatus" method="post" class="d-inline">
+                        <input type="hidden" name="id" value="@order.Id" />
+                        <select name="status" class="form-select form-select-sm" onchange="this.form.submit()">
+                            <option value="Đợi xác nhận" selected="@(order.Status == "Đợi xác nhận")">Đợi xác nhận</option>
+                            <option value="Đang vận chuyển" selected="@(order.Status == "Đang vận chuyển")">Đang vận chuyển</option>
+                            <option value="Đã thanh toán" selected="@(order.Status == "Đã thanh toán")">Đã thanh toán</option>
+                            <option value="Đã hủy" selected="@(order.Status == "Đã hủy")">Đã hủy</option>
+                        </select>
+                    </form>
+                </td>
+                <td class="text-nowrap text-center">
+                    <a asp-action="Details" asp-route-id="@order.Id" class="btn btn-primary btn-sm me-1">Chi tiết</a>
+
+                    @if (order.Status == "Đợi xác nhận")
+                    {
+                        <form asp-action="ConfirmOrder" method="post" class="d-inline me-1">
                             <input type="hidden" name="id" value="@order.Id" />
-                            <select name="status" class="form-select form-select-sm" onchange="this.form.submit()">
-                                <option value="Pending" selected="@(order.Status == "Pending")">Chưa thanh toán</option>
-                                <option value="Confirmed" selected="@(order.Status == "Confirmed")">Đã thanh toán</option>
-                                <option value="Cancelled" selected="@(order.Status == "Cancelled")">Đã hủy</option>
-                            </select>
+                            <button type="submit" class="btn btn-success btn-sm">Xác nhận</button>
                         </form>
-                    </td>
-                    <td>
-                        <a asp-action="Details" asp-route-id="@order.Id" class="btn btn-primary btn-sm">Chi tiết</a>
+                    }
 
-                        @if (order.Status == "Pending")
-                        {
-                            <form asp-action="ConfirmOrder" method="post" class="d-inline">
-                                <input type="hidden" name="id" value="@order.Id" />
-                                <button type="submit" class="btn btn-success btn-sm">Xác nhận</button>
-                            </form>
-                        }
+                    @if (order.Status != "Đã hủy")
+                    {
+                        <form asp-action="ConfirmCancel" method="post" class="d-inline me-1">
+                            <input type="hidden" name="id" value="@order.Id" />
+                            <button type="submit" class="btn btn-danger btn-sm">Hủy</button>
+                        </form>
+                    }
 
-                        @if (order.Status != "Cancelled")
-                        {
-                            <form asp-action="UpdateStatus" method="post" class="d-inline">
-                                <input type="hidden" name="id" value="@order.Id" />
-                                <input type="hidden" name="status" value="Cancelled" />
-                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Bạn có chắc muốn hủy đơn hàng này không?');">Hủy</button>
-                            </form>
-                        }
-
-                        <a asp-action="GenerateInvoice" asp-route-id="@order.Id" class="btn btn-secondary btn-sm">In hóa đơn</a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-</div>
+                    <a asp-action="GenerateInvoice" asp-route-id="@order.Id" class="btn btn-secondary btn-sm">In hóa đơn</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

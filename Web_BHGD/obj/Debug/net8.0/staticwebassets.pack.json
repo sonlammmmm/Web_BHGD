@@ -5,6 +5,10 @@
       "PackagePath": "staticwebassets\\css\\admin.css"
     },
     {
+      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\css\\order.css",
+      "PackagePath": "staticwebassets\\css\\order.css"
+    },
+    {
       "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\css\\profile.css",
       "PackagePath": "staticwebassets\\css\\profile.css"
     },
@@ -21,6 +25,10 @@
       "PackagePath": "staticwebassets\\images\\0129bc1d-711d-4883-ac2e-a0b84fad9a5d.jpg"
     },
     {
+      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\images\\121c5ecc-9871-44f2-af9f-8bba73a7db5e_638859568181701877.jpg",
+      "PackagePath": "staticwebassets\\images\\121c5ecc-9871-44f2-af9f-8bba73a7db5e_638859568181701877.jpg"
+    },
+    {
       "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\images\\12ca7c2b-64e9-4349-a833-5f6608f47b01.jpg",
       "PackagePath": "staticwebassets\\images\\12ca7c2b-64e9-4349-a833-5f6608f47b01.jpg"
     },
@@ -35,6 +43,14 @@
     {
       "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\images\\3d551914-822e-42ab-8bc1-0ae49abf5877.jpeg",
       "PackagePath": "staticwebassets\\images\\3d551914-822e-42ab-8bc1-0ae49abf5877.jpeg"
+    },
+    {
+      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\images\\5684c285-855b-4137-8668-bf24a4eb432c_638859580675088691.jpg",
+      "PackagePath": "staticwebassets\\images\\5684c285-855b-4137-8668-bf24a4eb432c_638859580675088691.jpg"
+    },
+    {
+      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\images\\82e151c9-f111-416e-adab-c000cbce229c.jpg",
+      "PackagePath": "staticwebassets\\images\\82e151c9-f111-416e-adab-c000cbce229c.jpg"
     },
     {
       "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\images\\90539e42-a813-4876-b395-9a5b29671271.jpg",
@@ -55,6 +71,22 @@
     {
       "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\images\\images (2).jpg",
       "PackagePath": "staticwebassets\\images\\images (2).jpg"
+    },
+    {
+      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\images\\logomomo.png",
+      "PackagePath": "staticwebassets\\images\\logomomo.png"
+    },
+    {
+      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\images\\logovcb.png",
+      "PackagePath": "staticwebassets\\images\\logovcb.png"
+    },
+    {
+      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\images\\qrmomo.jpg",
+      "PackagePath": "staticwebassets\\images\\qrmomo.jpg"
+    },
+    {
+      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\images\\qrvcb.jpg",
+      "PackagePath": "staticwebassets\\images\\qrvcb.jpg"
     },
     {
       "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\invoices\\Invoice.cs",

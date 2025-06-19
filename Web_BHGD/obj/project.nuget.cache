@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "oi5c7IGSD0s=",
+  "dgSpecHash": "JqE+fW3XH8w=",
   "success": true,
   "projectFilePath": "E:\\Web_BHGD\\Web_BHGD\\Web_BHGD.csproj",
   "expectedPackageFiles": [
@@ -135,6 +135,7 @@
     "C:\\Users\\trans\\.nuget\\packages\\nuget.projectmodel\\6.11.0\\nuget.projectmodel.6.11.0.nupkg.sha512",
     "C:\\Users\\trans\\.nuget\\packages\\nuget.protocol\\6.11.0\\nuget.protocol.6.11.0.nupkg.sha512",
     "C:\\Users\\trans\\.nuget\\packages\\nuget.versioning\\6.11.0\\nuget.versioning.6.11.0.nupkg.sha512",
+    "C:\\Users\\trans\\.nuget\\packages\\sixlabors.imagesharp\\3.1.10\\sixlabors.imagesharp.3.1.10.nupkg.sha512",
     "C:\\Users\\trans\\.nuget\\packages\\sqlitepclraw.bundle_e_sqlite3\\2.1.6\\sqlitepclraw.bundle_e_sqlite3.2.1.6.nupkg.sha512",
     "C:\\Users\\trans\\.nuget\\packages\\sqlitepclraw.core\\2.1.6\\sqlitepclraw.core.2.1.6.nupkg.sha512",
     "C:\\Users\\trans\\.nuget\\packages\\sqlitepclraw.lib.e_sqlite3\\2.1.6\\sqlitepclraw.lib.e_sqlite3.2.1.6.nupkg.sha512",

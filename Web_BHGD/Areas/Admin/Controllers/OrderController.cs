@@ -26,8 +26,7 @@ namespace Web_BHGD.Areas.Admin.Controllers
             }
 
             var orders = await _context.Orders
-                .Include(o => o.OrderDetails)
-                .ThenInclude(od => od.Product)
+                .Include(o => o.OrderDetails).ThenInclude(od => od.Product)
                 .Include(o => o.ApplicationUser)
                 .OrderByDescending(o => o.OrderDate)
                 .ToListAsync();
@@ -45,8 +44,7 @@ namespace Web_BHGD.Areas.Admin.Controllers
             }
 
             var order = await _context.Orders
-                .Include(o => o.OrderDetails)
-                .ThenInclude(od => od.Product)
+                .Include(o => o.OrderDetails).ThenInclude(od => od.Product)
                 .Include(o => o.ApplicationUser)
                 .FirstOrDefaultAsync(o => o.Id == id);
 
@@ -57,30 +55,6 @@ namespace Web_BHGD.Areas.Admin.Controllers
             }
 
             return View(order);
-        }
-
-        // Xác nhận đơn hàng
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ConfirmOrder(int id)
-        {
-            if (_context.Orders == null)
-            {
-                TempData["Error"] = "Không thể truy cập dữ liệu đơn hàng.";
-                return NotFound();
-            }
-
-            var order = await _context.Orders.FindAsync(id);
-            if (order == null)
-            {
-                TempData["Error"] = $"Không tìm thấy đơn hàng #{id}.";
-                return NotFound();
-            }
-
-            order.Status = "Confirmed";
-            await _context.SaveChangesAsync();
-            TempData["Success"] = $"Đã xác nhận đơn hàng #{id}";
-            return RedirectToAction("Index");
         }
 
         // Cập nhật trạng thái đơn hàng
@@ -94,23 +68,125 @@ namespace Web_BHGD.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var order = await _context.Orders.FindAsync(id);
+            var order = await _context.Orders
+                .Include(o => o.OrderDetails).ThenInclude(od => od.Product)
+                .FirstOrDefaultAsync(o => o.Id == id);
+
             if (order == null)
             {
                 TempData["Error"] = $"Không tìm thấy đơn hàng #{id}.";
                 return NotFound();
             }
 
-            if (!new[] { "Pending", "Confirmed", "Cancelled" }.Contains(status))
+            var validStatuses = new[] { "Chờ xác nhận", "Đã xác nhận", "Đang giao hàng", "Đã giao hàng", "Huỷ" };
+            if (!validStatuses.Contains(status))
             {
                 TempData["Error"] = "Trạng thái không hợp lệ.";
                 return RedirectToAction("Details", new { id });
             }
 
+            var oldStatus = order.Status;
+
+            // Kiểm tra logic chuyển trạng thái
+            if (!IsValidStatusTransition(oldStatus, status))
+            {
+                TempData["Error"] = $"Không thể chuyển từ trạng thái '{oldStatus}' sang '{status}'.";
+                return RedirectToAction("Details", new { id });
+            }
+
+            // Xử lý logic khi chuyển sang "Đã xác nhận"
+            if (status == "Đã xác nhận" && oldStatus != "Đã xác nhận")
+            {
+                // Kiểm tra số lượng tồn kho
+                foreach (var detail in order.OrderDetails)
+                {
+                    var product = detail.Product;
+                    if (product.Stock < detail.Quantity)
+                    {
+                        TempData["Error"] = $"Sản phẩm {product.Name} không đủ tồn kho. Hiện có: {product.Stock}, cần: {detail.Quantity}";
+                        return RedirectToAction("Details", new { id });
+                    }
+                }
+
+                // Cập nhật tồn kho và số lượng đã bán
+                foreach (var detail in order.OrderDetails)
+                {
+                    var product = detail.Product;
+                    product.Stock -= detail.Quantity;
+                    product.SoldQuantity += detail.Quantity;
+                }
+            }
+
+            // Xử lý logic khi hủy đơn hàng
+            if (status == "Huỷ" && oldStatus == "Đã xác nhận")
+            {
+                // Hoàn lại tồn kho và giảm số lượng đã bán (chỉ khi đơn hàng đã được xác nhận trước đó)
+                foreach (var detail in order.OrderDetails)
+                {
+                    var product = detail.Product;
+                    product.Stock += detail.Quantity;
+                    product.SoldQuantity = Math.Max(0, product.SoldQuantity - detail.Quantity); // Đảm bảo không âm
+                }
+            }
+
             order.Status = status;
             await _context.SaveChangesAsync();
-            TempData["Success"] = $"Đã cập nhật trạng thái đơn hàng #{id} thành {GetStatusText(status)}.";
+
+            TempData["Success"] = $"Đã cập nhật trạng thái đơn hàng #{id} thành '{status}'.";
             return RedirectToAction("Details", new { id });
+        }
+
+        // Hủy đơn hàng (method riêng cho nút hủy)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ConfirmCancel(int id)
+        {
+            if (_context.Orders == null)
+            {
+                TempData["Error"] = "Không thể truy cập dữ liệu đơn hàng.";
+                return NotFound();
+            }
+
+            var order = await _context.Orders
+                .Include(o => o.OrderDetails).ThenInclude(od => od.Product)
+                .FirstOrDefaultAsync(o => o.Id == id);
+
+            if (order == null)
+            {
+                TempData["Error"] = $"Không tìm thấy đơn hàng #{id}.";
+                return NotFound();
+            }
+
+            if (order.Status == "Huỷ")
+            {
+                TempData["Error"] = "Đơn hàng này đã được hủy trước đó.";
+                return RedirectToAction("Details", new { id });
+            }
+
+            if (order.Status == "Đã giao hàng")
+            {
+                TempData["Error"] = "Không thể hủy đơn hàng đã giao thành công.";
+                return RedirectToAction("Details", new { id });
+            }
+
+            var oldStatus = order.Status;
+
+            // Hoàn lại tồn kho nếu đơn hàng đã được xác nhận
+            if (oldStatus == "Đã xác nhận" || oldStatus == "Đang giao hàng")
+            {
+                foreach (var detail in order.OrderDetails)
+                {
+                    var product = detail.Product;
+                    product.Stock += detail.Quantity;
+                    product.SoldQuantity = Math.Max(0, product.SoldQuantity - detail.Quantity);
+                }
+            }
+
+            order.Status = "Huỷ";
+            await _context.SaveChangesAsync();
+
+            TempData["Success"] = $"Đã hủy đơn hàng #{id}.";
+            return RedirectToAction("Index");
         }
 
         // Tạo hóa đơn HTML
@@ -123,8 +199,7 @@ namespace Web_BHGD.Areas.Admin.Controllers
             }
 
             var order = await _context.Orders
-                .Include(o => o.OrderDetails)
-                .ThenInclude(od => od.Product)
+                .Include(o => o.OrderDetails).ThenInclude(od => od.Product)
                 .Include(o => o.ApplicationUser)
                 .FirstOrDefaultAsync(o => o.Id == id);
 
@@ -137,13 +212,35 @@ namespace Web_BHGD.Areas.Admin.Controllers
             return View("Invoice", order);
         }
 
+        // Kiểm tra tính hợp lệ của việc chuyển trạng thái
+        private bool IsValidStatusTransition(string currentStatus, string newStatus)
+        {
+            // Định nghĩa các chuyển đổi trạng thái hợp lệ
+            var validTransitions = new Dictionary<string, string[]>
+            {
+                ["Chờ xác nhận"] = new[] { "Đã xác nhận","Đang giao hàng", "Huỷ" },
+                ["Đã xác nhận"] = new[] { "Đang giao hàng", "Đã giao hàng", "Huỷ" },
+                ["Đang giao hàng"] = new[] { "Đã giao hàng", "Huỷ" },
+                ["Đã giao hàng"] = new string[] { },
+                ["Huỷ"] = new string[] { } 
+            };
+
+            if (currentStatus == newStatus)
+                return true; // Cho phép giữ nguyên trạng thái
+
+            return validTransitions.ContainsKey(currentStatus) &&
+                   validTransitions[currentStatus].Contains(newStatus);
+        }
+
         private string GetStatusText(string status)
         {
             return status switch
             {
-                "Pending" => "Chưa thanh toán",
-                "Confirmed" => "Đã thanh toán",
-                "Cancelled" => "Đã hủy",
+                "Chờ xác nhận" => "Chờ xác nhận",
+                "Đã xác nhận" => "Đã xác nhận",
+                "Đang giao hàng" => "Đang giao hàng",
+                "Đã giao hàng" => "Đã giao hàng",
+                "Huỷ" => "Huỷ",
                 _ => status
             };
         }

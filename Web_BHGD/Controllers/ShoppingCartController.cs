@@ -13,9 +13,10 @@ namespace Web_BHGD.Controllers
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public ShoppingCartController(ApplicationDbContext context,
-                                    UserManager<ApplicationUser> userManager,
-                                    IProductRepository productRepository)
+        public ShoppingCartController(
+            ApplicationDbContext context,
+            UserManager<ApplicationUser> userManager,
+            IProductRepository productRepository)
         {
             _productRepository = productRepository;
             _context = context;
@@ -38,33 +39,18 @@ namespace Web_BHGD.Controllers
         {
             if (productId <= 0)
             {
-                if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
-                {
-                    return Json(new { success = false, message = "ID sản phẩm không hợp lệ." });
-                }
-                TempData["Error"] = "ID sản phẩm không hợp lệ.";
-                return RedirectToAction("Index", "Product");
+                return HandleInvalidRequest("ID sản phẩm không hợp lệ.", "Product");
             }
 
             if (quantity <= 0 || quantity > 99)
             {
-                if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
-                {
-                    return Json(new { success = false, message = "Số lượng phải từ 1 đến 99." });
-                }
-                TempData["Error"] = "Số lượng phải từ 1 đến 99.";
-                return RedirectToAction("Details", "Product", new { id = productId });
+                return HandleInvalidRequest("Số lượng phải từ 1 đến 99.", "Product", "Details", productId);
             }
 
             var product = await _productRepository.GetByIdAsync(productId);
             if (product == null)
             {
-                if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
-                {
-                    return Json(new { success = false, message = "Sản phẩm không tồn tại." });
-                }
-                TempData["Error"] = "Sản phẩm không tồn tại.";
-                return RedirectToAction("Index", "Product");
+                return HandleInvalidRequest("Sản phẩm không tồn tại.", "Product");
             }
 
             try
@@ -81,30 +67,22 @@ namespace Web_BHGD.Controllers
                 cart.AddItem(cartItem);
                 HttpContext.Session.SetObjectAsJson("Cart", cart);
 
-                // Trả về JSON cho AJAX request
-                if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+                if (IsAjaxRequest())
                 {
-                    var itemCount = cart.Items.Sum(i => i.Quantity);
                     return Json(new
                     {
                         success = true,
                         message = $"Đã thêm {product.Name} vào giỏ hàng.",
-                        itemCount = itemCount
+                        itemCount = cart.Items.Sum(i => i.Quantity)
                     });
                 }
 
-                // Redirect cho request thường
                 TempData["Success"] = $"Đã thêm {product.Name} vào giỏ hàng.";
                 return RedirectToAction("Details", "Product", new { id = productId });
             }
             catch (Exception ex)
             {
-                if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
-                {
-                    return Json(new { success = false, message = $"Lỗi khi thêm sản phẩm: {ex.Message}" });
-                }
-                TempData["Error"] = $"Lỗi khi thêm sản phẩm: {ex.Message}";
-                return RedirectToAction("Details", "Product", new { id = productId });
+                return HandleError(ex.Message, "Product", "Details", productId);
             }
         }
 
@@ -121,28 +99,24 @@ namespace Web_BHGD.Controllers
         public IActionResult UpdateQuantity(int productId, int quantity)
         {
             if (quantity <= 0)
-            {
                 return RemoveFromCart(productId);
-            }
+
             var cart = HttpContext.Session.GetObjectFromJson<ShoppingCart>("Cart");
-            if (cart != null)
+            var item = cart?.Items.FirstOrDefault(i => i.ProductId == productId);
+
+            if (item != null)
             {
-                var item = cart.Items.FirstOrDefault(i => i.ProductId == productId);
-                if (item != null)
+                item.Quantity = quantity;
+                HttpContext.Session.SetObjectAsJson("Cart", cart);
+                return Json(new
                 {
-                    item.Quantity = quantity;
-                    HttpContext.Session.SetObjectAsJson("Cart", cart);
-                    var itemTotal = item.Price * item.Quantity; // Thành tiền của sản phẩm
-                    var totalPrice = cart.Items.Sum(i => i.Price * i.Quantity); // Tổng tiền của giỏ hàng
-                    return Json(new
-                    {
-                        success = true,
-                        message = "Đã cập nhật số lượng sản phẩm.",
-                        itemTotal = itemTotal.ToString("#,##0"), // Định dạng số
-                        totalPrice = totalPrice.ToString("#,##0") // Định dạng số
-                    });
-                }
+                    success = true,
+                    message = "Đã cập nhật số lượng sản phẩm.",
+                    itemTotal = (item.Price * item.Quantity).ToString("#,##0"),
+                    totalPrice = cart.Items.Sum(i => i.Price * i.Quantity).ToString("#,##0")
+                });
             }
+
             return Json(new { success = false, message = "Sản phẩm không tồn tại trong giỏ hàng." });
         }
 
@@ -150,16 +124,15 @@ namespace Web_BHGD.Controllers
         public IActionResult RemoveFromCart(int productId)
         {
             var cart = HttpContext.Session.GetObjectFromJson<ShoppingCart>("Cart");
-            if (cart != null)
+            var item = cart?.Items.FirstOrDefault(i => i.ProductId == productId);
+
+            if (item != null)
             {
-                var item = cart.Items.FirstOrDefault(i => i.ProductId == productId);
-                if (item != null)
-                {
-                    cart.RemoveItem(productId);
-                    HttpContext.Session.SetObjectAsJson("Cart", cart);
-                    return Json(new { success = true, message = $"Đã xóa {item.Name} khỏi giỏ hàng." });
-                }
+                cart.RemoveItem(productId);
+                HttpContext.Session.SetObjectAsJson("Cart", cart);
+                return Json(new { success = true, message = $"Đã xóa {item.Name} khỏi giỏ hàng." });
             }
+
             return Json(new { success = false, message = "Sản phẩm không tồn tại trong giỏ hàng." });
         }
 
@@ -174,19 +147,20 @@ namespace Web_BHGD.Controllers
         public async Task<IActionResult> Checkout()
         {
             var cart = HttpContext.Session.GetObjectFromJson<ShoppingCart>("Cart");
+
             if (cart == null || !cart.Items.Any())
             {
                 TempData["Error"] = "Giỏ hàng của bạn đang trống.";
                 return RedirectToAction("Index");
             }
-            
+
             var order = new Order
             {
                 OrderDate = DateTime.UtcNow,
-                TotalPrice = cart.Items.Sum(i => i.Price * i.Quantity)
+                TotalPrice = cart.Items.Sum(i => i.Price * i.Quantity),
+                PaymentMethod = "COD"
             };
 
-            // Điền sẵn thông tin cho người dùng đã đăng nhập
             if (User.Identity.IsAuthenticated)
             {
                 var user = await _userManager.GetUserAsync(User);
@@ -196,7 +170,7 @@ namespace Web_BHGD.Controllers
                 order.CustomerPhone = user.PhoneNumber ?? "";
             }
 
-            ViewBag.TotalAmount = cart.Items.Sum(i => i.Price * i.Quantity);
+            ViewBag.TotalAmount = order.TotalPrice;
             ViewBag.CartItems = cart.Items;
             return View(order);
         }
@@ -204,9 +178,10 @@ namespace Web_BHGD.Controllers
         // Xử lý đặt hàng
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Checkout(Order order)
+        public async Task<IActionResult> Checkout(Order order, bool isQrPaymentComplete = false)
         {
             var cart = HttpContext.Session.GetObjectFromJson<ShoppingCart>("Cart");
+
             if (cart == null || !cart.Items.Any())
             {
                 TempData["Error"] = "Giỏ hàng của bạn đang trống.";
@@ -222,20 +197,14 @@ namespace Web_BHGD.Controllers
 
             try
             {
-                // Xử lý UserId
                 if (User.Identity.IsAuthenticated)
                 {
                     var user = await _userManager.GetUserAsync(User);
                     order.UserId = user.Id;
                 }
-                else
-                {
-                    order.UserId = null; // Khách vãng lai
-                }
 
                 order.OrderDate = DateTime.UtcNow;
                 order.TotalPrice = cart.Items.Sum(i => i.Price * i.Quantity);
-                order.Status = "Pending"; // Trạng thái mặc định
                 order.OrderDetails = cart.Items.Select(i => new OrderDetail
                 {
                     ProductId = i.ProductId,
@@ -243,12 +212,30 @@ namespace Web_BHGD.Controllers
                     Price = i.Price
                 }).ToList();
 
+                if (order.PaymentMethod == "COD")
+                {
+                    order.Status = "Đã xác nhận";
+                }
+                else if ((order.PaymentMethod == "Bank" || order.PaymentMethod == "MoMo") && isQrPaymentComplete)
+                {
+                    order.Status = "Chờ xác nhận";
+                }
+                else
+                {
+                    ViewBag.TotalAmount = order.TotalPrice;
+                    ViewBag.CartItems = cart.Items;
+                    TempData["Error"] = "Vui lòng hoàn tất thanh toán qua mã QR.";
+                    return View(order);
+                }
+
                 _context.Orders.Add(order);
                 await _context.SaveChangesAsync();
 
-                // Xóa giỏ hàng
                 HttpContext.Session.Remove("Cart");
-                TempData["Success"] = "Đặt hàng thành công! Đơn hàng đang chờ xác nhận từ quản trị viên.";
+                TempData["Success"] = order.PaymentMethod == "COD"
+                    ? "Đặt hàng thành công! Đơn hàng của bạn sẽ được vận chuyển sớm nhất có thể."
+                    : "Đặt hàng thành công! Đơn hàng đang chờ xác nhận từ quản trị viên.";
+
                 return View("OrderCompleted", order.Id);
             }
             catch (Exception ex)
@@ -263,6 +250,38 @@ namespace Web_BHGD.Controllers
         private async Task<Product> GetProductFromDatabase(int productId)
         {
             return await _productRepository.GetByIdAsync(productId);
+        }
+
+        // Helpers
+        private bool IsAjaxRequest()
+        {
+            return Request.Headers["X-Requested-With"] == "XMLHttpRequest";
+        }
+
+        private IActionResult HandleInvalidRequest(string message, string controller, string action = "Index", int? id = null)
+        {
+            if (IsAjaxRequest())
+            {
+                return Json(new { success = false, message });
+            }
+
+            TempData["Error"] = message;
+            return id.HasValue
+                ? RedirectToAction(action, controller, new { id })
+                : RedirectToAction(action, controller);
+        }
+
+        private IActionResult HandleError(string errorMessage, string controller, string action = "Index", int? id = null)
+        {
+            if (IsAjaxRequest())
+            {
+                return Json(new { success = false, message = $"Lỗi: {errorMessage}" });
+            }
+
+            TempData["Error"] = $"Lỗi: {errorMessage}";
+            return id.HasValue
+                ? RedirectToAction(action, controller, new { id })
+                : RedirectToAction(action, controller);
         }
     }
 }
