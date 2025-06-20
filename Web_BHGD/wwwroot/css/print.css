@@ -1,0 +1,35 @@
+﻿@media print {
+    body {
+        background-color: white;
+        margin: 0;
+        padding: 0;
+    }
+
+    .invoice-container {
+        box-shadow: none;
+        border: none;
+        margin: 0;
+        padding: 1rem;
+        width: 100%;
+    }
+
+    .invoice-actions {
+        display: none;
+    }
+
+    .btn {
+        display: none;
+    }
+
+    .shadow-sm {
+        box-shadow: none;
+    }
+}
+
+/* Đảm bảo nút cố định không ảnh hưởng bố cục chính */
+.invoice-actions {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 50;
+}

@@ -9,6 +9,10 @@
       "PackagePath": "staticwebassets\\css\\order.css"
     },
     {
+      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\css\\print.css",
+      "PackagePath": "staticwebassets\\css\\print.css"
+    },
+    {
       "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\css\\profile.css",
       "PackagePath": "staticwebassets\\css\\profile.css"
     },
@@ -25,16 +29,16 @@
       "PackagePath": "staticwebassets\\images\\0129bc1d-711d-4883-ac2e-a0b84fad9a5d.jpg"
     },
     {
-      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\images\\121c5ecc-9871-44f2-af9f-8bba73a7db5e_638859568181701877.jpg",
-      "PackagePath": "staticwebassets\\images\\121c5ecc-9871-44f2-af9f-8bba73a7db5e_638859568181701877.jpg"
-    },
-    {
       "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\images\\12ca7c2b-64e9-4349-a833-5f6608f47b01.jpg",
       "PackagePath": "staticwebassets\\images\\12ca7c2b-64e9-4349-a833-5f6608f47b01.jpg"
     },
     {
       "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\images\\17bc4b97-df85-4ee5-b772-d4a94fb8fb72.jpg",
       "PackagePath": "staticwebassets\\images\\17bc4b97-df85-4ee5-b772-d4a94fb8fb72.jpg"
+    },
+    {
+      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\images\\26cf1208-be6c-4584-8a9a-4eb71b343f4d_638860096426760472.jpg",
+      "PackagePath": "staticwebassets\\images\\26cf1208-be6c-4584-8a9a-4eb71b343f4d_638860096426760472.jpg"
     },
     {
       "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\images\\3c791ef0-a5c5-439b-be77-419bf6b88ba8.jpg",
@@ -45,8 +49,16 @@
       "PackagePath": "staticwebassets\\images\\3d551914-822e-42ab-8bc1-0ae49abf5877.jpeg"
     },
     {
-      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\images\\5684c285-855b-4137-8668-bf24a4eb432c_638859580675088691.jpg",
-      "PackagePath": "staticwebassets\\images\\5684c285-855b-4137-8668-bf24a4eb432c_638859580675088691.jpg"
+      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\images\\59248032-9c09-494b-a204-5921004cc0e0_638860112319071144.png",
+      "PackagePath": "staticwebassets\\images\\59248032-9c09-494b-a204-5921004cc0e0_638860112319071144.png"
+    },
+    {
+      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\images\\6ff55c5b-a967-4815-9018-fe71dae8dd37_638860099844052001.jpg",
+      "PackagePath": "staticwebassets\\images\\6ff55c5b-a967-4815-9018-fe71dae8dd37_638860099844052001.jpg"
+    },
+    {
+      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\images\\782429c0-cbff-4ad5-be58-e1deb9e8a740_638860108871882025.jpg",
+      "PackagePath": "staticwebassets\\images\\782429c0-cbff-4ad5-be58-e1deb9e8a740_638860108871882025.jpg"
     },
     {
       "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\images\\82e151c9-f111-416e-adab-c000cbce229c.jpg",
@@ -57,6 +69,10 @@
       "PackagePath": "staticwebassets\\images\\90539e42-a813-4876-b395-9a5b29671271.jpg"
     },
     {
+      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\images\\b12089d2-a7e2-42b3-b010-66767440c26e_638860097294111459.jpg",
+      "PackagePath": "staticwebassets\\images\\b12089d2-a7e2-42b3-b010-66767440c26e_638860097294111459.jpg"
+    },
+    {
       "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\images\\banner_bhgd.png",
       "PackagePath": "staticwebassets\\images\\banner_bhgd.png"
     },
@@ -65,12 +81,20 @@
       "PackagePath": "staticwebassets\\images\\default_product.png"
     },
     {
+      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\images\\e4a011de-a629-4031-ab81-395ba76951d4_638860098331246507.jpg",
+      "PackagePath": "staticwebassets\\images\\e4a011de-a629-4031-ab81-395ba76951d4_638860098331246507.jpg"
+    },
+    {
       "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\images\\f46feff9-fef3-4671-801c-bbaaa252cf61.jpg",
       "PackagePath": "staticwebassets\\images\\f46feff9-fef3-4671-801c-bbaaa252cf61.jpg"
     },
     {
       "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\images\\images (2).jpg",
       "PackagePath": "staticwebassets\\images\\images (2).jpg"
+    },
+    {
+      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\images\\loginbanner.png",
+      "PackagePath": "staticwebassets\\images\\loginbanner.png"
     },
     {
       "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\images\\logomomo.png",
@@ -87,6 +111,10 @@
     {
       "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\images\\qrvcb.jpg",
       "PackagePath": "staticwebassets\\images\\qrvcb.jpg"
+    },
+    {
+      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\images\\registerbanner.png",
+      "PackagePath": "staticwebassets\\images\\registerbanner.png"
     },
     {
       "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\invoices\\Invoice.cs",

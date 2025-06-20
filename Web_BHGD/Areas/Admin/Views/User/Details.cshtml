@@ -1,44 +1,56 @@
 ﻿@model Web_BHGD.Areas.Admin.Models.UserViewModel
+
 @{
-    ViewData["Title"] = "Chi tiết người dùng";
+    ViewData["Title"] = "Chi tiết Người dùng #" + Model.Id;
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2 class="mb-4">Chi tiết người dùng</h2>
+<!-- Header -->
+<div class="content-card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h2 class="card-title">@ViewData["Title"]</h2>
+        <a asp-action="Index" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> Quay lại
+        </a>
+    </div>
 
-<div class="card">
     <div class="card-body">
-        <dl class="row">
-            <dt class="col-sm-3">Họ tên</dt>
-            <dd class="col-sm-9">@Model.FullName</dd>
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                @TempData["Error"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
 
-            <dt class="col-sm-3">Email</dt>
-            <dd class="col-sm-9">@Model.Email</dd>
-
-            <dt class="col-sm-3">Số điện thoại</dt>
-            <dd class="col-sm-9">@Model.PhoneNumber</dd>
-
-            <dt class="col-sm-3">Địa chỉ</dt>
-            <dd class="col-sm-9">@Model.Address</dd>
-
-            <dt class="col-sm-3">Tuổi</dt>
-            <dd class="col-sm-9">@Model.Age</dd>
-
-            <dt class="col-sm-3">Vai trò</dt>
-            <dd class="col-sm-9">@string.Join(", ", Model.Roles)</dd>
-
-            <dt class="col-sm-3">Trạng thái</dt>
-            <dd class="col-sm-9">
-                @if (Model.IsLocked)
-                {
-                    <span class="text-danger fw-bold">Bị khóa</span>
-                }
-                else
-                {
-                    <span class="text-success">Hoạt động</span>
-                }
-            </dd>
-        </dl>
-        <a asp-action="Index" class="btn btn-secondary">Quay lại danh sách</a>
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="form-card p-4 shadow-sm rounded-3">
+                    <div class="mb-4 text-center">
+                        <i class="fas fa-user fa-3x text-primary mb-3"></i>
+                        <h4 class="text-muted">Thông tin người dùng</h4>
+                    </div>
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <p class="mb-1"><strong>ID:</strong> @Model.Id</p>
+                            <p class="mb-1"><strong>Họ và tên:</strong> @Model.FullName</p>
+                            <p class="mb-1"><strong>Email:</strong> @Model.Email</p>
+                            <p class="mb-1"><strong>Số điện thoại:</strong> @(string.IsNullOrEmpty(Model.PhoneNumber) ? "Chưa cập nhật" : Model.PhoneNumber)</p>
+                            <p class="mb-1"><strong>Địa chỉ:</strong> @(string.IsNullOrEmpty(Model.Address) ? "Chưa cập nhật" : Model.Address)</p>
+                            <p class="mb-1"><strong>Tuổi:</strong> @(Model.Age.HasValue ? Model.Age.Value.ToString() : "Chưa cập nhật")</p>
+                            <p class="mb-0"><strong>Vai trò:</strong> @string.Join(", ", Model.Roles)</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p class="mb-0">
+                                <strong>Trạng thái:</strong>
+                                <span class="badge @(!Model.IsLocked ? "bg-success" : "bg-danger")">
+                                    @(!Model.IsLocked ? "Hoạt động" : "Bị khóa")
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

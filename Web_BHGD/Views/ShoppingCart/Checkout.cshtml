@@ -188,27 +188,18 @@
                 if (data.bankName) $('#bank-info').show(); else $('#bank-info').hide();
             }
 
+            // SỬA LẠI PHẦN NÀY: COD KHÔNG CẦN XỬ LÝ MODAL
             $('#checkout-form').on('submit', function (e) {
                 const method = $('#PaymentMethod').val();
                 if (method === 'MoMo' || method === 'Bank') {
                     e.preventDefault();
-                    // Chỉ hiển thị modal nếu form chưa có isQrPaymentComplete
-                    if (!$('#checkout-form input[name="isQrPaymentComplete"]').length) {
-                        updateQRModal(method);
-                        qrModal.show();
-                    } else {
-                        // Nếu đã có isQrPaymentComplete, submit form
-                        $(this).off('submit').submit();
-                    }
+                    updateQRModal(method);
+                    qrModal.show();
                 }
-                // COD sẽ submit trực tiếp mà không cần xử lý thêm
+                // COD sẽ submit trực tiếp
             });
 
             $('.complete-payment').on('click', function () {
-                // Thêm input isQrPaymentComplete nếu chưa có
-                if (!$('#checkout-form input[name="isQrPaymentComplete"]').length) {
-                    $('#checkout-form').append('<input type="hidden" name="isQrPaymentComplete" value="true" />');
-                }
                 qrModal.hide();
                 // Submit form sau khi đóng modal
                 setTimeout(() => $('#checkout-form').off('submit').submit(), 500);

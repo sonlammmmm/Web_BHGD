@@ -188,7 +188,7 @@
     color: #495057;
 }
 
-@@keyframes pulse {
+@keyframes pulse {
     0% {
         opacity: 1;
         transform: scale(1);
@@ -260,7 +260,7 @@
         }
 
 /* Responsive */
-@@media (max-width: 768px) {
+@media (max-width: 768px) {
     .modal-lg {
         max-width: 95%;
     }
@@ -293,7 +293,7 @@
     animation-fill-mode: forwards;
 }
 
-@@keyframes slideIn {
+@keyframes slideIn {
     from {
         transform: translateX(100%);
         opacity: 0;
@@ -305,7 +305,7 @@
     }
 }
 
-@@keyframes slideOut {
+@keyframes slideOut {
     from {
         transform: translateX(0);
         opacity: 1;
@@ -772,4 +772,91 @@
     .contact-info-card {
         padding: 1.5rem 1rem;
     }
+}
+
+.stats-card {
+    background: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    display: flex;
+    align-items: center;
+    transition: transform 0.3s ease;
+}
+
+    .stats-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+    }
+
+.stats-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    margin-right: 15px;
+}
+
+.stats-value {
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.stats-label {
+    font-size: 14px;
+    color: #6c757d;
+}
+
+.order-row:hover {
+    background-color: #f8f9fa !important;
+}
+
+.status-pending {
+    background-color: #ffc107;
+    color: #000;
+}
+
+.status-confirmed {
+    background-color: #0dcaf0;
+    color: #000;
+}
+
+.status-shipping {
+    background-color: #0d6efd;
+    color: #fff;
+}
+
+.status-delivered {
+    background-color: #198754;
+    color: #fff;
+}
+
+.status-cancelled {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+.avatar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 5px;
+}
+
+.btn-action {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
 }

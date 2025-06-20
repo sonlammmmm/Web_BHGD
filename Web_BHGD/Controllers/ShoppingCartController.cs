@@ -212,29 +212,16 @@ namespace Web_BHGD.Controllers
                     Price = i.Price
                 }).ToList();
 
-                if (order.PaymentMethod == "COD")
-                {
-                    order.Status = "Đã xác nhận";
-                }
-                else if ((order.PaymentMethod == "Bank" || order.PaymentMethod == "MoMo") && isQrPaymentComplete)
-                {
-                    order.Status = "Chờ xác nhận";
-                }
-                else
-                {
-                    ViewBag.TotalAmount = order.TotalPrice;
-                    ViewBag.CartItems = cart.Items;
-                    TempData["Error"] = "Vui lòng hoàn tất thanh toán qua mã QR.";
-                    return View(order);
-                }
+                // SỬA LẠI PHẦN NÀY: COD KHÔNG TỰ ĐỘNG XÁC NHẬN
+                order.Status = "Chờ xác nhận"; // Tất cả đơn hàng đều ở trạng thái chờ xác nhận ban đầu
 
                 _context.Orders.Add(order);
                 await _context.SaveChangesAsync();
 
                 HttpContext.Session.Remove("Cart");
-                TempData["Success"] = order.PaymentMethod == "COD"
-                    ? "Đặt hàng thành công! Đơn hàng của bạn sẽ được vận chuyển sớm nhất có thể."
-                    : "Đặt hàng thành công! Đơn hàng đang chờ xác nhận từ quản trị viên.";
+
+                // Thông báo chung cho tất cả phương thức thanh toán
+                TempData["Success"] = "Đặt hàng thành công! Đơn hàng của bạn đang chờ xác nhận từ quản trị viên.";
 
                 return View("OrderCompleted", order.Id);
             }

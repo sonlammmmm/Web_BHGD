@@ -1,172 +1,43 @@
 ﻿@model Web_BHGD.Models.Category
+
 @{
-    ViewData["Title"] = "Thêm Danh mục";
+    ViewData["Title"] = "Thêm mới Danh mục";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
-@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
-<div class="container-fluid">
-    <div class="row">
-        <!-- Main Content -->
-        <div class="col-md-9 col-lg-10">
-            <div class="p-4">
-                <!-- Breadcrumb -->
-                <nav aria-label="breadcrumb" class="mb-4">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item">
-                            <a asp-controller="Home" asp-action="Index" class="text-decoration-none">
-                                <i class="fas fa-home me-1"></i>Dashboard
-                            </a>
-                        </li>
-                        <li class="breadcrumb-item">
-                            <a asp-controller="Categories" asp-action="Index" class="text-decoration-none">
-                                Danh mục
-                            </a>
-                        </li>
-                        <li class="breadcrumb-item active" aria-current="page">Thêm mới</li>
-                    </ol>
-                </nav>
+<!-- Header -->
+<div class="content-card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h2 class="card-title">@ViewData["Title"]</h2>
+        <a asp-action="Index" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> Quay lại
+        </a>
+    </div>
 
-                <!-- Header -->
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                    <div>
-                        <h1 class="h3 mb-0">
-                            <i class="fas fa-plus-circle me-2 text-success"></i>
-                            Thêm Danh mục Mới
-                        </h1>
-                        <p class="text-muted mb-0">Tạo danh mục sản phẩm mới</p>
-                    </div>
-                </div>
-
-                <!-- Form Card -->
-                <div class="row justify-content-center">
-                    <div class="col-md-8 col-lg-6">
-                        <div class="card shadow-sm">
-                            <div class="card-header bg-success text-white">
-                                <h5 class="mb-0">
-                                    <i class="fas fa-edit me-2"></i>
-                                    Thông tin Danh mục
-                                </h5>
-                            </div>
-                            <div class="card-body p-4">
-                                <form asp-action="Add" method="post">
-                                    <div class="mb-4">
-                                        <label for="Name" class="form-label fw-bold">
-                                            <i class="fas fa-tag me-1 text-primary"></i>
-                                            Tên Danh mục <span class="text-danger">*</span>
-                                        </label>
-                                        <input asp-for="Name" class="form-control form-control-lg"
-                                               placeholder="Nhập tên danh mục..."
-                                               id="Name" autocomplete="off" />
-                                        <span asp-validation-for="Name" class="text-danger small"></span>
-                                        <div class="form-text">
-                                            <i class="fas fa-info-circle me-1"></i>
-                                            Tên danh mục phải từ 2-50 ký tự
-                                        </div>
-                                    </div>
-
-                                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                        <a asp-action="Index" class="btn btn-outline-secondary btn-lg me-2">
-                                            <i class="fas fa-arrow-left me-1"></i>
-                                            Quay lại
-                                        </a>
-                                        <button type="submit" class="btn btn-success btn-lg">
-                                            <i class="fas fa-save me-1"></i>
-                                            Lưu Danh mục
-                                        </button>
-                                    </div>
-                                </form>
-                            </div>
+    <div class="card-body">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="form-card p-4 shadow-sm rounded-3">
+                    <form asp-action="Add" method="post">
+                        <div class="mb-4 text-center">
+                            <i class="fas fa-folder-plus fa-3x text-primary mb-3"></i>
+                            <h4 class="text-muted">Nhập thông tin danh mục</h4>
                         </div>
-
-                        <!-- Help Card -->
-                        <div class="card mt-4 border-info">
-                            <div class="card-body">
-                                <h6 class="card-title text-info">
-                                    <i class="fas fa-lightbulb me-1"></i>
-                                    Gợi ý
-                                </h6>
-                                <ul class="mb-0 small text-muted">
-                                    <li>Chọn tên danh mục ngắn gọn, dễ hiểu</li>
-                                    <li>Tránh tạo danh mục trùng lặp</li>
-                                    <li>Sử dụng tên có ý nghĩa với sản phẩm</li>
-                                </ul>
-                            </div>
+                        <div class="mb-4">
+                            <label for="Name" class="form-label fw-bold">Tên danh mục</label>
+                            <input asp-for="Name" class="form-control form-control-lg custom-input" required placeholder="Nhập tên danh mục" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
                         </div>
-                    </div>
+                        <button type="submit" class="btn btn-primary w-100 py-2 custom-btn">
+                            <i class="fas fa-save"></i> Lưu
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<style>
-    .nav-link {
-        transition: all 0.3s ease;
-        border-radius: 0.25rem;
-        margin-bottom: 0.25rem;
-    }
-
-        .nav-link:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-            color: white !important;
-        }
-
-        .nav-link.active {
-            background-color: rgba(255, 255, 255, 0.2);
-            color: white !important;
-        }
-
-    .card {
-        border: none;
-        box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
-        transition: all 0.3s ease;
-    }
-
-    .form-control:focus {
-        border-color: #28a745;
-        box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
-    }
-
-    .bg-dark {
-        background-color: #2c3e50 !important;
-    }
-
-    .breadcrumb-item + .breadcrumb-item::before {
-        content: "›";
-        font-weight: bold;
-    }
-</style>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        // Focus vào input đầu tiên
-        const nameInput = document.getElementById('Name');
-        if (nameInput) {
-            nameInput.focus();
-        }
-
-        // Real-time validation
-        nameInput.addEventListener('input', function () {
-            const value = this.value.trim();
-            const formText = this.nextElementSibling.nextElementSibling;
-
-            if (value.length < 2) {
-                formText.innerHTML = '<i class="fas fa-exclamation-triangle me-1"></i>Tên danh mục phải có ít nhất 2 ký tự';
-                formText.className = 'form-text text-warning';
-            } else if (value.length > 50) {
-                formText.innerHTML = '<i class="fas fa-exclamation-triangle me-1"></i>Tên danh mục không được quá 50 ký tự';
-                formText.className = 'form-text text-danger';
-            } else {
-                formText.innerHTML = '<i class="fas fa-check-circle me-1"></i>Tên danh mục hợp lệ';
-                formText.className = 'form-text text-success';
-            }
-        });
-    });
-</script>
-
 @section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+    <partial name="_ValidationScriptsPartial" />
 }

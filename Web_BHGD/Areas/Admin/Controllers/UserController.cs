@@ -28,18 +28,27 @@ namespace Web_BHGD.Areas.Admin.Controllers
             _logger.LogInformation("Bắt đầu lấy danh sách người dùng");
             try
             {
-                var users = await _dbContext.Users
-                    .Select(u => new UserViewModel
+                var rawUsers = await _dbContext.Users.ToListAsync();
+
+                var users = rawUsers.Select(u =>
+                {
+                    int? parsedAge = null;
+                    if (!string.IsNullOrEmpty(u.Age) && int.TryParse(u.Age, out int age))
+                    {
+                        parsedAge = age;
+                    }
+
+                    return new UserViewModel
                     {
                         Id = u.Id,
                         FullName = u.FullName,
                         Email = u.Email,
                         PhoneNumber = u.PhoneNumber,
                         Address = u.Address,
-                        Age = u.Age,
+                        Age = parsedAge,
                         IsLocked = u.LockoutEnd != null && u.LockoutEnd > DateTimeOffset.UtcNow
-                    })
-                    .ToListAsync();
+                    };
+                }).ToList();
 
                 // Lấy tất cả roles trong một truy vấn
                 var userIds = users.Select(u => u.Id).ToList();
@@ -88,10 +97,10 @@ namespace Web_BHGD.Areas.Admin.Controllers
                 {
                     Id = user.Id,
                     FullName = user.FullName,
-                    Email = user.Email, // Sửa từ u.Email thành user.Email
+                    Email = user.Email,
                     PhoneNumber = user.PhoneNumber,
                     Address = user.Address,
-                    Age = user.Age,
+                    Age = string.IsNullOrEmpty(user.Age) ? (int?)null : int.TryParse(user.Age, out int age) ? age : (int?)null, // Chuyển đổi string sang int?
                     Roles = roles.ToList(),
                     IsLocked = user.LockoutEnd != null && user.LockoutEnd > DateTimeOffset.UtcNow
                 };
@@ -189,6 +198,6 @@ namespace Web_BHGD.Areas.Admin.Controllers
                 TempData["Error"] = $"Lỗi khi mở khóa tài khoản: {ex.Message}";
                 return RedirectToAction(nameof(Index));
             }
-        } 
+        }
     }
 }

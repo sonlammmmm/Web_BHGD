@@ -37,7 +37,7 @@ namespace Web_BHGD.Areas.Admin.Controllers
 
         public IActionResult Add()
         {
-            return View();
+            return View(new Category());
         }
 
         [HttpPost]

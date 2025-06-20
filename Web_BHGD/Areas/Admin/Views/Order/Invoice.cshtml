@@ -1,112 +1,127 @@
-﻿@model Web_BHGD.Models.Order
-
+﻿@model Order
 @{
-    ViewData["Title"] = $"Hóa đơn đơn hàng #{Model.Id}";
     Layout = null;
 }
-
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="utf-8" />
-    <title>@ViewData["Title"]</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <style>
-        body {
-            padding: 2rem;
-            font-family: "Segoe UI", sans-serif;
-            background-color: #fff;
-            color: #000;
-        }
-        h2, h4 {
-            margin-bottom: 1rem;
-        }
-        .invoice-details {
-            margin-bottom: 2rem;
-        }
-        .invoice-footer {
-            margin-top: 2rem;
-            font-style: italic;
-        }
-        .table th, .table td {
-            vertical-align: middle;
-        }
-        @@media print {
-            .btn-print {
-                display: none;
-            }
-        }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hóa đơn #@Model.Id</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="/css/print.css" rel="stylesheet">
 </head>
-<body>
-    <h2 class="text-center text-uppercase">HÓA ĐƠN BÁN HÀNG</h2>
-
-    <p><strong>Mã đơn hàng:</strong> #@Model.Id</p>
-    <p><strong>Ngày đặt:</strong> @Model.OrderDate.ToString("dd/MM/yyyy HH:mm")</p>
-
-    <div class="invoice-details">
-        <h4>Thông tin khách hàng</h4>
-        <p><strong>Tên:</strong> @(Model.ApplicationUser?.UserName ?? Model.CustomerName)</p>
-        <p><strong>Điện thoại:</strong> @Model.CustomerPhone</p>
-        <p><strong>Email:</strong> @Model.CustomerEmail</p>
-        <p><strong>Địa chỉ:</strong> @Model.ShippingAddress</p>
-        <p><strong>Phương thức thanh toán:</strong>
-            @(Model.PaymentMethod switch
-            {
-                "COD" => "Thanh toán khi nhận hàng",
-                "Bank" => "Ngân hàng",
-                "MoMo" => "MoMo",
-                _ => Model.PaymentMethod
-            })
-        </p>
+<body class="bg-gray-50 font-sans">
+    <!-- Nút hành động cố định -->
+    <div class="invoice-actions fixed top-4 right-4 z-50 flex space-x-2 print:hidden">
+        <button onclick="window.close()" class="btn bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-md flex items-center text-sm font-medium">
+            Đóng
+        </button>
+        <button onclick="window.print()" class="btn bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md flex items-center text-sm font-medium">
+            In hóa đơn
+        </button>
     </div>
 
-    <div class="invoice-details">
-        <h4>Ghi chú</h4>
-        <p>@(string.IsNullOrWhiteSpace(Model.Notes) ? "Không có ghi chú" : Model.Notes)</p>
-    </div>
+    <div class="invoice-container max-w-3xl mx-auto my-6 p-6 bg-white rounded-lg shadow-sm">
+        <!-- Tiêu đề công ty -->
+        <div class="company-header flex items-center justify-between border-b border-gray-200 pb-4 mb-6">
+            <div class="company-info">
+                <h1 class="text-xl font-bold text-gray-800">CÔNG TY TNHH BHGD</h1>
+                <p class="text-xs text-gray-500">
+                    Số 123, Đường ABC, Quận XYZ, TP. Hồ Chí Minh<br>
+                    Điện thoại: 0123.456.789 | Email: contact@bhgd.com
+                </p>
+            </div>
+            <div class="company-logo w-16 h-16 bg-indigo-800 text-white rounded-full flex items-center justify-center text-xl font-bold">
+                BHGD
+            </div>
+        </div>
 
-    <div class="invoice-details">
-        <h4>Chi tiết đơn hàng</h4>
-        <div class="table-responsive">
-            <table class="table table-bordered table-striped">
-                <thead class="table-light">
-                    <tr>
-                        <th scope="col">Tên sản phẩm</th>
-                        <th scope="col">Đơn giá</th>
-                        <th scope="col">Số lượng</th>
-                        <th scope="col">Thành tiền</th>
+        <!-- Tiêu đề hóa đơn -->
+        <div class="invoice-header text-center mb-6">
+            <h2 class="text-2xl font-semibold text-gray-800">HÓA ĐƠN THANH TOÁN</h2>
+            <p class="text-sm text-gray-600">Mã hóa đơn: #@Model.Id</p>
+        </div>
+
+        <!-- Thông tin khách hàng và đơn hàng -->
+        <div class="invoice-details flex flex-col md:flex-row gap-4 mb-6">
+            <div class="customer-info flex-1 p-4 bg-gray-50 rounded-md border border-gray-200">
+                <h3 class="text-base font-semibold text-gray-800 border-b border-gray-300 pb-2 mb-3">Thông tin khách hàng</h3>
+                <p class="text-sm text-gray-700"><strong>@Model.CustomerName</strong></p>
+                <p class="text-sm text-gray-600">Điện thoại: @Model.CustomerPhone</p>
+                <p class="text-sm text-gray-600">Email: @Model.CustomerEmail</p>
+                <p class="text-sm text-gray-600">Địa chỉ: @Model.ShippingAddress</p>
+            </div>
+            <div class="order-info flex-1 p-4 bg-gray-50 rounded-md border border-gray-200">
+                <h3 class="text-base font-semibold text-gray-800 border-b border-gray-300 pb-2 mb-3">Thông tin đơn hàng</h3>
+                <p class="text-sm text-gray-600">Ngày đặt: @Model.OrderDate.ToString("dd/MM/yyyy HH:mm")</p>
+                <p class="text-sm text-gray-600">Phương thức: @Model.PaymentMethod</p>
+                <p class="text-sm text-gray-600">Mã đơn: #@Model.Id</p>
+                <p class="text-sm text-gray-600">Trạng thái: @Model.Status</p>
+            </div>
+        </div>
+
+        <!-- Bảng sản phẩm -->
+        <table class="w-full border-collapse mb-6 text-sm">
+            <thead>
+                <tr class="bg-indigo-800 text-white">
+                    <th class="border border-gray-300 p-2 text-left">Sản phẩm</th>
+                    <th class="border border-gray-300 p-2 text-right">Đơn giá</th>
+                    <th class="border border-gray-300 p-2 text-center">Số lượng</th>
+                    <th class="border border-gray-300 p-2 text-right">Thành tiền</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var detail in Model.OrderDetails)
+                {
+                    <tr class="hover:bg-gray-50">
+                        <td class="border border-gray-300 p-2">@(detail.Product?.Name ?? "Sản phẩm không xác định")</td>
+                        <td class="border border-gray-300 p-2 text-right">@detail.Price.ToString("n0") đ</td>
+                        <td class="border border-gray-300 p-2 text-center">@detail.Quantity</td>
+                        <td class="border border-gray-300 p-2 text-right">@((detail.Price * detail.Quantity).ToString("n0")) đ</td>
                     </tr>
-                </thead>
-                <tbody>
-                    @foreach (var detail in Model.OrderDetails)
-                    {
-                        <tr>
-                            <td>@detail.Product.Name</td>
-                            <td>@detail.Price.ToString("#,##0")₫</td>
-                            <td>@detail.Quantity</td>
-                            <td>@(detail.Price * detail.Quantity).ToString("#,##0")₫</td>
-                        </tr>
-                    }
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <td colspan="3" class="text-end fw-bold">Tổng cộng:</td>
-                        <td class="fw-bold">@Model.TotalPrice.ToString("#,##0")₫</td>
-                    </tr>
-                </tfoot>
-            </table>
+                }
+                <tr class="bg-gray-100 font-semibold">
+                    <td class="border border-gray-300 p-2 text-right" colspan="3">Tạm tính:</td>
+                    <td class="border border-gray-300 p-2 text-right">@(Model.OrderDetails != null ? Model.OrderDetails.Sum(od => od.Price * od.Quantity).ToString("n0") : "0") đ</td>
+                </tr>
+                <tr class="bg-gray-100 font-semibold">
+                    <td class="border border-gray-300 p-2 text-right" colspan="3">Phí vận chuyển:</td>
+                    <td class="border border-gray-300 p-2 text-right">0 đ</td>
+                </tr>
+                <tr class="bg-gray-100 font-semibold">
+                    <td class="border border-gray-300 p-2 text-right" colspan="3">Tổng cộng:</td>
+                    <td class="border border-gray-300 p-2 text-right">@(Model.OrderDetails != null ? Model.OrderDetails.Sum(od => od.Price * od.Quantity).ToString("n0") : "0") đ</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Ghi chú -->
+        <div class="notes p-4 bg-gray-50 rounded-md border border-gray-200 mb-6">
+            <h3 class="text-base font-semibold text-gray-800 border-b border-gray-300 pb-2 mb-3">Ghi chú đơn hàng</h3>
+            <p class="text-sm text-gray-600">@(string.IsNullOrWhiteSpace(Model.Notes) ? "*** Không có ghi chú ***" : Model.Notes)</p>
+        </div>
+
+        <!-- Chân trang -->
+        <div class="footer text-center pt-4 border-t border-gray-200 text-gray-600 text-sm">
+            <p class="font-semibold">Cảm ơn quý khách đã mua hàng! Hẹn gặp lại!</p>
+            <p>Ngày xuất hóa đơn: @DateTime.Now.ToString("dd/MM/yyyy")</p>
         </div>
     </div>
 
-    <div class="invoice-footer">
-        <p>Cảm ơn quý khách đã mua sắm tại <strong>BHGD Store</strong>!</p>
-        <p><em>Hóa đơn này được tạo tự động và không cần chữ ký xác nhận.</em></p>
-    </div>
-
-    <div class="text-end mt-4 btn-print">
-        <a href="javascript:window.print()" class="btn btn-outline-primary me-2">🖨 In hóa đơn</a>
-        <a asp-area="Admin" asp-controller="Order" asp-action="Index" class="btn btn-primary">⬅ Quay lại</a>
-    </div>
+    @functions {
+        string GetStatusClass(string status)
+        {
+            return status switch
+            {
+                "Chờ xác nhận" => "bg-yellow-400 text-yellow-900",
+                "Đã xác nhận" => "bg-blue-500 text-white",
+                "Đang giao hàng" => "bg-blue-600 text-white",
+                "Đã giao hàng" => "bg-green-500 text-white",
+                "Huỷ" => "bg-red-500 text-white",
+                _ => "bg-gray-500 text-white"
+            };
+        }
+    }
 </body>
 </html>

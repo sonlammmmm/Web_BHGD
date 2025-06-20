@@ -38,6 +38,8 @@ namespace Web_BHGD.Areas.Admin.Controllers
         public async Task<IActionResult> Index()
         {
             var products = await _productRepository.GetAllAsync();
+            var categories = await _categoryRepository.GetAllAsync(); // Lấy danh mục
+            ViewBag.Categories = new SelectList(categories, "Id", "Name"); // Truyền vào ViewBag
 
             // Thống kê chi tiết hơn
             ViewBag.TotalProducts = products.Count();
@@ -50,6 +52,7 @@ namespace Web_BHGD.Areas.Admin.Controllers
             return View(products);
         }
 
+        // Các action khác giữ nguyên
         public async Task<IActionResult> Display(int id)
         {
             var product = await _productRepository.GetByIdAsync(id);
@@ -58,23 +61,16 @@ namespace Web_BHGD.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            // Tính toán các thông số chi tiết
             ViewBag.StockStatus = GetStockStatus(product.Stock);
             ViewBag.StockStatusClass = GetStockStatusClass(product.Stock);
 
-            // Tính tỷ lệ bán hàng (dựa trên tổng sản lượng ban đầu)
             var totalInitialQuantity = product.Stock + product.SoldQuantity;
             ViewBag.SalesPercentage = totalInitialQuantity > 0
                 ? Math.Round((double)product.SoldQuantity / totalInitialQuantity * 100, 1)
                 : 0;
 
-            // Tính giá trị tồn kho
             ViewBag.StockValue = product.Stock * product.Price;
-
-            // Tính doanh thu đã bán
             ViewBag.Revenue = product.SoldQuantity * product.Price;
-
-            // Đánh giá hiệu suất bán hàng
             ViewBag.PerformanceStatus = GetPerformanceStatus(product.SoldQuantity, product.Stock);
 
             return View(product);
@@ -84,7 +80,7 @@ namespace Web_BHGD.Areas.Admin.Controllers
         {
             var categories = await _categoryRepository.GetAllAsync();
             ViewBag.Categories = new SelectList(categories, "Id", "Name");
-            return View();
+            return View(new Product());
         }
 
         [HttpPost]
@@ -113,8 +109,7 @@ namespace Web_BHGD.Areas.Admin.Controllers
 
             try
             {
-                // Khởi tạo sản phẩm mới
-                product.SoldQuantity = 0; // Sản phẩm mới chưa bán được gì
+                product.SoldQuantity = 0;
                 product.ImageUrl = imageUrl != null && imageUrl.Length > 0
                     ? await SaveImage(imageUrl)
                     : DefaultImagePath;
@@ -157,7 +152,6 @@ namespace Web_BHGD.Areas.Admin.Controllers
             var categories = await _categoryRepository.GetAllAsync();
             ViewBag.Categories = new SelectList(categories, "Id", "Name", product.CategoryId);
 
-            // Thông tin để hiển thị trên form
             ViewBag.CurrentStock = product.Stock;
             ViewBag.SoldQuantity = product.SoldQuantity;
             ViewBag.StockValue = product.Stock * product.Price;
@@ -167,11 +161,18 @@ namespace Web_BHGD.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Update(int id, Product product, IFormFile imageUrl)
+        [HttpPost]
+        public async Task<IActionResult> Update(int id, Product product, IFormFile imageUrl, string ExistingImageUrl)
         {
             if (id != product.Id)
             {
                 return NotFound();
+            }
+
+            // Xóa validation error cho ImageUrl nếu là update và không có ảnh mới
+            if (product.Id > 0 && (imageUrl == null || imageUrl.Length == 0))
+            {
+                ModelState.Remove("ImageUrl");
             }
 
             if (!ModelState.IsValid)
@@ -202,27 +203,52 @@ namespace Web_BHGD.Areas.Admin.Controllers
                 var oldStock = existingProduct.Stock;
                 var oldImageUrl = existingProduct.ImageUrl;
 
-                // Xử lý ảnh mới
+                // Xử lý ảnh được cải thiện
                 if (imageUrl != null && imageUrl.Length > 0)
                 {
+                    // Có ảnh mới được upload
                     existingProduct.ImageUrl = await SaveImage(imageUrl);
-                    if (!string.IsNullOrEmpty(oldImageUrl) && oldImageUrl != DefaultImagePath)
+
+                    // Xóa ảnh cũ nếu không phải ảnh mặc định
+                    if (!string.IsNullOrEmpty(oldImageUrl) &&
+                        oldImageUrl != DefaultImagePath &&
+                        oldImageUrl.StartsWith("/images/"))
                     {
                         var oldImagePath = Path.Combine("wwwroot", oldImageUrl.TrimStart('/'));
                         if (System.IO.File.Exists(oldImagePath))
                         {
-                            System.IO.File.Delete(oldImagePath);
+                            try
+                            {
+                                System.IO.File.Delete(oldImagePath);
+                            }
+                            catch (Exception ex)
+                            {
+                                _logger.LogWarning(ex, "Không thể xóa ảnh cũ: {OldImagePath}", oldImagePath);
+                            }
                         }
                     }
                 }
+                else
+                {
+                    // Không có ảnh mới, giữ ảnh hiện tại
+                    // Ưu tiên: ExistingImageUrl -> existingProduct.ImageUrl -> DefaultImagePath
+                    if (!string.IsNullOrWhiteSpace(ExistingImageUrl))
+                    {
+                        existingProduct.ImageUrl = ExistingImageUrl;
+                    }
+                    else if (string.IsNullOrWhiteSpace(existingProduct.ImageUrl))
+                    {
+                        existingProduct.ImageUrl = DefaultImagePath;
+                    }
+                    // Nếu existingProduct.ImageUrl đã có giá trị, giữ nguyên
+                }
 
-                // Cập nhật thông tin sản phẩm (giữ nguyên SoldQuantity)
+                // Cập nhật các thuộc tính khác
                 existingProduct.Name = product.Name;
                 existingProduct.Price = product.Price;
                 existingProduct.Description = product.Description;
                 existingProduct.CategoryId = product.CategoryId;
                 existingProduct.Stock = product.Stock;
-                // Không cập nhật SoldQuantity ở đây vì nó được quản lý bởi OrderController
 
                 await _productRepository.UpdateAsync(existingProduct);
                 await _context.SaveChangesAsync();
@@ -245,54 +271,16 @@ namespace Web_BHGD.Areas.Admin.Controllers
 
         public async Task<IActionResult> Delete(int id)
         {
-            var product = await _productRepository.GetByIdAsync(id);
-            if (product == null)
-            {
-                return NotFound();
-            }
-
-            // Kiểm tra xem sản phẩm có đang trong đơn hàng chưa xử lý không
-            var pendingOrders = await _context.OrderDetails
-                .Include(od => od.Order)
-                .Where(od => od.ProductId == id &&
-                            (od.Order.Status == "Chờ xác nhận" ||
-                             od.Order.Status == "Đã xác nhận" ||
-                             od.Order.Status == "Đang giao hàng"))
-                .CountAsync();
-
-            if (pendingOrders > 0)
-            {
-                ViewBag.DeleteWarning = $"Cảnh báo: Sản phẩm này đang có {pendingOrders} đơn hàng chưa hoàn thành!";
-                ViewBag.CanDelete = false;
-            }
-            else
-            {
-                ViewBag.CanDelete = true;
-                if (product.Stock > 0)
-                {
-                    ViewBag.StockWarning = $"Sản phẩm còn {product.Stock} đơn vị trong kho (giá trị: {(product.Stock * product.Price):N0} đ)";
-                }
-                if (product.SoldQuantity > 0)
-                {
-                    ViewBag.SalesInfo = $"Sản phẩm đã bán được {product.SoldQuantity} đơn vị (doanh thu: {(product.SoldQuantity * product.Price):N0} đ)";
-                }
-            }
-
-            return View(product);
-        }
-
-        [HttpPost, ActionName("DeleteConfirmed")]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
             try
             {
                 var product = await _productRepository.GetByIdAsync(id);
                 if (product == null)
                 {
-                    return NotFound();
+                    TempData["Error"] = "Không tìm thấy sản phẩm";
+                    return RedirectToAction(nameof(Index));
                 }
 
-                // Kiểm tra lại đơn hàng chưa xử lý
+                // Kiểm tra đơn hàng chưa hoàn thành
                 var pendingOrders = await _context.OrderDetails
                     .Include(od => od.Order)
                     .Where(od => od.ProductId == id &&
@@ -303,40 +291,171 @@ namespace Web_BHGD.Areas.Admin.Controllers
 
                 if (pendingOrders > 0)
                 {
+                    ViewBag.DeleteWarning = $"Cảnh báo: Sản phẩm này đang có {pendingOrders} đơn hàng chưa hoàn thành!";
+                    ViewBag.CanDelete = false;
+                }
+                else
+                {
+                    ViewBag.CanDelete = true;
+                    if (product.Stock > 0)
+                    {
+                        ViewBag.StockWarning = $"Sản phẩm còn {product.Stock} đơn vị trong kho (giá trị: {(product.Stock * product.Price):N0} đ)";
+                    }
+                    if (product.SoldQuantity > 0)
+                    {
+                        ViewBag.SalesInfo = $"Sản phẩm đã bán được {product.SoldQuantity} đơn vị (doanh thu: {(product.SoldQuantity * product.Price):N0} đ)";
+                    }
+                }
+
+                return View(product);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Lỗi khi tải trang xóa sản phẩm: {ProductId}", id);
+                TempData["Error"] = "Có lỗi xảy ra khi tải thông tin sản phẩm";
+                return RedirectToAction(nameof(Index));
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            try
+            {
+                _logger.LogInformation("Bắt đầu xóa sản phẩm với ID: {ProductId}", id);
+
+                // Lấy sản phẩm với tracking để có thể xóa
+                var product = await _context.Products
+                    .Include(p => p.Category)
+                    .FirstOrDefaultAsync(p => p.Id == id);
+
+                if (product == null)
+                {
+                    _logger.LogWarning("Không tìm thấy sản phẩm với ID: {ProductId}", id);
+                    TempData["Error"] = "Không tìm thấy sản phẩm cần xóa";
+                    return RedirectToAction(nameof(Index));
+                }
+
+                // Kiểm tra lại đơn hàng chưa hoàn thành
+                var pendingOrders = await _context.OrderDetails
+                    .Include(od => od.Order)
+                    .Where(od => od.ProductId == id &&
+                                (od.Order.Status == "Chờ xác nhận" ||
+                                 od.Order.Status == "Đã xác nhận" ||
+                                 od.Order.Status == "Đang giao hàng"))
+                    .CountAsync();
+
+                if (pendingOrders > 0)
+                {
+                    _logger.LogWarning("Không thể xóa sản phẩm {ProductId} vì còn {PendingOrders} đơn hàng chưa hoàn thành",
+                        id, pendingOrders);
                     TempData["Error"] = $"Không thể xóa sản phẩm vì còn {pendingOrders} đơn hàng chưa hoàn thành";
                     return RedirectToAction(nameof(Index));
                 }
 
-                _logger.LogInformation("Xóa sản phẩm: {ProductName} - Tồn kho: {Stock}, Đã bán: {SoldQuantity}",
-                    product.Name, product.Stock, product.SoldQuantity);
+                // Lưu thông tin để log
+                var productName = product.Name;
+                var productStock = product.Stock;
+                var productSoldQuantity = product.SoldQuantity;
+                var imageUrl = product.ImageUrl;
 
-                // Xóa ảnh
-                if (!string.IsNullOrEmpty(product.ImageUrl) && product.ImageUrl != DefaultImagePath)
-                {
-                    var imagePath = Path.Combine("wwwroot", product.ImageUrl.TrimStart('/'));
-                    if (System.IO.File.Exists(imagePath))
-                    {
-                        System.IO.File.Delete(imagePath);
-                    }
-                }
-
-                await _productRepository.DeleteAsync(id);
+                // Xóa sản phẩm từ database trước
+                _context.Products.Remove(product);
                 await _context.SaveChangesAsync();
 
-                TempData["Success"] = $"Xóa sản phẩm '{product.Name}' thành công";
+                _logger.LogInformation("Đã xóa sản phẩm khỏi database: {ProductName} - Tồn kho: {Stock}, Đã bán: {SoldQuantity}",
+                    productName, productStock, productSoldQuantity);
+
+                // Sau khi xóa thành công từ database, mới xóa file ảnh
+                await DeleteProductImage(imageUrl);
+
+                TempData["Success"] = $"Xóa sản phẩm '{productName}' thành công";
+                return RedirectToAction(nameof(Index));
+            }
+            catch (DbUpdateException ex)
+            {
+                _logger.LogError(ex, "Lỗi cơ sở dữ liệu khi xóa sản phẩm: {ProductId}", id);
+                TempData["Error"] = "Không thể xóa sản phẩm do có ràng buộc dữ liệu. Vui lòng kiểm tra lại các đơn hàng liên quan.";
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Lỗi khi xóa sản phẩm: {ProductId}", id);
+                _logger.LogError(ex, "Lỗi không xác định khi xóa sản phẩm: {ProductId}", id);
                 TempData["Error"] = $"Lỗi khi xóa sản phẩm: {ex.Message}";
                 return RedirectToAction(nameof(Index));
             }
         }
 
+        private async Task DeleteProductImage(string imageUrl)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(imageUrl) || imageUrl == DefaultImagePath)
+                {
+                    return; // Không cần xóa ảnh mặc định
+                }
+
+                // Chỉ xóa ảnh trong thư mục images của ứng dụng
+                if (imageUrl.StartsWith("/images/"))
+                {
+                    var imagePath = Path.Combine("wwwroot", imageUrl.TrimStart('/'));
+
+                    if (System.IO.File.Exists(imagePath))
+                    {
+                        // Đợi một chút để đảm bảo file không bị lock
+                        await Task.Delay(100);
+
+                        // Thử xóa file
+                        System.IO.File.Delete(imagePath);
+                        _logger.LogInformation("Đã xóa file ảnh: {ImagePath}", imagePath);
+                    }
+                    else
+                    {
+                        _logger.LogWarning("File ảnh không tồn tại: {ImagePath}", imagePath);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log lỗi nhưng không throw exception vì đã xóa thành công khỏi database
+                _logger.LogWarning(ex, "Không thể xóa file ảnh: {ImageUrl}", imageUrl);
+            }
+        }
+
+        // Thêm method kiểm tra ràng buộc dữ liệu
+        private async Task<(bool CanDelete, string Reason, int Count)> CheckProductConstraints(int productId)
+        {
+            try
+            {
+                // Kiểm tra đơn hàng chưa hoàn thành
+                var pendingOrdersCount = await _context.OrderDetails
+                    .Include(od => od.Order)
+                    .Where(od => od.ProductId == productId &&
+                                (od.Order.Status == "Chờ xác nhận" ||
+                                 od.Order.Status == "Đã xác nhận" ||
+                                 od.Order.Status == "Đang giao hàng"))
+                    .CountAsync();
+
+                if (pendingOrdersCount > 0)
+                {
+                    return (false, "Có đơn hàng chưa hoàn thành", pendingOrdersCount);
+                }
+
+                // Có thể thêm các kiểm tra khác ở đây
+                // Ví dụ: kiểm tra trong giỏ hàng, wishlist, v.v.
+
+                return (true, string.Empty, 0);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Lỗi khi kiểm tra ràng buộc cho sản phẩm: {ProductId}", productId);
+                return (false, "Lỗi hệ thống", 0);
+            }
+        }
+
         private async Task<string> SaveImage(IFormFile image)
         {
-            // Giữ nguyên logic SaveImage như cũ
             _logger.LogInformation("Bắt đầu lưu ảnh: {FileName}, Kích thước: {FileSize} bytes", image.FileName, image.Length);
 
             if (image == null || image.Length == 0)
@@ -397,7 +516,6 @@ namespace Web_BHGD.Areas.Admin.Controllers
             }
         }
 
-        // Các hàm helper mới
         private string GetStockStatus(int stock)
         {
             return stock switch

@@ -1,0 +1,65 @@
+﻿@model Web_BHGD.Areas.Admin.Models.UserRolesViewModel
+
+@{
+    ViewData["Title"] = "Sửa vai trò cho " + Model.FullName;
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!-- Header -->
+<div class="content-card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h2 class="card-title">@ViewData["Title"]</h2>
+        <a asp-action="Index" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> Quay lại
+        </a>
+    </div>
+
+    <div class="card-body">
+        @if (TempData["Success"] != null)
+        {
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                @TempData["Success"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                @TempData["Error"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="form-card p-4 shadow-sm rounded-3">
+                    <div class="mb-4 text-center">
+                        <i class="fas fa-user-shield fa-3x text-primary mb-3"></i>
+                        <h4 class="text-muted">Quản lý vai trò</h4>
+                    </div>
+                    <form asp-action="EditRoles" method="post">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" asp-for="UserId" />
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Vai trò</label>
+                            @foreach (var role in Model.Roles)
+                            {
+                                <div class="form-check mb-2">
+                                    <input type="checkbox" asp-for="@role.IsSelected" class="form-check-input" id="role_@role.RoleId" />
+                                    <label class="form-check-label" for="role_@role.RoleId">@role.RoleName</label>
+                                </div>
+                            }
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100 py-2 custom-btn">
+                            <i class="fas fa-save"></i> Lưu thay đổi
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

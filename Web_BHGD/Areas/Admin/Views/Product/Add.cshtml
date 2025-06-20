@@ -1,84 +1,132 @@
 ﻿@model Product
 @{
-    ViewData["Title"] = "Thêm sản phẩm";
+    ViewData["Title"] = Model.Id == 0 ? "Thêm sản phẩm" : "Cập nhật sản phẩm";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    var categories = ViewBag.Categories as SelectList;
+    var currentImage = Model.ImageUrl ?? "/images/default_product.png";
 }
 
-<div class="admin-header">
-    <h2 class="admin-title"><i class="fas fa-plus-circle"></i> @ViewData["Title"]</h2>
-</div>
+<div class="content-card">
+    <div class="card-header">
+        <h2 class="card-title">@ViewData["Title"]</h2>
+        <a asp-action="Index" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> Quay lại
+        </a>
+    </div>
 
-<div class="compact-form">
-    <form asp-action="Add" enctype="multipart/form-data">
-        <div class="form-section">
-            <div class="form-group">
-                <label asp-for="Name">Tên sản phẩm *</label>
-                <input asp-for="Name" class="form-control" placeholder="Vui lòng nhập tên sản phẩm">
-                <span asp-validation-for="Name" class="form-error"></span>
-            </div>
+    <div class="card-body">
+        <form asp-action="@(Model.Id == 0 ? "Add" : "Update")" 
+              enctype="multipart/form-data">
+            <div class="row">
+                <div class="col-md-8">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-            <div class="form-row">
-                <div class="form-group">
-                    <label asp-for="CategoryId">Danh mục *</label>
-                    <select asp-for="CategoryId" asp-items="ViewBag.Categories" class="form-select">
-                        <option value="">-- Chọn danh mục --</option>
-                    </select>
-                    <span asp-validation-for="CategoryId" class="form-error"></span>
+                    <input type="hidden" asp-for="Id" />
+                    @if (Model.Id > 0)
+                    {
+                        <input type="hidden" name="ExistingImageUrl" value="@Model.ImageUrl" />
+                    }
+
+                    <div class="mb-4">
+                        <label asp-for="Name" class="form-label fw-medium">Tên sản phẩm</label>
+                        <input asp-for="Name" class="form-control form-control-lg" placeholder="Nhập tên sản phẩm" />
+                        <span asp-validation-for="Name" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-4">
+                        <label asp-for="CategoryId" class="form-label fw-medium">Danh mục</label>
+                        <select asp-for="CategoryId" asp-items="categories" class="form-select">
+                            <option value="">-- Chọn danh mục --</option>
+                        </select>
+                        <span asp-validation-for="CategoryId" class="text-danger small"></span>
+                    </div>
+
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <label asp-for="Price" class="form-label fw-medium">Giá bán</label>
+                            <div class="input-group">
+                                <span class="input-group-text">đ</span>
+                                <input asp-for="Price" class="form-control" type="number" min="0" placeholder="Giá sản phẩm" />
+                            </div>
+                            <span asp-validation-for="Price" class="text-danger small"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="Stock" class="form-label fw-medium">Số lượng tồn kho</label>
+                            <input asp-for="Stock" class="form-control" type="number" min="0" placeholder="Số lượng tồn kho" />
+                            <span asp-validation-for="Stock" class="text-danger small"></span>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label asp-for="Description" class="form-label fw-medium">Mô tả</label>
+                        <textarea asp-for="Description" class="form-control" rows="4" placeholder="Mô tả chi tiết sản phẩm"></textarea>
+                        <span asp-validation-for="Description" class="text-danger small"></span>
+                    </div>
                 </div>
 
-                <div class="form-group">
-                    <label asp-for="Price">Giá (VNĐ) *</label>
-                    <input asp-for="Price" type="number" class="form-control" placeholder="0" min="0" max="1000000000">
-                    <span asp-validation-for="Price" class="form-error"></span>
-                </div>
-            </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <img id="previewImage" src="@currentImage"
+                                 class="img-fluid mb-3 rounded border"
+                                 style="max-height:200px;"
+                                 onerror="this.src='/images/default_product.png'">
 
-            <div class="form-row">
-                <div class="form-group">
-                    <label asp-for="Stock">Số lượng *</label>
-                    <input asp-for="Stock" type="number" class="form-control" value="0" min="0">
-                    <span asp-validation-for="Stock" class="form-error"></span>
-                </div>
+                            <div class="mb-3">
+                                <label class="btn btn-outline-primary w-100">
+                                    <i class="fas fa-upload"></i> Chọn ảnh
+                                    <input type="file" name="imageUrl" accept="image/*" class="d-none" id="imageInput">
+                                </label>
+                                <small class="text-muted d-block mt-2">JPG/PNG, tối đa 5MB</small>
+                            </div>
 
-                <div class="form-group">
-                    <label>Ảnh sản phẩm</label>
-                    <div class="image-upload-preview">
-                        <img id="previewImage" src="~/images/default_product.png">
-                        <label for="imageInput" class="upload-btn">
-                            <i class="fas fa-cloud-upload-alt"></i> Chọn ảnh
-                        </label>
-                        <input type="file" name="imageUrl" id="imageInput" accept="image/*">
+                            @if (Model.Id > 0)
+                            {
+                                <div class="mt-4">
+                                    <h6>Thống kê</h6>
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item d-flex justify-content-between">
+                                            <span>Đã bán:</span>
+                                            <span>@Model.SoldQuantity</span>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between">
+                                            <span>Giá trị tồn kho:</span>
+                                            <span>@((Model.Stock * Model.Price).ToString("N0"))đ</span>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between">
+                                            <span>Doanh thu:</span>
+                                            <span>@((Model.SoldQuantity * Model.Price).ToString("N0"))đ</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            }
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="form-section">
-            <div class="form-group">
-                <label asp-for="Description">Mô tả sản phẩm</label>
-                <textarea asp-for="Description" class="form-control" rows="3" placeholder="Mô tả chi tiết sản phẩm..."></textarea>
+            <div class="d-flex justify-content-end gap-2 mt-4">
+                <button type="submit" class="btn btn-primary btn-lg">
+                    <i class="fas fa-save"></i> Tạo sản phẩm
+                </button>
+                <a asp-action="Index" class="btn btn-secondary btn-lg">
+                    <i class="fas fa-times"></i> Hủy bỏ
+                </a>
             </div>
-        </div>
-
-        <div class="form-footer">
-            <a asp-action="Index" class="btn btn-secondary">
-                <i class="fas fa-times"></i> Hủy bỏ
-            </a>
-            <button type="submit" class="btn btn-primary">
-                <i class="fas fa-save"></i> Lưu sản phẩm
-            </button>
-        </div>
-    </form>
+        </form>
+    </div>
 </div>
 
 @section Scripts {
     <script>
-        document.getElementById('imageInput').addEventListener('change', function (event) {
-            const file = event.target.files[0];
+        document.getElementById('imageInput').addEventListener('change', function (e) {
+            const preview = document.getElementById('previewImage');
+            const file = e.target.files[0];
+
             if (file) {
                 const reader = new FileReader();
                 reader.onload = function (e) {
-                    document.getElementById('previewImage').src = e.target.result;
+                    preview.src = e.target.result;
                 }
                 reader.readAsDataURL(file);
             }

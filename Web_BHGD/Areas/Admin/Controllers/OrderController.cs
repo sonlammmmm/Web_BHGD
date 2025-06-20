@@ -44,8 +44,7 @@ namespace Web_BHGD.Areas.Admin.Controllers
             }
 
             var order = await _context.Orders
-                .Include(o => o.OrderDetails).ThenInclude(od => od.Product)
-                .Include(o => o.ApplicationUser)
+                .Include(o => o.OrderDetails).ThenInclude(od => od.Product).ThenInclude(p => p.Category)
                 .FirstOrDefaultAsync(o => o.Id == id);
 
             if (order == null)
@@ -69,7 +68,8 @@ namespace Web_BHGD.Areas.Admin.Controllers
             }
 
             var order = await _context.Orders
-                .Include(o => o.OrderDetails).ThenInclude(od => od.Product)
+                .Include(o => o.OrderDetails)
+                    .ThenInclude(od => od.Product)
                 .FirstOrDefaultAsync(o => o.Id == id);
 
             if (order == null)
@@ -94,10 +94,10 @@ namespace Web_BHGD.Areas.Admin.Controllers
                 return RedirectToAction("Details", new { id });
             }
 
-            // Xử lý logic khi chuyển sang "Đã xác nhận"
+            // Xử lý logic khi chuyển sang "Đã xác nhận" - áp dụng cho mọi phương thức thanh toán
             if (status == "Đã xác nhận" && oldStatus != "Đã xác nhận")
             {
-                // Kiểm tra số lượng tồn kho
+                // Kiểm tra số lượng tồn kho cho tất cả sản phẩm
                 foreach (var detail in order.OrderDetails)
                 {
                     var product = detail.Product;
@@ -114,22 +114,25 @@ namespace Web_BHGD.Areas.Admin.Controllers
                     var product = detail.Product;
                     product.Stock -= detail.Quantity;
                     product.SoldQuantity += detail.Quantity;
+                    _context.Products.Update(product);
                 }
             }
 
             // Xử lý logic khi hủy đơn hàng
-            if (status == "Huỷ" && oldStatus == "Đã xác nhận")
+            if (status == "Huỷ" && (oldStatus == "Đã xác nhận" || oldStatus == "Đang giao hàng"))
             {
-                // Hoàn lại tồn kho và giảm số lượng đã bán (chỉ khi đơn hàng đã được xác nhận trước đó)
+                // Hoàn lại tồn kho và giảm số lượng đã bán
                 foreach (var detail in order.OrderDetails)
                 {
                     var product = detail.Product;
                     product.Stock += detail.Quantity;
-                    product.SoldQuantity = Math.Max(0, product.SoldQuantity - detail.Quantity); // Đảm bảo không âm
+                    product.SoldQuantity = Math.Max(0, product.SoldQuantity - detail.Quantity);
+                    _context.Products.Update(product);
                 }
             }
 
             order.Status = status;
+            _context.Orders.Update(order);
             await _context.SaveChangesAsync();
 
             TempData["Success"] = $"Đã cập nhật trạng thái đơn hàng #{id} thành '{status}'.";
@@ -148,7 +151,8 @@ namespace Web_BHGD.Areas.Admin.Controllers
             }
 
             var order = await _context.Orders
-                .Include(o => o.OrderDetails).ThenInclude(od => od.Product)
+                .Include(o => o.OrderDetails)
+                    .ThenInclude(od => od.Product)
                 .FirstOrDefaultAsync(o => o.Id == id);
 
             if (order == null)
@@ -179,10 +183,12 @@ namespace Web_BHGD.Areas.Admin.Controllers
                     var product = detail.Product;
                     product.Stock += detail.Quantity;
                     product.SoldQuantity = Math.Max(0, product.SoldQuantity - detail.Quantity);
+                    _context.Products.Update(product);
                 }
             }
 
             order.Status = "Huỷ";
+            _context.Orders.Update(order);
             await _context.SaveChangesAsync();
 
             TempData["Success"] = $"Đã hủy đơn hàng #{id}.";
@@ -199,8 +205,8 @@ namespace Web_BHGD.Areas.Admin.Controllers
             }
 
             var order = await _context.Orders
-                .Include(o => o.OrderDetails).ThenInclude(od => od.Product)
-                .Include(o => o.ApplicationUser)
+                .Include(o => o.OrderDetails)
+                    .ThenInclude(od => od.Product) // Chỉ cần load Product
                 .FirstOrDefaultAsync(o => o.Id == id);
 
             if (order == null)

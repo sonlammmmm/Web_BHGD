@@ -40,11 +40,6 @@
                                 </div>
                             </div>
                             <div class="col-md-3">
-                                <label class="form-label fw-semibold text-dark">Danh mục</label>
-                                @Html.DropDownList("categoryId", ViewBag.CategorySelectList as SelectList, "-- Chọn danh mục --",
-                                         new { @class = "form-select border-primary", value = ViewBag.CurrentCategory })
-                            </div>
-                            <div class="col-md-3">
                                 <label class="form-label fw-semibold text-dark">Sắp xếp</label>
                                 <select name="sortOrder" class="form-select border-primary">
                                     @{
@@ -109,12 +104,6 @@
                                         </a>
                                         <div class="mb-2">
                                             <span class="text-primary fw-bold">@product.Price.ToString("#,##0")₫</span>
-                                            @if (product.Price > 200000)
-                                            {
-                                                <small class="text-muted text-decoration-line-through ms-2">
-                                                    @((product.Price * 1.2m).ToString("#,##0"))₫
-                                                </small>
-                                            }
                                         </div>
                                         <div class="mb-3">
                                             @for (int i = 0; i < 5; i++)

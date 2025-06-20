@@ -1,135 +1,68 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Admin Panel</title>
+    <title>@ViewData["Title"] - Quản lý sản phẩm</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
-    <style>
-        .sidebar-logo {
-            transition: all 0.3s ease;
-        }
-
-            .sidebar-logo:hover {
-                transform: scale(1.05);
-            }
-
-        .sidebar-sticky {
-            position: -webkit-sticky;
-            position: sticky;
-            top: 0;
-            height: 100vh;
-            overflow-y: auto;
-        }
-
-        .nav-link .badge {
-            transition: all 0.3s ease;
-        }
-
-        .nav-link:hover .badge {
-            background-color: rgba(255,255,255,0.3) !important;
-        }
-
-        .progress-bar {
-            transition: width 1s ease-in-out;
-        }
-    </style>
 </head>
 <body>
-    <main>
-        <div class="container-fluid">
-            <div class="row">
-                <!-- Sidebar -->
-                <div class="col-md-3 col-lg-2 px-0 bg-dark">
-                    <div class="sidebar-sticky">
-                        <div class="p-3 border-bottom border-dark">
-                            <div class="sidebar-logo d-flex align-items-center">
-                                <i class="fas fa-user-shield fa-2x text-primary me-2"></i>
-                                <h5 class="text-white mb-0">Admin Panel</h5>
-                            </div>
-                        </div>
-
-                        <nav class="nav flex-column p-3">
-                            <a class="nav-link text-white-50" asp-controller="Home" asp-action="Index">
-                                <i class="fas fa-tachometer-alt me-2"></i>
-                                Dashboard
-                            </a>
-
-                            <hr class="text-white-50">
-
-                            <h6 class="text-white-50 text-uppercase small mb-3">Quản lý</h6>
-
-                            <a class="nav-link text-white-50" asp-controller="Product" asp-action="Index">
-                                <i class="fas fa-box me-2"></i>
-                                Sản phẩm
-                                <span class="badge bg-secondary ms-auto">@ViewContext.HttpContext.Items["ProductCount"]</span>
-                            </a>
-
-                            <a class="nav-link text-white-50" asp-controller="Categories" asp-action="Index">
-                                <i class="fas fa-tags me-2"></i>
-                                Danh mục
-                                <span class="badge bg-secondary ms-auto">Categories</span>
-                            </a>
-
-                            <a class="nav-link text-white-50" asp-controller="Order" asp-action="Index">
-                                <i class="fas fa-shopping-cart me-2"></i>
-                                Đơn hàng
-                                <span class="badge bg-secondary ms-auto">Order</span>
-                            </a>
-
-                            <a class="nav-link text-white-50" asp-controller="User" asp-action="Index">
-                                <i class="fas fa-users me-2"></i>
-                                Người dùng
-                                <span class="badge bg-secondary ms-auto">User</span>
-                            </a>
-
-                            <hr class="text-white-50">
-
-                            <h6 class="text-white-50 text-uppercase small mb-3">Hệ thống</h6>
-
-                            <a class="nav-link text-white-50 mt-4" asp-area="" asp-controller="Home" asp-action="Index">
-                                <i class="fas fa-store me-2"></i>
-                                Về trang bán hàng
-                            </a>
-
-                            <a class="nav-link text-white-50 mt-4" asp-area="" asp-controller="Home" asp-action="Index">
-                                <i class="fas fa-store me-2"></i>
-                                Về trang bán hàng
-                            </a>
-                        </nav>
-                    </div>
-                </div>
-
-                <!-- Main Content -->
-                <div class="col-md-9 col-lg-10 bg-light p-4">
-                    @RenderBody()
-                </div>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-logo">
+            <div class="d-flex align-items-center">
+                <i class="fas fa-user-shield fa-2x text-primary me-2"></i>
+                <h5 class="text-white mb-0 logo-text">Admin Panel</h5>
             </div>
         </div>
-    </main>
+        
+        <nav class="sidebar-menu">
+            <a class="nav-link text-white-50 active" asp-controller="Home" asp-action="Index">
+                <i class="fas fa-tachometer-alt"></i>
+                <span class="menu-text">Dashboard</span>
+            </a>
 
-    <footer class="border-top footer text-muted bg-white">
-        <div class="container">
-            <div class="row py-3">
-                <div class="col-md-6">
-                    © @DateTime.Now.Year - Admin Panel - Privacy
-                </div>
-                <div class="col-md-6 text-md-end">
-                    <span class="badge bg-info text-dark">
-                        <i class="fas fa-sync-alt me-1"></i>
-                        Last updated: @DateTime.Now.ToString("HH:mm:ss")
-                    </span>
-                </div>
-            </div>
-        </div>
-    </footer>
+            <h6 class="text-white-50 text-uppercase small mt-4 mb-2 menu-text">Quản lý</h6>
+
+            <a class="nav-link text-white-50" asp-controller="Product" asp-action="Index">
+                <i class="fas fa-box"></i>
+                <span class="menu-text">Sản phẩm</span>
+            </a>
+
+            <a class="nav-link text-white-50" asp-controller="Categories" asp-action="Index">
+                <i class="fas fa-tags"></i>
+                <span class="menu-text">Danh mục</span>
+            </a>
+
+            <a class="nav-link text-white-50" asp-controller="Order" asp-action="Index">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="menu-text">Đơn hàng</span>
+            </a>
+
+            <a class="nav-link text-white-50" asp-controller="User" asp-action="Index">
+                <i class="fas fa-users"></i>
+                <span class="menu-text">Người dùng</span>
+            </a>
+
+            <h6 class="text-white-50 text-uppercase small mt-4 mb-2 menu-text">Hệ thống</h6>
+
+            <a class="nav-link text-white-50" asp-area="" asp-controller="Home" asp-action="Index">
+                <i class="fas fa-store"></i>
+                <span class="menu-text">Về trang bán hàng</span>
+            </a>
+        </nav>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="main-content">
+        @RenderBody()
+    </div>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-
+    
     <!-- Notification System -->
     @if (TempData["Success"] != null)
     {
@@ -158,24 +91,6 @@
             </div>
         </div>
     }
-
-    <script>
-        // Auto update timestamp in footer
-        function updateTimestamp() {
-            const now = new Date();
-            document.querySelector('.bg-info').innerHTML =
-                `<i class="fas fa-sync-alt me-1"></i> Last updated: ${now.toLocaleTimeString()}`;
-        }
-        setInterval(updateTimestamp, 60000);
-
-        // Initialize tooltips
-        document.addEventListener('DOMContentLoaded', function () {
-            const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-            tooltipTriggerList.map(function (tooltipTriggerEl) {
-                return new bootstrap.Tooltip(tooltipTriggerEl);
-            });
-        });
-    </script>
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>
