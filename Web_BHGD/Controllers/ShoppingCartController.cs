@@ -270,5 +270,11 @@ namespace Web_BHGD.Controllers
                 ? RedirectToAction(action, controller, new { id })
                 : RedirectToAction(action, controller);
         }
+
+        // Trong ShoppingCartController.cs
+        public IActionResult GetQRModal()
+        {
+            return PartialView("_QRPopup");
+        }
     }
 }

@@ -131,78 +131,99 @@
     </div>
 </section>
 
-<!-- Modal QR Payment -->
-<div class="modal fade" id="qrPaymentModal" tabindex="-1" aria-labelledby="qrPaymentModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="qrPaymentModalLabel">Thanh toán qua QR</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body text-center">
-                <img id="qr-code-image" src="" alt="QR Code" class="img-fluid mb-3" style="max-width: 200px;" />
-                <p><strong>Số tài khoản:</strong> <span id="account-number"></span></p>
-                <p><strong>Tên tài khoản:</strong> <span id="account-name"></span></p>
-                <div id="bank-info" style="display: none;">
-                    <p><strong>Ngân hàng:</strong> <span id="bank-name"></span></p>
-                </div>
-                <p class="text-muted">Vui lòng quét mã QR hoặc chuyển khoản theo thông tin trên.</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                <button type="button" class="btn btn-primary complete-payment">Hoàn tất thanh toán</button>
-            </div>
-        </div>
-    </div>
-</div>
+@await Html.PartialAsync("_QRPopup")
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
     <script>
         $(document).ready(function () {
-            const qrModal = new bootstrap.Modal(document.getElementById('qrPaymentModal'));
+            const qrModalElement = document.getElementById('qrPaymentModal');
+            let qrModal = null;
+
+            function initializeModal() {
+                if (!qrModal) {
+                    qrModal = new bootstrap.Modal(qrModalElement, {
+                        backdrop: true,
+                        keyboard: false
+                    });
+                    qrModalElement.addEventListener('hidden.bs.modal', function () {
+                        $('.modal-backdrop').remove();
+                        $('body').removeClass('modal-open').css('overflow', '');
+                    });
+                }
+                return qrModal;
+            }
+
+            function removeBackdrops() {
+                $('.modal-backdrop').remove();
+            }
 
             const paymentData = {
                 MoMo: {
-                    logo: '/images/logomomo.png',
                     qrCode: '/images/qrmomo.jpg',
+                    logo: '/images/logomomo.png',
                     accountNumber: '0387744234',
                     accountName: 'TRAN SY SON LAM',
-                    bankName: ''
+                    bankName: 'Ví MoMo'
                 },
                 Bank: {
-                    logo: '/images/logovcb.png',
                     qrCode: '/images/qrvcb.jpg',
+                    logo: '/images/logovcb.png',
                     accountNumber: '1030439923',
                     accountName: 'TRAN SY SON LAM',
                     bankName: 'VietcomBank'
                 }
             };
 
-            function updateQRModal(method) {
+            function updateQRModal(method, totalAmount) {
                 const data = paymentData[method];
                 $('#qr-code-image').attr('src', data.qrCode);
+                $('#payment-logo').attr('src', data.logo);
                 $('#account-number').text(data.accountNumber);
                 $('#account-name').text(data.accountName);
-                $('#bank-name').text(data.bankName || '');
-                if (data.bankName) $('#bank-info').show(); else $('#bank-info').hide();
+                $('#bank-name').text(data.bankName);
+                $('#amount-display').text(totalAmount.toLocaleString('vi-VN') + '₫');
+                if (method === 'Bank') $('#bank-info').show(); else $('#bank-info').hide();
+                startCountdown();
             }
 
-            // SỬA LẠI PHẦN NÀY: COD KHÔNG CẦN XỬ LÝ MODAL
+            function startCountdown() {
+                let timeLeft = 15 * 60;
+                const timerElement = $('.countdown-timer');
+                const countdown = setInterval(() => {
+                    if (timeLeft <= 0) {
+                        clearInterval(countdown);
+                        timerElement.text('Hết hạn!').addClass('text-danger fw-bold');
+                        return;
+                    }
+                    const minutes = Math.floor(timeLeft / 60);
+                    const seconds = timeLeft % 60;
+                    timerElement.text(`Thời gian còn lại: ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`);
+                    timeLeft--;
+                }, 1000);
+                qrModalElement.addEventListener('hidden.bs.modal', () => clearInterval(countdown));
+            }
+
             $('#checkout-form').on('submit', function (e) {
                 const method = $('#PaymentMethod').val();
                 if (method === 'MoMo' || method === 'Bank') {
                     e.preventDefault();
-                    updateQRModal(method);
-                    qrModal.show();
+                    const totalAmount = @totalAmount;
+                    updateQRModal(method, totalAmount);
+                    removeBackdrops();
+                    $('body').removeClass('modal-open').css('overflow', '');
+                    initializeModal().show();
                 }
-                // COD sẽ submit trực tiếp
             });
 
             $('.complete-payment').on('click', function () {
-                qrModal.hide();
-                // Submit form sau khi đóng modal
-                setTimeout(() => $('#checkout-form').off('submit').submit(), 500);
+                if (qrModal) qrModal.hide();
+                setTimeout(() => $('#checkout-form').off('submit').submit(), 300);
+            });
+
+            qrModalElement.addEventListener('show.bs.modal', function () {
+                removeBackdrops();
+                setTimeout(removeBackdrops, 0);
             });
         });
     </script>

@@ -64,16 +64,6 @@
             </div>
             <!-- Content -->
             <div class="col-lg-9">
-                <!-- Quick Search -->
-                <div class="mb-4">
-                    <form asp-action="QuickSearch" method="post" class="d-flex">
-                        @Html.AntiForgeryToken()
-                        <div class="input-group">
-                            <input type="text" name="searchTerm" class="form-control" placeholder="Tìm kiếm sản phẩm..." />
-                            <button class="btn btn-primary" type="submit"><i class="bi bi-search"></i> Tìm</button>
-                        </div>
-                    </form>
-                </div>
                 <!-- Featured Products -->
                 <div class="mb-4">
                     <div class="d-flex justify-content-between align-items-center mb-3">
@@ -143,19 +133,10 @@
 @section Scripts {
     <script>
         $(document).ready(function () {
-            // Scroll behavior cho trang chủ
-            var lastScroll = 0;
-            $(window).scroll(function () {
-                var currentScroll = $(this).scrollTop();
-                if (currentScroll > lastScroll && currentScroll > $('.hero-section').height() + $('.categories-section').height()) {
-                    $('.sticky-top').fadeIn();
-                } else {
-                    $('.sticky-top').fadeOut();
-                }
-                lastScroll = currentScroll;
-            });
+            // Ensure sidebar is always visible
+            $('.sticky-top').show();
 
-            // Smooth scroll cho nút "Khám phá"
+            // Smooth scroll for "Khám phá" button
             $('.explore-btn').click(function (e) {
                 e.preventDefault();
                 $('html, body').animate({

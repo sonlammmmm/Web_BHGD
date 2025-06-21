@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@using Web_BHGD.Models
+@{
+    var categories = ViewBag.Categories as List<Category>;
+}
+<!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="utf-8" />
@@ -7,6 +11,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/profile.css" asp-append-version="true" />
 </head>
 <body>
@@ -26,23 +31,39 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="/Product"><i class="bi bi-shop"></i> Sản phẩm</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/Home/Contact"><i class="bi bi-envelope"></i> Liên hệ</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/Home/About"><i class="bi bi-info-circle"></i> Giới thiệu</a>
-                            </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="categoryDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="bi bi-list-ul"></i> Danh mục
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="categoryDropdown">
-                                    <li><a class="dropdown-item" href="/Category/Kitchen"><i class="bi bi-egg-fried"></i> Đồ bếp</a></li>
-                                    <li><a class="dropdown-item" href="/Category/Bathroom"><i class="bi bi-droplet"></i> Đồ phòng tắm</a></li>
-                                    <li><a class="dropdown-item" href="/Category/LivingRoom"><i class="bi bi-sofa"></i> Đồ phòng khách</a></li>
-                                    <li><a class="dropdown-item" href="/Category/Bedroom"><i class="bi bi-bed"></i> Đồ phòng ngủ</a></li>
+                                    <li>
+                                        <a class="dropdown-item" asp-controller="Product" asp-action="Index">
+                                            <i class="bi bi-box-seam"></i> Tất cả sản phẩm
+                                        </a>
+                                    </li>
+                                    @if (categories != null)
+                                    {
+                                        foreach (var category in categories)
+                                        {
+                                            <li>
+                                                <a class="dropdown-item" asp-controller="Product" asp-action="Index" asp-route-categoryId="@category.Id">
+                                                    <i class="bi bi-tag"></i> @category.Name
+                                                </a>
+                                            </li>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <li class="dropdown-item text-muted">Không có danh mục</li>
+                                    }
                                 </ul>
                             </li>
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/Admin/Home/Index"><i class="bi bi-gear me-1"></i> ADMIN</a>
+                                </li>
+                            }
                         </ul>
                         <form method="get" action="/Product" class="search-box d-flex">
                             @Html.AntiForgeryToken()
@@ -68,7 +89,9 @@
         </header>
 
         <main class="main-content">
-            @RenderBody()
+            <div class="content-wrapper">
+                @RenderBody()
+            </div>
         </main>
 
         <footer class="bg-light text-center text-lg-start text-muted py-4">
@@ -83,7 +106,8 @@
                         <ul class="list-unstyled">
                             <li><a href="#" class="text-dark text-decoration-none">Trang chủ</a></li>
                             <li><a href="#" class="text-dark text-decoration-none">Sản phẩm</a></li>
-                            <li><a href="#" class="text-dark text-decoration-none">Danh mục</a></li>
+                            <li><a href="/Home/Contact" class="text-dark text-decoration-none">Liên hệ</a></li>
+                            <li><a href="/Home/About" class="text-dark text-decoration-none">Giới thiệu</a></li>
                         </ul>
                     </div>
                     <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
@@ -113,6 +137,8 @@
 
     <!-- Toast Container -->
     <div id="toast-container" class="position-fixed" style="top: 80px; right: 20px; z-index: 9999; width: 350px;"></div>
+
+    <div id="modal-container" style="position: relative; z-index: 1060;"></div>
 
     <!-- Core Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>

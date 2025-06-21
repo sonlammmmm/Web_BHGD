@@ -1,90 +1,72 @@
-﻿@model string
-
-<!-- Debug để kiểm tra render -->
-<div style="display:none;" id="debug-partial">Partial _QRPopup rendered with Model: '@Model'</div>
-
-@if (!string.IsNullOrEmpty(Model))
-{
-    <div class="modal fade" id="qrModal" tabindex="-1" aria-labelledby="qrModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header" style="background-color: #f8f9fa; border-bottom: 1px solid #dee2e6;">
-                    <h5 class="modal-title" id="qrModalLabel">Quét mã QR để thanh toán</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+﻿<div class="modal fade" id="qrPaymentModal" tabindex="-1" aria-labelledby="qrPaymentModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="payment-logo">
+                    <img id="payment-logo" src="" alt="Payment Logo" class="logo-img" />
                 </div>
-                <div class="modal-body text-center" style="padding: 2rem;">
-                    <!-- Debug thông tin truyền vào -->
-                    <p style="color: red; font-size: 0.8rem;">Debug: Model = '@Model'</p>
-                    @if (Model == "MoMo")
-                    {
-                        <img src="/images/logomomo.png" alt="MoMo Logo" class="mb-3" style="max-width: 150px;" />
-                        <img src="/images/qrmomo.jpg" alt="MoMo QR Code" class="img-fluid mb-3" style="max-width: 250px; border: 1px solid #dee2e6; border-radius: 8px;" />
-                        <p class="mb-2"><strong>Số tài khoản:</strong> 0387744234</p>
-                        <p><strong>Tên tài khoản:</strong> TRAN SY SON LAM</p>
-                    }
-                    else if (Model == "Bank")
-                    {
-                        <img src="/images/logovcb.png" alt="VietcomBank Logo" class="mb-3" style="max-width: 150px;" />
-                        <img src="/images/qrvcb.jpg" alt="VietcomBank QR Code" class="img-fluid mb-3" style="max-width: 250px; border: 1px solid #dee2e6; border-radius: 8px;" />
-                        <p class="mb-2"><strong>Số tài khoản:</strong> 1030439923</p>
-                        <p class="mb-2"><strong>Tên tài khoản:</strong> TRAN SY SON LAM</p>
-                        <p><strong>Ngân hàng:</strong> VietcomBank</p>
-                    }
-                    else
-                    {
-                        <p class="text-danger">Phương thức thanh toán không hợp lệ: '@Model'. Vui lòng chọn lại.</p>
-                    }
-                    <p class="text-muted mt-3">Vui lòng quét mã QR bằng ứng dụng @(Model == "MoMo" ? "MoMo" : "Ngân hàng") để thanh toán.</p>
+                <h5 class="modal-title" id="qrPaymentModalLabel">Thanh toán bằng mã QR</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="payment-header">
+                    <div class="qr-amount-container">
+                        <div class="qr-container">
+                            <img id="qr-code-image" src="" alt="QR Code" class="qr-code-img" />
+                        </div>
+                        <div class="amount-display" id="amount-display"></div>
+                    </div>
                 </div>
-                <div class="modal-footer" style="border-top: 1px solid #dee2e6;">
-                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" style="border-radius: 8px;">Hủy</button>
-                    <button type="button" class="btn btn-primary" id="complete-payment" style="border-radius: 8px;">Hoàn tất thanh toán</button>
+                <div class="payment-instructions">
+                    <p class="instruction-text">Vui lòng quét mã QR bằng ứng dụng ngân hàng để thanh toán.</p>
                 </div>
+                <div class="payment-details">
+                    <div class="detail-item">
+                        <label>Số tài khoản:</label>
+                        <span id="account-number"></span>
+                        <button class="copy-btn" onclick="copyToClipboard('account-number')">
+                            <i class="bi bi-copy"></i>
+                        </button>
+                    </div>
+                    <div class="detail-item">
+                        <label>Tên tài khoản:</label>
+                        <span id="account-name"></span>
+                    </div>
+                    <div class="detail-item">
+                        <label>Ngân hàng:</label>
+                        <span id="bank-name"></span>
+                    </div>
+                </div>
+                <div class="payment-status">
+                    <div class="status-indicator">
+                        <div class="status-dot"></div>
+                        <span class="status-text">Đang chờ thanh toán</span>
+                    </div>
+                    <div class="timer-container">
+                        <span class="countdown-timer"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-primary complete-payment">Xác nhận thanh toán</button>
             </div>
         </div>
     </div>
-}
+</div>
 
-<style>
-    .modal-content {
-        border-radius: 12px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+<script>
+    function copyToClipboard(elementId) {
+        const element = document.getElementById(elementId);
+        const text = element.innerText;
+        navigator.clipboard.writeText(text).then(() => {
+            const toast = document.createElement('div');
+            toast.className = 'copy-toast';
+            toast.innerHTML = `<i class="bi bi-check-circle me-2"></i>Đã sao chép: ${text}`;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }).catch(() => {
+            alert('Không thể sao chép, vui lòng thử lại.');
+        });
     }
-
-    .modal-title {
-        font-weight: 600;
-        color: #343a40;
-    }
-
-    .modal-body p {
-        font-size: 1rem;
-        color: #343a40;
-    }
-
-    .modal-body .text-muted {
-        font-size: 0.9rem;
-        color: #6c757d;
-    }
-
-    .btn-primary {
-        background-color: #007bff;
-        border-color: #007bff;
-        padding: 0.5rem 1.5rem;
-    }
-
-        .btn-primary:hover {
-            background-color: #0056b3;
-            border-color: #0056b3;
-        }
-
-    .btn-outline-secondary {
-        border-color: #6c757d;
-        color: #6c757d;
-        padding: 0.5rem 1.5rem;
-    }
-
-        .btn-outline-secondary:hover {
-            background-color: #6c757d;
-            color: #fff;
-        }
-</style>
+</script>

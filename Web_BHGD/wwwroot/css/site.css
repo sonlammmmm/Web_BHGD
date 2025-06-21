@@ -25,12 +25,22 @@ body {
     flex-direction: column;
     height: 100%;
     min-height: 100vh;
+    position: relative;
+    z-index: 1;
+}
+
+/* Thêm vào site.css */
+.modal-backdrop {
+    z-index: 1040 !important;
+}
+
+#qrPaymentModal {
+    z-index: 1050 !important;
 }
 
 footer {
     flex-shrink: 0;
 }
-
 
 :root {
     --bs-primary: #FF6200;
@@ -187,17 +197,24 @@ h2, h4 {
     background-color: #fff;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
     padding: 0.75rem 1rem;
-    position: fixed; /* Cố định navbar */
-    top: 0; /* Đặt ở đầu trang */
+    position: fixed;
+    top: 0;
     left: 0;
     right: 0;
-    z-index: 1000; /* Đảm bảo navbar nằm trên các phần tử khác */
+    z-index: 1000;
 }
 
 /* Đảm bảo nội dung không bị che bởi navbar */
 .main-content {
-    padding-top: 70px; /* Khoảng cách trên cùng bằng chiều cao navbar (điều chỉnh theo thực tế) */
+    padding-top: 70px;
     flex: 1 0 auto;
+    position: relative;
+    z-index: 10;
+}
+
+.content-wrapper {
+    flex: 1;
+    position: relative;
 }
 
 .search-box {
@@ -300,3 +317,9 @@ h2, h4 {
         color: var(--bs-primary);
     }
 
+.category-menu {
+    position: sticky;
+    top: 70px;
+    z-index: 900;
+    margin-top: 0 !important;
+}
