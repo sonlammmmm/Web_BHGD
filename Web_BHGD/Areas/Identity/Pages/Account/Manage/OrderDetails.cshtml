@@ -2,20 +2,31 @@
 @model Web_BHGD.Areas.Identity.Pages.Account.Manage.OrderDetailsModel
 @using Web_BHGD.Models
 @{
-    ViewData["Title"] = "Chi tiết đơn hàng";
+    ViewData["Title"] = Model.Order != null ? $"Chi tiết đơn hàng #{Model.Order.Id}" : "Chi tiết đơn hàng";
     ViewData["ActivePage"] = ManageNavPages.OrderHistory;
 }
 
 <div class="card border-0 shadow-sm">
     <div class="card-header bg-light py-3">
-        <div class="d-flex justify-content-between align-items-center">
-            <h4 class="mb-0 keep-title">@ViewData["Title"]</h4>
-            <a asp-page="./OrderHistory" class="btn btn-outline-secondary btn-sm">
-                <i class="bi bi-arrow-left me-1"></i>Quay lại
-            </a>
-        </div>
+    <div class="d-flex justify-content-between align-items-center">
+        @if (Model.Order != null)
+        {
+            <h4 class="mb-0 keep-title">Chi tiết đơn hàng #@Model.Order.Id</h4>
+        }
+        else
+        {
+            <h4 class="mb-0 keep-title">Chi tiết đơn hàng</h4>
+        }
+        <a asp-page="./OrderHistory" class="btn btn-outline-secondary btn-sm no-print">
+            <i class="bi bi-arrow-left me-1"></i>Quay lại
+        </a>
     </div>
+</div>
     <div class="card-body">
+        <form style="display: none;">
+            @Html.AntiForgeryToken()
+        </form>
+
         @if (!string.IsNullOrEmpty(Model.StatusMessage))
         {
             <div class="alert alert-warning alert-dismissible fade show mb-4" role="alert">
@@ -23,6 +34,12 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         }
+
+        <!-- Alert thông báo in hóa đơn -->
+        <div class="alert alert-print alert-dismissible fade mb-4" role="alert" style="display: none;" id="printAlert">
+            <i class="bi bi-printer me-2"></i>Đang chuẩn bị in hóa đơn...
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
 
         @if (Model.Order != null)
         {
@@ -49,7 +66,16 @@
                                             <tr>
                                                 <td>
                                                     <div class="d-flex align-items-center">
-                                                        <div class="bg-light rounded me-3" style="width: 50px; height: 50px;"></div>
+                                                        @if (!string.IsNullOrEmpty(detail.Product?.ImageUrl))
+                                                        {
+                                                            <img src="@detail.Product.ImageUrl" alt="@detail.Product.Name" class="product-image me-3">
+                                                        }
+                                                        else
+                                                        {
+                                                            <div class="product-placeholder me-3">
+                                                                <i class="bi bi-image"></i>
+                                                            </div>
+                                                        }
                                                         <div>
                                                             <div class="fw-medium">@detail.Product?.Name</div>
                                                         </div>
@@ -72,9 +98,9 @@
                                         <span class="text-muted">Tạm tính:</span>
                                         <span>@((Model.Order.TotalPrice * 1m).ToString("#,##0"))₫</span>
                                     </div>
-                                    <div class="d-flex justify-content-between mb-2">
+                                    <div class="d-flex journal-content-between mb-2">
                                         <span class="text-muted">Giảm giá:</span>
-                                        <span class="text-danger">-</span>
+                                        <span class="text-danger">- 0₫</span>
                                     </div>
                                     <div class="d-flex justify-content-between mt-2 pt-2 fw-medium fs-5" style="border-top: 1px dashed #dee2e6;">
                                         <span>Tổng:</span>
@@ -96,29 +122,29 @@
                                 <div class="text-muted small mb-1">Trạng thái</div>
                                 @switch (Model.Order.Status)
                                 {
-                                    case "Pending":
+                                    case "Chờ xác nhận":
                                         <span class="badge bg-warning bg-opacity-15 text-warning w-100 py-2">
-                                            <i class="bi bi-clock me-1"></i>Chờ duyệt
+                                            <i class="bi bi-clock me-1"></i>Chờ xác nhận
                                         </span>
                                         break;
-                                    case "Confirmed":
+                                    case "Đã xác nhận":
                                         <span class="badge bg-info bg-opacity-15 text-info w-100 py-2">
-                                            <i class="bi bi-check-circle me-1"></i>Đã duyệt
+                                            <i class="bi bi-check-circle me-1"></i>Đã xác nhận
                                         </span>
                                         break;
-                                    case "Shipped":
+                                    case "Đang giao hàng":
                                         <span class="badge bg-primary bg-opacity-15 text-primary w-100 py-2">
-                                            <i class="bi bi-truck me-1"></i>Đang giao
+                                            <i class="bi bi-truck me-1"></i>Đang giao hàng
                                         </span>
                                         break;
-                                    case "Delivered":
+                                    case "Đã giao hàng":
                                         <span class="badge bg-success bg-opacity-15 text-success w-100 py-2">
-                                            <i class="bi bi-check-lg me-1"></i>Đã giao
+                                            <i class="bi bi-check-lg me-1"></i>Đã giao hàng
                                         </span>
                                         break;
-                                    case "Cancelled":
+                                    case "Huỷ":
                                         <span class="badge bg-danger bg-opacity-15 text-danger w-100 py-2">
-                                            <i class="bi bi-x-circle me-1"></i>Đã hủy
+                                            <i class="bi bi-x-circle me-1"></i>Huỷ
                                         </span>
                                         break;
                                     default:
@@ -153,11 +179,14 @@
                         </div>
                     </div>
 
-                    <div class="d-grid gap-2">
-                        <button class="btn btn-outline-danger btn-sm">
-                            <i class="bi bi-x-circle me-1"></i>Hủy đơn
-                        </button>
-                        <button class="btn btn-outline-primary btn-sm">
+                    <div class="d-grid gap-2 no-print">
+                        @if (Model.Order.Status == "Chờ xác nhận" || Model.Order.Status == "Đã xác nhận")
+                        {
+                            <button class="btn btn-outline-danger btn-sm" onclick="cancelOrder('@Model.Order.Id')">
+                                <i class="bi bi-x-circle me-1"></i>Hủy đơn
+                            </button>
+                        }
+                        <button class="btn btn-outline-primary btn-sm" onclick="printInvoice()">
                             <i class="bi bi-printer me-1"></i>In hóa đơn
                         </button>
                     </div>
@@ -176,10 +205,105 @@
                     <i class="bi bi-arrow-left me-1"></i>Quay lại
                 </a>
             </div>
-        }
+        }   
     </div>
 </div>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        function printInvoice() {
+            // Hiển thị thông báo
+            const printAlert = document.getElementById('printAlert');
+            printAlert.style.display = 'block';
+
+            // Ẩn thông báo sau 2 giây và in
+            setTimeout(() => {
+                printAlert.style.display = 'none';
+                window.print();
+            }, 2000);
+        }
+
+        function cancelOrder(orderId) {
+            if (confirm('Bạn có chắc chắn muốn hủy đơn hàng này?')) {
+                // Kiểm tra token
+                const tokenElement = document.querySelector('input[name="__RequestVerificationToken"]');
+                if (!tokenElement) {
+                    alert('Không tìm thấy token bảo mật. Vui lòng tải lại trang.');
+                    return;
+                }
+
+                // Tạo FormData cho Razor Page Handler
+                const formData = new FormData();
+                formData.append('orderId', orderId);
+                formData.append('__RequestVerificationToken', tokenElement.value);
+
+                // Hiển thị loading trên button
+                const cancelBtn = event.target;
+                const originalText = cancelBtn.innerHTML;
+                cancelBtn.innerHTML = '<i class="bi bi-hourglass-split me-1"></i>Đang xử lý...';
+                cancelBtn.disabled = true;
+
+                // Gọi Razor Page Handler
+                fetch(window.location.pathname + '?handler=CancelOrder', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => {
+                    console.log('Response status:', response.status);
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Response data:', data);
+                    if (data.success) {
+                        alert('Đơn hàng đã được hủy thành công!');
+                        location.reload();
+                    } else {
+                        alert('Có lỗi xảy ra: ' + (data.message || 'Không xác định'));
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Có lỗi xảy ra khi hủy đơn hàng: ' + error.message);
+                })
+                .finally(() => {
+                    // Khôi phục button
+                    cancelBtn.innerHTML = originalText;
+                    cancelBtn.disabled = false;
+                });
+            }
+        }
+
+        // Alternative: Sử dụng jQuery AJAX (nếu có jQuery)
+        function cancelOrderWithJQuery(orderId) {
+            if (confirm('Bạn có chắc chắn muốn hủy đơn hàng này?')) {
+                const token = $('input[name="__RequestVerificationToken"]').val();
+        
+                $.ajax({
+                    url: window.location.pathname + '?handler=CancelOrder',
+                    type: 'POST',
+                    data: {
+                        orderId: orderId,
+                        __RequestVerificationToken: token
+                    },
+                    success: function(data) {
+                        if (data.success) {
+                            alert('Đơn hàng đã được hủy thành công!');
+                            location.reload();
+                        } else {
+                            alert('Có lỗi xảy ra: ' + data.message);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error:', error);
+                        alert('Có lỗi xảy ra khi hủy đơn hàng!');
+                    }
+                });
+            }
+        }
+    </script>
 }

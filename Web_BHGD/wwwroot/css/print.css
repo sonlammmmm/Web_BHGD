@@ -27,9 +27,30 @@
 }
 
 /* Đảm bảo nút cố định không ảnh hưởng bố cục chính */
-.invoice-actions {
-    position: fixed;
-    top: 1rem;
-    right: 1rem;
-    z-index: 50;
+:root {
+    --main-orange: #FF6200;
+}
+
+.btn-orange {
+    background-color: var(--main-orange);
+    color: white;
+}
+
+    .btn-orange:hover {
+        background-color: #e45700;
+    }
+
+.header-orange {
+    background-color: var(--main-orange);
+    color: white;
+}
+
+.border-orange {
+    border-color: var(--main-orange) !important;
+}
+
+@media print {
+    .no-print {
+        display: none !important;
+    }
 }

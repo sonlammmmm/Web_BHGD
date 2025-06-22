@@ -86,36 +86,72 @@
                         @foreach (var product in Model)
                         {
                             <div class="col-lg-4 col-md-6 mb-4">
-                                <div class="product-card bg-white shadow-sm rounded h-100">
+                                <div class="product-card bg-white shadow-sm rounded h-100 position-relative d-flex flex-column">
                                     <a asp-controller="Product" asp-action="Details" asp-route-id="@product.Id">
                                         <div class="position-relative">
                                             <img src="@(string.IsNullOrEmpty(product.ImageUrl) ? "/images/no-image.jpg" : product.ImageUrl)"
                                                  class="card-img-top rounded-top" alt="@product.Name"
-                                                 style="height: 200px; object-fit: cover;" />
+                                                 style="height: 220px; object-fit: contain; background: #f8f9fa; padding: 10px;" />
                                             @if (product.Price < 500000)
                                             {
                                                 <span class="badge bg-primary text-white position-absolute top-0 start-0 m-2">Giá Sốc</span>
                                             }
+                                            @if (product.Stock == 0)
+                                            {
+                                                <div class="out-of-stock-overlay position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center"
+                                                     style="background: rgba(0,0,0,0.7); border-radius: 8px 8px 0 0;">
+                                                    <span class="badge bg-danger fs-6 px-3 py-2">Hết hàng</span>
+                                                </div>
+                                            }
                                         </div>
                                     </a>
-                                    <div class="p-3 d-flex flex-column">
-                                        <a asp-controller="Product" asp-action="Details" asp-route-id="@product.Id" class="text-dark">
-                                            <h6 class="text-truncate fw-bold mb-2">@product.Name</h6>
+                                    <div class="p-3 d-flex flex-column flex-grow-1">
+                                        <a asp-controller="Product" asp-action="Details" asp-route-id="@product.Id" class="text-dark text-decoration-none">
+                                            <h6 class="fw-bold mb-2 product-title">@product.Name</h6>
                                         </a>
                                         <div class="mb-2">
-                                            <span class="text-primary fw-bold">@product.Price.ToString("#,##0")₫</span>
+                                            <span class="text-primary fw-bold fs-6">@product.Price.ToString("#,##0")₫</span>
                                         </div>
-                                        <div class="mb-3">
+                                        <div class="mb-2">
                                             @for (int i = 0; i < 5; i++)
                                             {
                                                 <i class="bi bi-star-fill text-warning" style="font-size: 12px;"></i>
                                             }
                                             <small class="text-muted ms-1">(1k+)</small>
                                         </div>
-                                        <button type="button" class="btn btn-primary btn-sm w-100 add-to-cart-btn mt-auto"
-                                                data-product-id="@product.Id" data-product-name="@product.Name">
-                                            <i class="bi bi-cart-plus me-1"></i>Thêm vào giỏ
-                                        </button>
+                                        <!-- Stock and Sold Info -->
+                                        <div class="mb-3">
+                                            <div class="row text-center">
+                                                <div class="col-6">
+                                                    <small class="text-muted d-block">Đã bán</small>
+                                                    <span class="fw-bold text-success">@product.SoldQuantity</span>
+                                                </div>
+                                                <div class="col-6">
+                                                    <small class="text-muted d-block">Tồn kho</small>
+                                                    <span class="fw-bold @(product.Stock > 0 ? "text-primary" : "text-danger")">@product.Stock</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Action Buttons -->
+                                        @if (product.Stock > 0)
+                                        {
+                                            <div class="d-grid gap-2 mt-auto">
+                                                <button type="button" class="btn btn-primary btn-sm add-to-cart-btn"
+                                                        data-product-id="@product.Id" data-product-name="@product.Name">
+                                                    <i class="bi bi-cart-plus me-1"></i>Thêm vào giỏ
+                                                </button>
+                                                <button type="button" class="btn btn-outline-primary btn-sm buy-now-btn"
+                                                        data-product-id="@product.Id" data-product-name="@product.Name">
+                                                    <i class="bi bi-lightning me-1"></i>Mua ngay
+                                                </button>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <button type="button" class="btn btn-secondary btn-sm w-100 mt-auto" disabled>
+                                                <i class="bi bi-x-circle me-1"></i>Hết hàng
+                                            </button>
+                                        }
                                     </div>
                                 </div>
                             </div>
@@ -167,11 +203,13 @@
     .product-card {
         transition: transform 0.3s ease, box-shadow 0.3s ease;
         box-shadow: 0 2px 8px rgba(var(--bs-primary-rgb), 0.1);
+        border: 1px solid rgba(0,0,0,0.05);
+        min-height: 450px;
     }
 
         .product-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 6px 12px rgba(var(--bs-primary-rgb), 0.2);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
         }
 
         .product-card img {
@@ -181,6 +219,18 @@
         .product-card:hover img {
             transform: scale(1.05);
         }
+
+    .out-of-stock-overlay {
+        z-index: 10;
+    }
+
+    .product-title {
+        line-height: 1.4;
+        min-height: 3.5em; /* Đảm bảo có đủ không gian cho tên dài */
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        display: block;
+    }
 
     .pagination .page-link:hover {
         background-color: var(--bs-primary);
@@ -199,6 +249,31 @@
     <script>
         $(document).ready(function () {
             console.log('Product Index page loaded - CartManager handling all cart operations');
+
+            $('.buy-now-btn').click(function () {
+                var btn = $(this);
+                var productId = btn.data('product-id');
+                var productName = btn.data('product-name');
+
+                btn.prop('disabled', true).html('<i class="bi bi-arrow-repeat spinner-border spinner-border-sm me-1"></i> Đang xử lý...');
+
+                $.ajax({
+                    url: '@Url.Action("AddToCart", "ShoppingCart")',
+                    type: 'POST',
+                    data: {
+                        productId: productId,
+                        quantity: 1,
+                        __RequestVerificationToken: CartManager.getAntiForgeryToken()
+                    },
+                    success: function () {
+                        window.location.href = '@Url.Action("Checkout", "ShoppingCart")';
+                    },
+                    error: function () {
+                        CartManager.showToast('error', 'Lỗi khi xử lý. Vui lòng thử lại.');
+                        btn.prop('disabled', false).html('<i class="bi bi-lightning me-1"></i>Mua ngay');
+                    }
+                });
+            });
         });
     </script>
 }

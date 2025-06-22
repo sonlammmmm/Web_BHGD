@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "7XXtBn5pvH1BGTJvSprdkFMm6wYkevOWezuNpUByshI=",
+  "Hash": "2gMsLKa709iTSe7r+Owvi3YdYftCMZjfuE2HrlErI2k=",
   "Source": "Web_BHGD",
   "BasePath": "_content/Web_BHGD",
   "Mode": "Default",
@@ -1290,6 +1290,25 @@
       "OriginalItemSpec": "wwwroot\\images\\0129bc1d-711d-4883-ac2e-a0b84fad9a5d.jpg"
     },
     {
+      "Identity": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\images\\101b1a44-c10d-43da-9093-58e69400d78f_638862189131724110.jpg",
+      "SourceId": "Web_BHGD",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\",
+      "BasePath": "_content/Web_BHGD",
+      "RelativePath": "images/101b1a44-c10d-43da-9093-58e69400d78f_638862189131724110.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\101b1a44-c10d-43da-9093-58e69400d78f_638862189131724110.jpg"
+    },
+    {
       "Identity": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\images\\12ca7c2b-64e9-4349-a833-5f6608f47b01.jpg",
       "SourceId": "Web_BHGD",
       "SourceType": "Discovered",
@@ -1345,6 +1364,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\26cf1208-be6c-4584-8a9a-4eb71b343f4d_638860096426760472.jpg"
+    },
+    {
+      "Identity": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\images\\3b5da2fa-cba0-49be-a4b9-0a8459917ed6_638862187996928052.png",
+      "SourceId": "Web_BHGD",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\",
+      "BasePath": "_content/Web_BHGD",
+      "RelativePath": "images/3b5da2fa-cba0-49be-a4b9-0a8459917ed6_638862187996928052.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\3b5da2fa-cba0-49be-a4b9-0a8459917ed6_638862187996928052.png"
     },
     {
       "Identity": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\images\\3c791ef0-a5c5-439b-be77-419bf6b88ba8.jpg",

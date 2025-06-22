@@ -37,29 +37,29 @@
                                 <td>
                                     @switch (order.Status)
                                     {
-                                        case "Pending":
+                                        case "Chờ xác nhận":
                                             <span class="badge bg-warning bg-opacity-15 text-warning w-100 py-2">
-                                                <i class="bi bi-clock me-1"></i>Chờ duyệt
+                                                <i class="bi bi-clock me-1"></i>Chờ xác nhận
                                             </span>
                                             break;
-                                        case "Confirmed":
+                                        case "Đã xác nhận":
                                             <span class="badge bg-info bg-opacity-15 text-info w-100 py-2">
-                                                <i class="bi bi-check-circle me-1"></i>Đã duyệt
+                                                <i class="bi bi-check-circle me-1"></i>Đã xác nhận
                                             </span>
                                             break;
-                                        case "Shipped":
+                                        case "Đang giao hàng":
                                             <span class="badge bg-primary bg-opacity-15 text-primary w-100 py-2">
-                                                <i class="bi bi-truck me-1"></i>Đang giao
+                                                <i class="bi bi-truck me-1"></i>Đang giao hàng
                                             </span>
                                             break;
-                                        case "Delivered":
+                                        case "Đã giao hàng":
                                             <span class="badge bg-success bg-opacity-15 text-success w-100 py-2">
-                                                <i class="bi bi-check-lg me-1"></i>Đã giao
+                                                <i class="bi bi-check-lg me-1"></i>Đã giao hàng
                                             </span>
                                             break;
-                                        case "Cancelled":
+                                        case "Huỷ":
                                             <span class="badge bg-danger bg-opacity-15 text-danger w-100 py-2">
-                                                <i class="bi bi-x-circle me-1"></i>Đã hủy
+                                                <i class="bi bi-x-circle me-1"></i>Huỷ
                                             </span>
                                             break;
                                         default:
