@@ -18,70 +18,74 @@
     <div class="main-wrapper">
         <header>
             <nav class="navbar navbar-expand-lg">
-                <div class="container">
-                    <a class="navbar-brand fw-bold" href="/">BHGD Store</a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="/">BHGD Store</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
-                    <div class="collapse navbar-collapse" id="navbarNav">
-                        <ul class="navbar-nav me-auto">
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                             <li class="nav-item">
-                                <a class="nav-link" href="/"><i class="bi bi-house"></i> Trang chủ</a>
+                                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">
+                                    <i class="bi bi-house-door me-1"></i> Trang chủ
+                                </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/Product"><i class="bi bi-shop"></i> Sản phẩm</a>
+                                <a class="nav-link" asp-area="" asp-controller="Product" asp-action="Index">
+                                    <i class="bi bi-grid me-1"></i> Sản phẩm
+                                </a>
                             </li>
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="categoryDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="bi bi-list-ul"></i> Danh mục
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bi bi-list me-1"></i> Danh mục
                                 </a>
-                                <ul class="dropdown-menu" aria-labelledby="categoryDropdown">
-                                    <li>
-                                        <a class="dropdown-item" asp-controller="Product" asp-action="Index">
-                                            <i class="bi bi-box-seam"></i> Tất cả sản phẩm
-                                        </a>
-                                    </li>
-                                    @if (categories != null)
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" asp-controller="Product" asp-action="Index">
+                                        <i class="bi bi-grid me-2"></i> Tất cả sản phẩm
+                                    </a></li>
+                                    @if (ViewBag.Categories != null)
                                     {
-                                        foreach (var category in categories)
+                                        foreach (var category in ViewBag.Categories as List<Category>)
                                         {
                                             <li>
                                                 <a class="dropdown-item" asp-controller="Product" asp-action="Index" asp-route-categoryId="@category.Id">
-                                                    <i class="bi bi-tag"></i> @category.Name
+                                                    <i class="bi bi-tag me-2"></i> @category.Name
                                                 </a>
                                             </li>
                                         }
-                                    }
-                                    else
-                                    {
-                                        <li class="dropdown-item text-muted">Không có danh mục</li>
                                     }
                                 </ul>
                             </li>
                             @if (User.IsInRole("Admin"))
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link" href="/Admin/Home/Index"><i class="bi bi-gear me-1"></i> ADMIN</a>
+                                    <a class="nav-link" asp-area="" asp-controller="Admin" asp-action="Index">
+                                        <i class="bi bi-shield-lock me-1"></i> ADMIN
+                                    </a>
                                 </li>
                             }
                         </ul>
-                        <form method="get" action="/Product" class="search-box d-flex">
+                
+                        <form class="d-flex search-box" method="get" asp-controller="Product" asp-action="Index">
                             @Html.AntiForgeryToken()
                             <div class="input-group">
-                                <input type="text" name="searchString" class="form-control border-primary" placeholder="Tìm sản phẩm..." value="@ViewBag.CurrentFilter" />
-                                <button type="submit" class="btn btn-primary" style="border-radius: 0 0.375rem 0.375rem 0;">
+                                <input type="text" name="searchString" class="form-control" placeholder="Tìm kiếm sản phẩm..." aria-label="Search">
+                                <button class="btn btn-primary" type="submit">
                                     <i class="bi bi-search"></i>
                                 </button>
                             </div>
                         </form>
-                        <ul class="navbar-nav ms-3">
+                
+                        <ul class="navbar-nav ms-auto">
                             <li class="nav-item">
                                 <partial name="_LoginPartial" />
                             </li>
-                            <a asp-controller="ShoppingCart" asp-action="Index" class="nav-link position-relative text-dark">
-                                <i class="bi bi-cart3"></i>
-                                <span class="cart-count position-absolute top-0 start-100 translate-middle badge rounded-pill">0</span>
-                            </a>
+                            <li class="nav-item">
+                                <a class="nav-link position-relative" asp-controller="ShoppingCart" asp-action="Index">
+                                    <i class="bi bi-cart3"></i>
+                                    <span class="cart-count">0</span>
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -89,7 +93,7 @@
         </header>
 
         <main class="main-content">
-            <div class="content-wrapper">
+            <div class="content-wrapper container">
                 @RenderBody()
             </div>
         </main>
@@ -100,30 +104,37 @@
                     <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
                         <h5 class="text-uppercase fw-bold">BHGD Store</h5>
                         <p>Chuyên cung cấp đồ gia dụng chất lượng cao, giá hợp lý, mang lại không gian sống tiện nghi.</p>
+                        <div class="mt-3">
+                            <a href="#" class="text-dark me-2"><i class="bi bi-facebook fs-5"></i></a>
+                            <a href="#" class="text-dark me-2"><i class="bi bi-instagram fs-5"></i></a>
+                            <a href="#" class="text-dark me-2"><i class="bi bi-youtube fs-5"></i></a>
+                            <a href="#" class="text-dark"><i class="bi bi-tiktok fs-5"></i></a>
+                        </div>
                     </div>
                     <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
                         <h5 class="text-uppercase fw-bold">Liên kết</h5>
                         <ul class="list-unstyled">
-                            <li><a href="#" class="text-dark text-decoration-none">Trang chủ</a></li>
-                            <li><a href="#" class="text-dark text-decoration-none">Sản phẩm</a></li>
-                            <li><a href="/Home/Contact" class="text-dark text-decoration-none">Liên hệ</a></li>
-                            <li><a href="/Home/About" class="text-dark text-decoration-none">Giới thiệu</a></li>
+                            <li><a href="/" class="text-dark text-decoration-none"><i class="bi bi-arrow-right me-2"></i>Trang chủ</a></li>
+                            <li><a href="/Product" class="text-dark text-decoration-none"><i class="bi bi-arrow-right me-2"></i>Sản phẩm</a></li>
+                            <li><a href="/Home/Contact" class="text-dark text-decoration-none"><i class="bi bi-arrow-right me-2"></i>Liên hệ</a></li>
+                            <li><a href="/Home/About" class="text-dark text-decoration-none"><i class="bi bi-arrow-right me-2"></i>Giới thiệu</a></li>
                         </ul>
                     </div>
                     <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
                         <h5 class="text-uppercase fw-bold">Hỗ trợ khách hàng</h5>
                         <ul class="list-unstyled">
-                            <li><a href="#" class="text-dark text-decoration-none">Chính sách đổi trả</a></li>
-                            <li><a href="#" class="text-dark text-decoration-none">Chính sách bảo hành</a></li>
-                            <li><a href="#" class="text-dark text-decoration-none">Hướng dẫn mua hàng</a></li>
+                            <li><a href="#" class="text-dark text-decoration-none"><i class="bi bi-question-circle me-2"></i>Chính sách đổi trả</a></li>
+                            <li><a href="#" class="text-dark text-decoration-none"><i class="bi bi-shield-check me-2"></i>Chính sách bảo hành</a></li>
+                            <li><a href="#" class="text-dark text-decoration-none"><i class="bi bi-info-circle me-2"></i>Hướng dẫn mua hàng</a></li>
                         </ul>
                     </div>
                     <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
                         <h5 class="text-uppercase fw-bold">Thông tin liên hệ</h5>
                         <ul class="list-unstyled">
-                            <li>123 Đường ABC, Quận 1, TP.HCM</li>
-                            <li>1900-1000</li>
-                            <li>info@bhgdstore.com</li>
+                            <li><i class="bi bi-geo-alt me-2"></i>123 Đường ABC, Quận 1, TP.HCM</li>
+                            <li><i class="bi bi-telephone me-2"></i>1900-1000</li>
+                            <li><i class="bi bi-envelope me-2"></i>info@bhgdstore.com</li>
+                            <li><i class="bi bi-clock me-2"></i>8:00 - 22:00 (T2 - CN)</li>
                         </ul>
                     </div>
                 </div>
@@ -149,29 +160,61 @@
 
     <!-- Initialize Cart Manager -->
     <script>
-        $(document).ready(function () {
-            CartManager.init(
-                '@Url.Action("AddToCart", "ShoppingCart")',
-                '@Url.Action("GetCartItemCount", "ShoppingCart")'
-            );
-        });
-        $(document).ready(function () {
-            $('.search-box input').on('focus', function () {
-                $('.search-box').addClass('expanded');
-                $('.navbar-nav.me-auto .nav-item').addClass('search-active');
-            }).on('blur', function () {
+    $(document).ready(function () {
+        CartManager.init(
+            '@Url.Action("AddToCart", "ShoppingCart")',
+            '@Url.Action("GetCartItemCount", "ShoppingCart")'
+        );
+        
+        // Add subtle hover animations
+        $('.card, .btn').hover(
+            function() {
+                $(this).css('transition', 'all 0.3s ease');
+            }
+        );
+        
+        // Search box animation with hover and focus
+        $('.search-box input').on('focus', function () {
+            $('.search-box').addClass('expanded');
+            $('.navbar-nav.me-auto .nav-item').addClass('search-active');
+        }).on('blur', function () {
+            if (!$(this).val().trim()) { // Chỉ thu nhỏ nếu không có text
                 $('.search-box').removeClass('expanded');
                 $('.navbar-nav.me-auto .nav-item').removeClass('search-active');
-            });
-
-            $('.search-box').on('submit', function (e) {
-                var searchTerm = $(this).find('input[name="searchString"]').val().trim();
-                if (!searchTerm) {
-                    e.preventDefault();
-                    CartManager.showToast('error', 'Vui lòng nhập từ khóa tìm kiếm.');
-                }
-            });
+            }
         });
+
+        // Thêm hiệu ứng hover cho search box
+        $('.search-box').hover(
+            function () {
+                if (!$('.search-box').hasClass('expanded')) {
+                    $('.search-box').addClass('expanded');
+                    $('.navbar-nav.me-auto .nav-item').addClass('search-active');
+                }
+            },
+            function () {
+                if (!$('.search-box input').is(':focus') && !$('.search-box input').val().trim()) {
+                    $('.search-box').removeClass('expanded');
+                    $('.navbar-nav.me-auto .nav-item').removeClass('search-active');
+                }
+            }
+        );
+
+        $('.search-box').on('submit', function (e) {
+            var searchTerm = $(this).find('input[name="searchString"]').val().trim();
+            if (!searchTerm) {
+                e.preventDefault();
+                CartManager.showToast('error', 'Vui lòng nhập từ khóa tìm kiếm.');
+            }
+        });
+        
+        // Add animation to dropdown items
+        $('.dropdown-item').hover(
+            function() {
+                $(this).css('transition', 'all 0.2s ease');
+            }
+        );
+    });
     </script>
 
     <!-- Page-specific scripts -->

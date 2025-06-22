@@ -9,9 +9,9 @@
 <div class="card border-0 shadow-sm">
     <div class="card-header bg-light py-3">
         <div class="d-flex justify-content-between align-items-center">
-            <h4 class="mb-0">@ViewData["Title"]</h4>
-            <a asp-page="./OrderHistory" class="btn btn-outline-secondary">
-                <i class="bi bi-arrow-left me-2"></i>Quay lại
+            <h4 class="mb-0 keep-title">@ViewData["Title"]</h4>
+            <a asp-page="./OrderHistory" class="btn btn-outline-secondary btn-sm">
+                <i class="bi bi-arrow-left me-1"></i>Quay lại
             </a>
         </div>
     </div>
@@ -30,9 +30,7 @@
                 <div class="col-lg-8">
                     <div class="card mb-4 border">
                         <div class="card-header bg-light-subtle py-3">
-                            <h5 class="mb-0">
-                                <i class="bi bi-list-check me-2"></i>Chi tiết
-                            </h5>
+                            <h5 class="mb-0">Chi tiết đơn hàng</h5>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -51,10 +49,9 @@
                                             <tr>
                                                 <td>
                                                     <div class="d-flex align-items-center">
-                                                        <div class="bg-light rounded me-3" style="width: 60px; height: 60px;"></div>
+                                                        <div class="bg-light rounded me-3" style="width: 50px; height: 50px;"></div>
                                                         <div>
                                                             <div class="fw-medium">@detail.Product?.Name</div>
-                                                            <div class="text-muted small">SKU: @(detail.Product?.Id.ToString() ?? "N/A")</div>
                                                         </div>
                                                     </div>
                                                 </td>
@@ -70,18 +67,17 @@
                             </div>
 
                             <div class="d-flex justify-content-end mt-4">
-                                <div class="border-top pt-3" style="width: 300px;">
+                                <div class="border-top pt-3" style="width: 250px;">
                                     <div class="d-flex justify-content-between mb-2">
                                         <span class="text-muted">Tạm tính:</span>
                                         <span>@((Model.Order.TotalPrice * 1m).ToString("#,##0"))₫</span>
                                     </div>
                                     <div class="d-flex justify-content-between mb-2">
                                         <span class="text-muted">Giảm giá:</span>
-                                        <span class="text-danger"></span>
+                                        <span class="text-danger">-</span>
                                     </div>
-                                    <div class="d-flex justify-content-between mt-2 pt-2 fw-medium fs-5"
-                                         style="border-top: 1px dashed #dee2e6;">
-                                        <span>Tổng cộng:</span>
+                                    <div class="d-flex justify-content-between mt-2 pt-2 fw-medium fs-5" style="border-top: 1px dashed #dee2e6;">
+                                        <span>Tổng:</span>
                                         <span class="text-primary">@Model.Order.TotalPrice.ToString("#,##0")₫</span>
                                     </div>
                                 </div>
@@ -93,9 +89,7 @@
                 <div class="col-lg-4">
                     <div class="card mb-4 border">
                         <div class="card-header bg-light-subtle py-3">
-                            <h5 class="mb-0">
-                                <i class="bi bi-truck me-2"></i>Thông tin vận chuyển
-                            </h5>
+                            <h5 class="mb-0">Thông tin giao hàng</h5>
                         </div>
                         <div class="card-body">
                             <div class="mb-3">
@@ -104,12 +98,12 @@
                                 {
                                     case "Pending":
                                         <span class="badge bg-warning bg-opacity-15 text-warning w-100 py-2">
-                                            <i class="bi bi-clock me-1"></i>Chờ xác nhận
+                                            <i class="bi bi-clock me-1"></i>Chờ duyệt
                                         </span>
                                         break;
                                     case "Confirmed":
                                         <span class="badge bg-info bg-opacity-15 text-info w-100 py-2">
-                                            <i class="bi bi-check-circle me-1"></i>Đã xác nhận
+                                            <i class="bi bi-check-circle me-1"></i>Đã duyệt
                                         </span>
                                         break;
                                     case "Shipped":
@@ -136,17 +130,17 @@
                             </div>
 
                             <div class="mb-3">
-                                <div class="text-muted small mb-1">Ngày đặt hàng</div>
+                                <div class="text-muted small mb-1">Ngày đặt</div>
                                 <div class="fw-medium">@Model.Order.OrderDate.ToString("dd/MM/yyyy HH:mm")</div>
                             </div>
 
                             <div class="mb-3">
-                                <div class="text-muted small mb-1">Hình thức giao hàng</div>
+                                <div class="text-muted small mb-1">Phương thức</div>
                                 <div class="fw-medium">Giao hàng tiêu chuẩn</div>
                             </div>
 
                             <div class="mb-3">
-                                <div class="text-muted small mb-1">Địa chỉ nhận hàng</div>
+                                <div class="text-muted small mb-1">Địa chỉ</div>
                                 <div class="fw-medium">@Model.Order.CustomerName</div>
                                 <div class="text-muted">@Model.Order.ShippingAddress</div>
                                 <div class="text-muted">@Model.Order.CustomerPhone</div>
@@ -154,17 +148,17 @@
 
                             <div>
                                 <div class="text-muted small mb-1">Ghi chú</div>
-                                <div class="fst-italic">@(string.IsNullOrEmpty(Model.Order.Notes) ? "Không có ghi chú" : Model.Order.Notes)</div>
+                                <div class="fst-italic">@(string.IsNullOrEmpty(Model.Order.Notes) ? "Không có" : Model.Order.Notes)</div>
                             </div>
                         </div>
                     </div>
 
                     <div class="d-grid gap-2">
-                        <button class="btn btn-outline-danger">
-                            <i class="bi bi-x-circle me-2"></i>Hủy đơn hàng
+                        <button class="btn btn-outline-danger btn-sm">
+                            <i class="bi bi-x-circle me-1"></i>Hủy đơn
                         </button>
-                        <button class="btn btn-outline-primary">
-                            <i class="bi bi-printer me-2"></i>In hóa đơn
+                        <button class="btn btn-outline-primary btn-sm">
+                            <i class="bi bi-printer me-1"></i>In hóa đơn
                         </button>
                     </div>
                 </div>
@@ -174,12 +168,12 @@
         {
             <div class="text-center py-5">
                 <div class="mb-4">
-                    <i class="bi bi-exclamation-circle text-danger" style="font-size: 4rem;"></i>
+                    <i class="bi bi-exclamation-circle text-danger"></i>
                 </div>
-                <h5 class="fw-medium mb-3">Không tìm thấy đơn hàng</h5>
-                <p class="text-muted mb-4">Đơn hàng bạn yêu cầu không tồn tại hoặc đã bị xóa</p>
-                <a asp-page="./OrderHistory" class="btn btn-primary px-4">
-                    <i class="bi bi-arrow-left me-2"></i>Quay lại lịch sử
+                <h5 class="fw-medium mb-3">Ôi, không tìm thấy đơn hàng này!</h5>
+                <p class="text-muted mb-4">Đơn hàng không tồn tại hoặc đã bị xóa.</p>
+                <a asp-page="./OrderHistory" class="btn btn-primary btn-continue-shopping">
+                    <i class="bi bi-arrow-left me-1"></i>Quay lại
                 </a>
             </div>
         }
