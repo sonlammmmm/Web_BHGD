@@ -29,7 +29,8 @@
                     ĐT: 0123.456.789 | Email: contact@bhgd.com
                 </small>
             </div>
-            <div class="bg-orange rounded-circle d-flex justify-content-center align-items-center" style="width:60px; height:60px; background-color: var(--main-orange); color: white; font-weight: bold;">
+            <div class="bg-orange rounded-circle d-flex justify-content-center align-items-center"
+                 style="width:60px; height:60px; background-color: var(--main-orange); color: white; font-weight: bold;">
                 BHGD
             </div>
         </div>
@@ -87,6 +88,8 @@
                             <td>@total.ToString("n0") đ</td>
                         </tr>
                     }
+                </tbody>
+                <tfoot>
                     <tr class="table-light fw-bold">
                         <td colspan="3" class="text-end">Tạm tính:</td>
                         <td>@Model.OrderDetails?.Sum(od => od.Price * od.Quantity).ToString("n0") đ</td>
@@ -99,7 +102,7 @@
                         <td colspan="3" class="text-end">Tổng cộng:</td>
                         <td>@Model.OrderDetails?.Sum(od => od.Price * od.Quantity).ToString("n0") đ</td>
                     </tr>
-                </tbody>
+                </tfoot>
             </table>
         </div>
 

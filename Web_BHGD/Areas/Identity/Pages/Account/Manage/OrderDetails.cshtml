@@ -8,20 +8,20 @@
 
 <div class="card border-0 shadow-sm">
     <div class="card-header bg-light py-3">
-    <div class="d-flex justify-content-between align-items-center">
-        @if (Model.Order != null)
-        {
-            <h4 class="mb-0 keep-title">Chi tiết đơn hàng #@Model.Order.Id</h4>
-        }
-        else
-        {
-            <h4 class="mb-0 keep-title">Chi tiết đơn hàng</h4>
-        }
-        <a asp-page="./OrderHistory" class="btn btn-outline-secondary btn-sm no-print">
-            <i class="bi bi-arrow-left me-1"></i>Quay lại
-        </a>
+        <div class="d-flex justify-content-between align-items-center">
+            @if (Model.Order != null)
+            {
+                <h4 class="mb-0 keep-title">Chi tiết đơn hàng #@Model.Order.Id</h4>
+            }
+            else
+            {
+                <h4 class="mb-0 keep-title">Chi tiết đơn hàng</h4>
+            }
+            <a asp-page="./OrderHistory" class="btn btn-outline-secondary btn-sm no-print">
+                <i class="bi bi-arrow-left me-1"></i>Quay lại
+            </a>
+        </div>
     </div>
-</div>
     <div class="card-body">
         <form style="display: none;">
             @Html.AntiForgeryToken()
@@ -36,7 +36,7 @@
         }
 
         <!-- Alert thông báo in hóa đơn -->
-        <div class="alert alert-print alert-dismissible fade mb-4" role="alert" style="display: none;" id="printAlert">
+        <div class="alert alert-info alert-dismissible fade mb-4" role="alert" style="display: none;" id="printAlert">
             <i class="bi bi-printer me-2"></i>Đang chuẩn bị in hóa đơn...
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
@@ -68,12 +68,12 @@
                                                     <div class="d-flex align-items-center">
                                                         @if (!string.IsNullOrEmpty(detail.Product?.ImageUrl))
                                                         {
-                                                            <img src="@detail.Product.ImageUrl" alt="@detail.Product.Name" class="product-image me-3">
+                                                            <img src="@detail.Product.ImageUrl" alt="@detail.Product.Name" class="product-image me-3" style="width: 50px; height: 50px; object-fit: cover; border-radius: 8px;">
                                                         }
                                                         else
                                                         {
-                                                            <div class="product-placeholder me-3">
-                                                                <i class="bi bi-image"></i>
+                                                            <div class="product-placeholder me-3 d-flex align-items-center justify-content-center" style="width: 50px; height: 50px; background-color: #f8f9fa; border-radius: 8px;">
+                                                                <i class="bi bi-image text-muted"></i>
                                                             </div>
                                                         }
                                                         <div>
@@ -98,9 +98,9 @@
                                         <span class="text-muted">Tạm tính:</span>
                                         <span>@((Model.Order.TotalPrice * 1m).ToString("#,##0"))₫</span>
                                     </div>
-                                    <div class="d-flex journal-content-between mb-2">
+                                    <div class="d-flex justify-content-between mb-2">
                                         <span class="text-muted">Giảm giá:</span>
-                                        <span class="text-danger">- 0₫</span>
+                                        <span class="text-danger">0₫</span>
                                     </div>
                                     <div class="d-flex justify-content-between mt-2 pt-2 fw-medium fs-5" style="border-top: 1px dashed #dee2e6;">
                                         <span>Tổng:</span>
@@ -186,7 +186,7 @@
                                 <i class="bi bi-x-circle me-1"></i>Hủy đơn
                             </button>
                         }
-                        <button class="btn btn-outline-primary btn-sm" onclick="printInvoice()">
+                        <button class="btn btn-outline-primary btn-sm" onclick="printInvoice(@Model.Order.Id)">
                             <i class="bi bi-printer me-1"></i>In hóa đơn
                         </button>
                     </div>
@@ -197,7 +197,7 @@
         {
             <div class="text-center py-5">
                 <div class="mb-4">
-                    <i class="bi bi-exclamation-circle text-danger"></i>
+                    <i class="bi bi-exclamation-circle text-danger fs-1"></i>
                 </div>
                 <h5 class="fw-medium mb-3">Ôi, không tìm thấy đơn hàng này!</h5>
                 <p class="text-muted mb-4">Đơn hàng không tồn tại hoặc đã bị xóa.</p>
@@ -205,7 +205,7 @@
                     <i class="bi bi-arrow-left me-1"></i>Quay lại
                 </a>
             </div>
-        }   
+        }
     </div>
 </div>
 
@@ -213,7 +213,31 @@
     <partial name="_ValidationScriptsPartial" />
 
     <script>
-        function printInvoice() {
+        function printInvoice(orderId) {
+            // Hiển thị thông báo
+            const printAlert = document.getElementById('printAlert');
+            printAlert.style.display = 'block';
+
+            // Tạo URL cho trang in hóa đơn
+            const invoiceUrl = '/Identity/Account/Manage/OrderInvoice?id=' + orderId;
+
+            // Mở cửa sổ mới để in hóa đơn
+            const printWindow = window.open(invoiceUrl, '_blank', 'width=800,height=600,scrollbars=yes,resizable=yes');
+
+            // Ẩn thông báo sau 2 giây
+            setTimeout(() => {
+                printAlert.style.display = 'none';
+            }, 2000);
+
+            // Kiểm tra nếu cửa sổ được mở thành công
+            if (!printWindow) {
+                alert('Popup bị chặn! Vui lòng cho phép popup để in hóa đơn.');
+                printAlert.style.display = 'none';
+            }
+        }
+
+        // Alternative: In trực tiếp trang hiện tại (nếu muốn)
+        function printCurrentPage() {
             // Hiển thị thông báo
             const printAlert = document.getElementById('printAlert');
             printAlert.style.display = 'block';
@@ -250,31 +274,31 @@
                     method: 'POST',
                     body: formData
                 })
-                .then(response => {
-                    console.log('Response status:', response.status);
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    console.log('Response data:', data);
-                    if (data.success) {
-                        alert('Đơn hàng đã được hủy thành công!');
-                        location.reload();
-                    } else {
-                        alert('Có lỗi xảy ra: ' + (data.message || 'Không xác định'));
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('Có lỗi xảy ra khi hủy đơn hàng: ' + error.message);
-                })
-                .finally(() => {
-                    // Khôi phục button
-                    cancelBtn.innerHTML = originalText;
-                    cancelBtn.disabled = false;
-                });
+                    .then(response => {
+                        console.log('Response status:', response.status);
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log('Response data:', data);
+                        if (data.success) {
+                            alert('Đơn hàng đã được hủy thành công!');
+                            location.reload();
+                        } else {
+                            alert('Có lỗi xảy ra: ' + (data.message || 'Không xác định'));
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('Có lỗi xảy ra khi hủy đơn hàng: ' + error.message);
+                    })
+                    .finally(() => {
+                        // Khôi phục button
+                        cancelBtn.innerHTML = originalText;
+                        cancelBtn.disabled = false;
+                    });
             }
         }
 
@@ -282,7 +306,7 @@
         function cancelOrderWithJQuery(orderId) {
             if (confirm('Bạn có chắc chắn muốn hủy đơn hàng này?')) {
                 const token = $('input[name="__RequestVerificationToken"]').val();
-        
+
                 $.ajax({
                     url: window.location.pathname + '?handler=CancelOrder',
                     type: 'POST',
@@ -290,7 +314,7 @@
                         orderId: orderId,
                         __RequestVerificationToken: token
                     },
-                    success: function(data) {
+                    success: function (data) {
                         if (data.success) {
                             alert('Đơn hàng đã được hủy thành công!');
                             location.reload();
@@ -298,7 +322,7 @@
                             alert('Có lỗi xảy ra: ' + data.message);
                         }
                     },
-                    error: function(xhr, status, error) {
+                    error: function (xhr, status, error) {
                         console.error('Error:', error);
                         alert('Có lỗi xảy ra khi hủy đơn hàng!');
                     }

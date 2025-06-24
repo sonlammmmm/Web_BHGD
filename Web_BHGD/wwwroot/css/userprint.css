@@ -1,4 +1,27 @@
-﻿@media print {
+﻿:root {
+    --main-orange: #FF6200;
+}
+
+.btn-orange {
+    background-color: var(--main-orange);
+    color: white;
+}
+
+    .btn-orange:hover {
+        background-color: #e45700;
+    }
+
+.header-orange {
+    background-color: var(--main-orange);
+    color: white;
+}
+
+.border-orange {
+    border-color: var(--main-orange) !important;
+}
+
+@media print {
+
     body {
         background-color: white;
         margin: 0;
@@ -64,25 +87,3 @@
     }
 }
 
-/* Màu sắc chủ đạo */
-:root {
-    --main-orange: #FF6200;
-}
-
-.btn-orange {
-    background-color: var(--main-orange);
-    color: white;
-}
-
-    .btn-orange:hover {
-        background-color: #e45700;
-    }
-
-.header-orange {
-    background-color: var(--main-orange);
-    color: white;
-}
-
-.border-orange {
-    border-color: var(--main-orange) !important;
-}

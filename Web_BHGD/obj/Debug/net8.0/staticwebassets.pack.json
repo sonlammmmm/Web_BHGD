@@ -21,6 +21,10 @@
       "PackagePath": "staticwebassets\\css\\site.css"
     },
     {
+      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\css\\userprint.css",
+      "PackagePath": "staticwebassets\\css\\userprint.css"
+    },
+    {
       "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\favicon.ico",
       "PackagePath": "staticwebassets\\favicon.ico"
     },
@@ -57,12 +61,20 @@
       "PackagePath": "staticwebassets\\images\\3d551914-822e-42ab-8bc1-0ae49abf5877.jpeg"
     },
     {
+      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\images\\5827d481-dd21-4fd8-ab94-948a9f5bc5e5_638863275871595789.jpg",
+      "PackagePath": "staticwebassets\\images\\5827d481-dd21-4fd8-ab94-948a9f5bc5e5_638863275871595789.jpg"
+    },
+    {
       "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\images\\59248032-9c09-494b-a204-5921004cc0e0_638860112319071144.png",
       "PackagePath": "staticwebassets\\images\\59248032-9c09-494b-a204-5921004cc0e0_638860112319071144.png"
     },
     {
       "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\images\\6ff55c5b-a967-4815-9018-fe71dae8dd37_638860099844052001.jpg",
       "PackagePath": "staticwebassets\\images\\6ff55c5b-a967-4815-9018-fe71dae8dd37_638860099844052001.jpg"
+    },
+    {
+      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\images\\71567afa-6a02-4dad-84f0-b244a2eff96a_638863273711603363.jpg",
+      "PackagePath": "staticwebassets\\images\\71567afa-6a02-4dad-84f0-b244a2eff96a_638863273711603363.jpg"
     },
     {
       "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\images\\782429c0-cbff-4ad5-be58-e1deb9e8a740_638860108871882025.jpg",
@@ -73,8 +85,20 @@
       "PackagePath": "staticwebassets\\images\\82e151c9-f111-416e-adab-c000cbce229c.jpg"
     },
     {
+      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\images\\8371bd2a-fc8c-475f-9069-a69598b99a3b_638863271426713940.jpg",
+      "PackagePath": "staticwebassets\\images\\8371bd2a-fc8c-475f-9069-a69598b99a3b_638863271426713940.jpg"
+    },
+    {
       "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\images\\90539e42-a813-4876-b395-9a5b29671271.jpg",
       "PackagePath": "staticwebassets\\images\\90539e42-a813-4876-b395-9a5b29671271.jpg"
+    },
+    {
+      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\images\\9cdda13e-f631-4cd9-9cc2-51b6fd802ca9_638863275176420024.png",
+      "PackagePath": "staticwebassets\\images\\9cdda13e-f631-4cd9-9cc2-51b6fd802ca9_638863275176420024.png"
+    },
+    {
+      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\images\\a48254f0-b2b8-47df-8346-863cf1d5973e_638863276857947191.jpg",
+      "PackagePath": "staticwebassets\\images\\a48254f0-b2b8-47df-8346-863cf1d5973e_638863276857947191.jpg"
     },
     {
       "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\images\\b12089d2-a7e2-42b3-b010-66767440c26e_638860097294111459.jpg",
@@ -83,6 +107,14 @@
     {
       "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\images\\banner_bhgd.png",
       "PackagePath": "staticwebassets\\images\\banner_bhgd.png"
+    },
+    {
+      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\images\\c482a6b0-9e88-4783-9a30-3cdfb5e7c241_638863277602327374.jpg",
+      "PackagePath": "staticwebassets\\images\\c482a6b0-9e88-4783-9a30-3cdfb5e7c241_638863277602327374.jpg"
+    },
+    {
+      "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\images\\d034f023-c15a-4e78-9e27-33bb07b30ec2_638863272680197223.jpg",
+      "PackagePath": "staticwebassets\\images\\d034f023-c15a-4e78-9e27-33bb07b30ec2_638863272680197223.jpg"
     },
     {
       "Id": "E:\\Web_BHGD\\Web_BHGD\\wwwroot\\images\\default_product.png",
